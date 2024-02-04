@@ -1,3 +1,4 @@
+-- For more info go to: https://github.com/nvim-neotest/neotest
 require("neotest").setup({
   adapters = {
     require("neotest-python")({
@@ -5,7 +6,9 @@ require("neotest").setup({
 			justMyCode = false
 		},
     }),
+	-- For all runners go to https://github.com/nvim-neotest/neotest#supported-runners
 	--require("neotest-go"),
-	require("nvim-ginkgo")
+	require("nvim-ginkgo"),
+	require("neotest-dotnet"),
   },
 })

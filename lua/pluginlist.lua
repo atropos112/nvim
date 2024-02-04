@@ -88,6 +88,7 @@ return {
 		--"nvim-neotest/neotest-go",
 		"nvim-extensions/nvim-ginkgo",
 		"nvim-neotest/neotest-python",
+		"Issafalcon/neotest-dotnet"
 	  }
 	},
 
@@ -97,7 +98,7 @@ return {
 		version = "*",
 		config = function()
 			require("toggleterm").setup{
-				open_mapping = "<leader>tt",
+				open_mapping = [[<c-\>]],
 			}
 		end
 	},
@@ -154,5 +155,59 @@ return {
 		'windwp/nvim-autopairs',
 		event = "InsertEnter",
 		opts = {}
-	}
+	},
+
+	{
+		'Hoffs/omnisharp-extended-lsp.nvim',
+	},
+
+	{
+		'mg979/vim-visual-multi',
+	},
+
+	-- install without yarn or npm
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+
+	{
+		"nvim-tree/nvim-tree.lua",
+		version = "*",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("nvim-tree").setup {}
+			vim.api.nvim_set_keymap('n', '<leader>nt', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
+		end,
+	},
+
+	{
+		'nvimdev/dashboard-nvim',
+		event = 'VimEnter',
+		config = function()
+			require('dashboard').setup {
+				-- config
+			}
+		end,
+		dependencies = { {'nvim-tree/nvim-web-devicons'}}
+	},
+	{
+  "folke/which-key.nvim",
+  event = "VeryLazy",
+  init = function()
+    vim.o.timeout = true
+    vim.o.timeoutlen = 300
+  end,
+  opts = {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+}
 }

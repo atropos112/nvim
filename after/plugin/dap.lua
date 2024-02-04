@@ -1,8 +1,12 @@
 require("dapui").setup()
 local dap, dapui = require("dap"), require("dapui")
 
-vim.keymap.set('n', '<leader>c', function() require('dap').continue() end)
+vim.keymap.set('n', '<leader>dc', function()
+	require('dapui').open()
+	require('dap').continue()
+end)
 vim.keymap.set('n', '<leader>di', function() require('dap').step_into() end)
+vim.keymap.set('n', '<leader>c', function() require('dap').step_over() end)
 vim.keymap.set('n', '<leader>dt', function()
 	require('dap').terminate()
 	require("dapui").close()
@@ -100,4 +104,22 @@ dap.configurations.rust = {
         cwd = '${workspaceFolder}',
         stopOnEntry = false,
     },
+}
+
+
+dap.adapters.netcoredbg= {
+  type = 'executable',
+  command = 'netcoredbg',
+  args = {'--interpreter=vscode'}
+}
+
+dap.configurations.cs = {
+  {
+    type = "netcoredbg",
+    name = "launch - netcoredbg",
+    request = "launch",
+    program = function()
+        return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+    end,
+  },
 }

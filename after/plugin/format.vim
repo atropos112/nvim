@@ -6,5 +6,6 @@ augroup END
 
 " Specific formatters, other than the defaults
 let g:neoformat_enabled_nix = ['alejandra']
+let g:neoformat_enabled_lua = ['stylua']
 let g:neoformat_enabled_c# = []
 
