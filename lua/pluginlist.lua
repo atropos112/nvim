@@ -85,9 +85,9 @@ return {
 			"nvim-lua/plenary.nvim",
 			"antoinemadec/FixCursorHold.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			--"nvim-neotest/neotest-go",
-			"nvim-extensions/nvim-ginkgo",
+			"nvim-neotest/neotest-go",
 			"nvim-neotest/neotest-python",
+			"rouge8/neotest-rust",
 			"Issafalcon/neotest-dotnet",
 		},
 	},
@@ -229,4 +229,8 @@ return {
 			"nvim-tree/nvim-web-devicons",
 		},
 	},
+
+	{
+		'mfussenegger/nvim-lint'
+	}
 }
