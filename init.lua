@@ -1,6 +1,3 @@
-require("globals")
-require("options")
-
-require("remap") -- Needs to be before plugins (so that leader is set before lazy)
-
-require("plugins")
+require("atro.utils")
+require("atro.configs")
+require("atro.lazy")
