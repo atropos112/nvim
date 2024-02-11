@@ -1,10 +1,15 @@
 return {
-	-- Undo tree i.e. a fancy "go back"  history
-	{
-		"mbbill/undotree",
-		config = function()
-			vim.g.undotree_WindowLayout = 2
-			vim.keymap.set("n", "<leader>ut", vim.cmd.UndotreeToggle)
-		end,
-	},
+    -- Undo tree i.e. a fancy "go back"  history
+    {
+        "mbbill/undotree",
+        config = function()
+            vim.g.undotree_WindowLayout = 2
+            vim.keymap.set("n", "<leader>ut", vim.cmd.UndotreeToggle)
+        end,
+    },
+    {
+        "Pocco81/auto-save.nvim",
+        event = "BufRead",
+        opts = {}
+    }
 }
