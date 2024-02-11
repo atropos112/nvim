@@ -32,12 +32,15 @@ return {
 					terraform = formatters.lsp,
 					typescript = formatters.prettierd,
 					typescriptreact = formatters.prettierd,
-					yaml = formatters.lsp,
+					
+                    yaml = {
+                        formatters.lsp,
+                        formatters.prettierd,
+                    },
 
 					-- Concatenate formatters
 					python = {
 						formatters.remove_trailing_whitespace,
-						formatters.black,
 						formatters.ruff,
 					},
 					nix = {

@@ -4,6 +4,15 @@ return {
 		version = "^4",
 		ft = { "rust" },
 		config = function()
+            require("atro.utils.mason").install({
+                -- lsp
+                "rust-analyzer",
+
+                -- debugger
+                "codelldb",
+            })
+
+            -- Debugging
 			local dap = require("dap")
 
 			dap.adapters.codelldb = {

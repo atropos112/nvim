@@ -7,8 +7,18 @@ return {
 			"Tastyep/structlog.nvim", -- Optional, but highly recommended for debugging
 		},
 		config = function()
+
+            require("atro.utils.mason").install({
+                -- lsp
+                "omnisharp",
+
+                -- debugger
+                "netcoredbg",
+            })
+
 			local csharp = require("csharp")
 			local dap = require('dap')
+
 
 			csharp.setup({
 				lsp = {
@@ -16,6 +26,8 @@ return {
 					enable_editor_config_support = true,
 				}
 			})
+
+            -- Debugger 
 			dap.adapters.netcoredbg = {
 				type = 'executable',
 				command = 'netcoredbg',
@@ -33,6 +45,8 @@ return {
 				},
 
 			}
+
+            -- Keymaps (note we don't have default keymaps for LSP here)
 			vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '', {
 				noremap = true,
 				silent = true,
