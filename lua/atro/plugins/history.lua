@@ -8,8 +8,14 @@ return {
         end,
     },
     {
-        "Pocco81/auto-save.nvim",
-        event = "BufRead",
-        opts = {}
+        '0x00-ketsu/autosave.nvim',
+        config = function()
+            require('autosave').setup {
+                events = {
+                    "InsertLeave",
+                    "FocusLost"
+                }
+            }
+        end
     }
 }
