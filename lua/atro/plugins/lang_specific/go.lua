@@ -2,7 +2,6 @@ return {
     -- Debugging functionality for go
     {
         "leoluz/nvim-dap-go",
-        event = "VeryLazy",
         ft = "go",
         config = function()
             -- NOTE: Debugger
@@ -23,7 +22,6 @@ return {
     -- Golang plugin (all the lagnuage niceties in one plugin)
     {
         "fatih/vim-go",
-        event = "VeryLazy",
         ft = "go",
         dependencies = {
             "mfussenegger/nvim-lint",

@@ -23,7 +23,7 @@ return {
                     javascript = formatters.lsp,
                     json = formatters.lsp,
                     lua = formatters.lsp,
-                    csharp = nil,
+                    csharp = formatters.lsp,
                     markdown = formatters.prettierd,
                     openscad = formatters.lsp,
                     rust = formatters.lsp,

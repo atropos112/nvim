@@ -1,43 +1,27 @@
 return {
     {
-        "iabdelkareem/csharp.nvim",
+        "Decodetalkers/csharpls-extended-lsp.nvim",
         ft = "cs",
-        dependencies = {
-            "williamboman/mason.nvim", -- Required, automatically installs omnisharp
-            "Tastyep/structlog.nvim",  -- Optional, but highly recommended for debugging
-        },
         config = function()
             -- NOTE: Dependency sourcing
             require("atro.utils.mason").install({
                 -- lsp
-                "omnisharp",
+                "csharp-language-server",
 
                 -- debugger
                 "netcoredbg",
             })
 
-            -- INFO: Plugin specific
-            local csharp = require("csharp")
-            csharp.setup({
-                lsp = {
-                    analyze_open_documents_only = true,
-                    enable_editor_config_support = true,
-                }
-            })
-            vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '', {
-                noremap = true,
-                silent = true,
-                callback = function()
-                    csharp.go_to_definition()
-                end
-            })
-
             -- NOTE: LSP
-            require("lspconfig").omnisharp.setup({
-                -- WARN: we do not attach "on_attach" as plugin adds its own
+            require("lspconfig").csharp_ls.setup({
+                on_attach = On_attach,
                 capabilities = Capabilities,
+                handlers = {
+                    ["textDocument/definition"] = require('csharpls_extended').handler,
+                    ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
+                },
+                cmd = { "csharp-ls" },
             })
-
 
             -- NOTE: Debugger
             local dap = require('dap')
@@ -58,6 +42,6 @@ return {
                     end,
                 },
             }
-        end
+        end,
     }
 }

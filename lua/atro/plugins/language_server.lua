@@ -14,6 +14,7 @@ return {
         config = function()
             require("mason").setup()
             Capabilities = require("cmp_nvim_lsp").default_capabilities(Capabilities)
+            require("mason-lspconfig").setup({})
         end,
     },
 }

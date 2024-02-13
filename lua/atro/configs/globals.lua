@@ -33,3 +33,7 @@ _G.On_attach = function(_, bufnr)
 end
 
 _G.Capabilities = vim.lsp.protocol.make_client_capabilities()
+Capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
