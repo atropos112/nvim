@@ -1,13 +1,13 @@
 return {
-	{
-		"iabdelkareem/csharp.nvim",
-		ft = "cs",
-		dependencies = {
-			"williamboman/mason.nvim", -- Required, automatically installs omnisharp
-			"Tastyep/structlog.nvim", -- Optional, but highly recommended for debugging
-		},
-		config = function()
-
+    {
+        "iabdelkareem/csharp.nvim",
+        ft = "cs",
+        dependencies = {
+            "williamboman/mason.nvim", -- Required, automatically installs omnisharp
+            "Tastyep/structlog.nvim",  -- Optional, but highly recommended for debugging
+        },
+        config = function()
+            -- NOTE: Dependency sourcing
             require("atro.utils.mason").install({
                 -- lsp
                 "omnisharp",
@@ -16,44 +16,48 @@ return {
                 "netcoredbg",
             })
 
-			local csharp = require("csharp")
-			local dap = require('dap')
+            -- INFO: Plugin specific
+            local csharp = require("csharp")
+            csharp.setup({
+                lsp = {
+                    analyze_open_documents_only = true,
+                    enable_editor_config_support = true,
+                }
+            })
+            vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '', {
+                noremap = true,
+                silent = true,
+                callback = function()
+                    csharp.go_to_definition()
+                end
+            })
+
+            -- NOTE: LSP
+            require("lspconfig").omnisharp.setup({
+                -- WARN: we do not attach "on_attach" as plugin adds its own
+                capabilities = Capabilities,
+            })
 
 
-			csharp.setup({
-				lsp = {
-					analyze_open_documents_only = true,
-					enable_editor_config_support = true,
-				}
-			})
+            -- NOTE: Debugger
+            local dap = require('dap')
+            dap.adapters.netcoredbg = {
+                type = 'executable',
+                command = 'netcoredbg',
+                args = { '--interpreter=vscode' }
+            }
 
-            -- Debugger 
-			dap.adapters.netcoredbg = {
-				type = 'executable',
-				command = 'netcoredbg',
-				args = { '--interpreter=vscode' }
-			}
-
-			dap.configurations.cs = {
-				{
-					type = "netcoredbg",
-					name = "launch - netcoredbg",
-					request = "launch",
-					program = function()
-						return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
-					end,
-				},
-
-			}
-
-            -- Keymaps (note we don't have default keymaps for LSP here)
-			vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '', {
-				noremap = true,
-				silent = true,
-				callback = function()
-					csharp.go_to_definition()
-				end
-			})
-		end
-	}
+            dap.configurations.cs = {
+                {
+                    type = "netcoredbg",
+                    name = "launch - netcoredbg",
+                    request = "launch",
+                    program = function()
+                        ---@diagnostic disable-next-line
+                        return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+                    end,
+                },
+            }
+        end
+    }
 }

@@ -1,18 +1,20 @@
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.json",
     callback = function()
+        -- NOTE: Dependency sourcing
         require("atro.utils.mason").install({
             -- linter
             "jsonlint",
 
-            -- lsp 
+            -- lsp
             "json-lsp",
         })
 
-        -- load linters (some are loaded in LSP stage)
-        require("lint").linters_by_ft.json= { "jsonlint" } 
 
-        require('lspconfig').jsonls.setup{
+        -- NOTE: LSP
+        require('lspconfig').jsonls.setup {
+            capabilities = Capabilities,
+            on_attach = On_attach,
             settings = {
                 json = {
                     schemas = require('schemastore').json.schemas(),
@@ -20,9 +22,10 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
                 },
             },
         }
+
+        -- NOTE: Linter
+        require("lint").linters_by_ft.json = { "jsonlint" }
     end
 })
 
 return {}
-      
-

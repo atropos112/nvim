@@ -1,17 +1,20 @@
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = {"*.yaml", "*.yml"},
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.yaml", "*.yml" },
     callback = function()
+        -- NOTE: Dependency sourcing
         require("atro.utils.mason").install({
             -- linter
             "yamllint",
 
-            -- lsp 
+            -- lsp
             "yaml-language-server"
         })
 
-        require("lint").linters_by_ft.nix = { "yamllint" } 
-        require('lspconfig').yamlls.setup{
+        -- NOTE: LSP
+        require('lspconfig').yamlls.setup {
             settings = {
+                on_attach = On_attach,
+                capabilities = Capabilities,
                 yaml = {
                     schemaStore = {
                         enable = false,
@@ -27,6 +30,10 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
                 },
             },
         }
+
+        -- NOTE: Linter
+        require("lint").linters_by_ft.nix = { "yamllint" }
     end
 })
+
 return {}

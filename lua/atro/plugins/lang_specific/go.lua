@@ -5,6 +5,7 @@ return {
         event = "VeryLazy",
         ft = "go",
         config = function()
+            -- NOTE: Debugger
             require('dap-go').setup {
                 dap_configurations = {
                     {
@@ -29,14 +30,23 @@ return {
             "williamboman/mason.nvim",
         },
         config = function()
-            require("atro.utils.mason").install({ 
-                -- lsp 
+            -- NOTE: Dependency sourcing
+            require("atro.utils.mason").install({
+                -- lsp
                 "gopls",
 
                 -- linter
-                "revive", 
-                "typos" 
+                "revive",
+                "typos"
             })
+
+            -- NOTE: LSP
+            require("lspconfig").gopls.setup({
+                on_attach = On_attach,
+                capabilities = Capabilities,
+            })
+
+            -- NOTE: Linter
             require("lint").linters_by_ft.markdown = { "revive", "typos" }
         end,
     }
