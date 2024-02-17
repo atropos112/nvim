@@ -1,4 +1,12 @@
 return {
+    -- API info of vim
+    {
+        "folke/neodev.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("neodev").setup()
+        end
+    },
 
     -- Tract time usage
     "wakatime/vim-wakatime",
