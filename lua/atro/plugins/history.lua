@@ -7,15 +7,4 @@ return {
             vim.keymap.set("n", "<leader>ut", vim.cmd.UndotreeToggle)
         end,
     },
-    {
-        '0x00-ketsu/autosave.nvim',
-        config = function()
-            require('autosave').setup {
-                events = {
-                    "InsertLeave",
-                    "FocusLost"
-                }
-            }
-        end
-    }
 }

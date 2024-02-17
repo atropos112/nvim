@@ -1,10 +1,24 @@
 # Needs documenting
 
+1. Gitsigns details 
+    - https://github.com/lewis6991/gitsigns.nvim?tab=readme-ov-file
+
+2. Neotree detailed setup with keymaps
+    - https://github.com/nvim-neo-tree/neo-tree.nvim
+    - https://github.com/iabdelkareem/dotfiles/blob/main/.config/nvim/lua/core/file-tree.lua
+    - https://invidious.atro.xyz/watch?v=GVk387iCyhY
+
+3. Diffview keymaps and figure out what does what
+    - https://github.com/sindrets/diffview.nvim?tab=readme-ov-file
+    - https://invidious.atro.xyz/watch?v=SWldGqw9wkc
+
+
+--- 
 1. How did you "make" each language "work"
-    - For C# explain how https://github.com/Hoffs/omnisharp-extended-lsp.nvim was needed to allow go-def to work on non-owned code (decompiled). This really needs to be documented, especially the `~/.omnisharp/omnisharp.json`
+    - For C# explain how https://github.com/Hoffs/omnisharp-extended-lsp.nvim was needed to allow go-def to work on non-owned code (decompiled). This really needs to be documented, the `~/.omnisharp/omnisharp.json`
     - For Go explain how you use a package and all works
 
-2. Neoformat has bunch of commands that needs to be keymapped.
+2. Neoformat in need of further investigation.
 
 3. Mason has all the DAP's and LSP's that I needed, but they are manually installed, would be good to have ensure_installed and have them there.
 

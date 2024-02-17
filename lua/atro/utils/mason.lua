@@ -3,6 +3,7 @@ local M = {}
 -- any cases where name of package is different from the binary name
 local name_to_bin = {
     ["csharp-language-server"] = "csharp-ls",
+    ["python-lsp-server"] = "pylsp"
 }
 
 M.install = function(ensure_installed)

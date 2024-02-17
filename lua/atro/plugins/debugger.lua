@@ -17,10 +17,9 @@ return {
         config = function()
             local dap = require("dap")
 
-            vim.keymap.set('n', '<leader>di', function() dap.step_into() end)
-            vim.keymap.set('n', '<leader>c', function() dap.step_over() end)
-            vim.keymap.set('n', '<leader>b', function() dap.toggle_breakpoint() end)
-
+            vim.keymap.set('n', '<leader>di', function() dap.step_into() end, { desc = "Step into" })
+            vim.keymap.set('n', '<leader>c', function() dap.step_over() end, { desc = "Step over" })
+            vim.keymap.set('n', '<leader>db', function() dap.toggle_breakpoint() end, { desc = "Toggle breakpoint" })
         end,
     },
     {
@@ -33,14 +32,14 @@ return {
             local dap, dapui = require("dap"), require("dapui")
             dapui.setup()
 
-            vim.keymap.set('n', '<leader>dc', function()
+            vim.keymap.set('n', '<leader>ds', function()
                 dapui.open()
                 dap.continue()
-            end)
+            end, { desc = "Start debugging" })
             vim.keymap.set('n', '<leader>dt', function()
                 dap.terminate()
                 dapui.close()
-            end)
+            end, { desc = "Stop debugging" })
 
             dap.listeners.before.attach.dapui_config = function()
                 dapui.open()

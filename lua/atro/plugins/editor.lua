@@ -29,5 +29,26 @@ return {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
+    },
+    {
+        "kevinhwang91/nvim-ufo",
+        dependencies = "kevinhwang91/promise-async",
+        init = function()
+        end,
+        config = function()
+            local ufo = require("ufo")
+            ufo.setup()
+            -- INFO: zc folds, zo unfolds, below are extras
+            vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "Open all folds" })
+            vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "Close all folds" })
+        end,
+    },
+    {
+        'rmagatti/goto-preview',
+        event = "BufRead",
+        config = function()
+            require('goto-preview').setup {}
+            vim.keymap.set("n", "gt", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
+        end
     }
 }

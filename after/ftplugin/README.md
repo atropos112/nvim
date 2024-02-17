@@ -9,7 +9,10 @@ A typical language support involves up to 6 parts
 - Debugger
 - Formatter (in a different file)
 
-Where all of the code needs to be placed (which section) is outlined in _plugin specific_ section, what should be added is in each section separately.
+## Where are things placed ?
+- Formatter is currently done in `lua/atro/plugins/formatting.lua`.
+- Plugins should be added in `lua/atro/plugins/lang_specific/<filetype>.lua` (e.g. `<filetype>=json`)
+- All the remaining configuration should be in `after/ftplugins/<filetype>.lua`
 
 ## Dependency sourcing
 
@@ -28,20 +31,8 @@ require("atro.utils.mason").install({
 
 ## Plugin specific
 
-That is plugin dependent. If you have plugin place all of the above in that plugins `config` function so it gets loaded when plugin is loaded. If you don't have a plugin for a given language then do the below
+That is plugin dependent, impossible to have a generic approach to this. 
 
-```lua
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = "*.lua",
-    callback = function()
-        CODE_HERE
-    end
-})
-
-return {}
-```
-
-This will trigger the config when pattern is meet, its useful when a computer doesn't have all the needed dependencies (e.g. go).
 
 ## LSP
 
