@@ -9,6 +9,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
         -- NOTE: LSP
         require('lspconfig').lua_ls.setup {
+            on_attach = On_attach,
             capabilities = Capabilities,
             settings = {
                 Lua = {

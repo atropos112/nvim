@@ -12,9 +12,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
         -- NOTE: LSP
         require('lspconfig').yamlls.setup {
+            on_attach = On_attach,
+            capabilities = Capabilities,
             settings = {
-                on_attach = On_attach,
-                capabilities = Capabilities,
                 yaml = {
                     schemaStore = {
                         enable = false,

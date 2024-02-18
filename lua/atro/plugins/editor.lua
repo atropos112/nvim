@@ -21,11 +21,13 @@ return {
 
     -- Adds matching pairs of brackets, quotes, etc.
     {
+        -- INFO: Autopairs plugin, adds matching pairs of brackets, quotes, etc.
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         opts = {},
     },
     {
+        -- INFO: Commenting plugin, allows commenting out lines and blocks of code
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
@@ -33,22 +35,53 @@ return {
     {
         "kevinhwang91/nvim-ufo",
         dependencies = "kevinhwang91/promise-async",
-        init = function()
-        end,
-        config = function()
-            local ufo = require("ufo")
-            ufo.setup()
-            -- INFO: zc folds, zo unfolds, below are extras
-            vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "Open all folds" })
-            vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "Close all folds" })
-        end,
+        event = "LspAttach",
+        -- INFO: zc folds, zo unfolds, below are extras
+        keys = {
+            { "zR", function() require("ufo").openAllFolds() end,  { desc = "Open all folds" } },
+            { "zM", function() require("ufo").closeAllFolds() end, { desc = "Close all folds" } },
+        },
+        opts = {
+            provider_selector = function(_, _, _)
+                return { 'treesitter', 'indent' }
+            end
+        }
     },
     {
         'rmagatti/goto-preview',
         event = "BufRead",
         config = function()
             require('goto-preview').setup {}
-            vim.keymap.set("n", "gt", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
+            vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>",
+                { noremap = true })
         end
-    }
+    },
+    {
+        -- INFO: with :<n> you can peek at n-th line
+        'nacro90/numb.nvim',
+        event = "BufRead",
+        opts = {}
+    },
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        event = "BufRead",
+        config = function()
+            local tc = require("treesitter-context")
+            vim.keymap.set("n", "[c", function() tc.go_to_context(vim.v.count1) end,
+                { desc = "Go up a context", silent = true })
+        end,
+    },
+    {
+        "danymat/neogen",
+        keys = {
+            {
+                "<leader>cc",
+                function()
+                    require("neogen").generate({})
+                end,
+                desc = "Neogen Comment",
+            },
+        },
+        opts = { snippet_engine = "luasnip" },
+    },
 }

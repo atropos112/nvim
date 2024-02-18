@@ -1,8 +1,3 @@
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
 return {
     {
         "neovim/nvim-lspconfig",
@@ -26,8 +21,27 @@ return {
     },
     {
         'VidocqH/lsp-lens.nvim',
-        config = function()
-            require 'lsp-lens'.setup({})
-        end,
+        event = "LspAttach",
+        opts = {
+            include_declaration = false, -- Reference include declaration
+            sections = {                 -- Enable / Disable specific request, formatter example looks 'Format Requests'
+                definition = false,
+                references = true,
+                implements = true,
+                git_authors = true,
+            },
+        }
     },
+    {
+        "utilyre/barbecue.nvim",
+        name = "barbecue",
+        version = "*",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "nvim-tree/nvim-web-devicons", -- optional dependency
+        },
+        opts = {
+            -- configurations go here
+        },
+    }
 }

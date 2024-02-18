@@ -72,6 +72,15 @@ return {
         end
     },
     {
+        "tris203/hawtkeys.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = {}
+    },
+    {
         "m4xshen/hardtime.nvim",
         event = "BufRead",
         dependencies = {
@@ -79,7 +88,44 @@ return {
             "nvim-lua/plenary.nvim"
         },
         opts = {
-            max_count = 12,
+            max_count = 8,
+            restriction_mode = "hint", -- Might change it to "block" at some point.
+            -- INFO: I like arrow keys, in insert mode, and disagree with it being a bad pactice ESC + l + i is more steps then arrow right. Only argument on the other side here is that arrow keys are far from where fingers typically are but I use moonlander zsa keyboard so this doesn't apply to me (my thumbs are always near arrows anyway).
+            disabled_keys = {
+                ["<Up>"] = {},
+                ["<Down>"] = {},
+                ["<Left>"] = {},
+                ["<Right>"] = {}
+            },
+            restricted_keys = {
+                ["<C-N>"] = {},
+                ["<Up>"] = { "i", "n" },
+                ["<Down>"] = { "i", "n" },
+                ["<Left>"] = { "i", "n" },
+                ["<Right>"] = { "i", "n" }
+            }
         }
-    }
+    },
+    -- INFO: Better increase/descrease, works on versions, dates, bools etc.
+    {
+        "monaqa/dial.nvim",
+        -- stylua: ignore
+        keys = {
+            { "<C-a>", function() return require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
+            { "<C-x>", function() return require("dial.map").dec_normal() end, expr = true, desc = "Decrement" },
+        },
+        config = function()
+            local augend = require("dial.augend")
+            require("dial.config").augends:register_group({
+                default = {
+                    augend.integer.alias.decimal,
+                    augend.integer.alias.hex,
+                    augend.date.alias["%Y/%m/%d"],
+                    augend.constant.alias.bool,
+                    augend.semver.alias.semver,
+                    augend.constant.new({ elements = { "let", "const" } }),
+                },
+            })
+        end,
+    },
 }
