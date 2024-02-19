@@ -13,6 +13,7 @@ return {
         },
         config = function()
             local telescope = require('telescope')
+            ---@diagnostic disable-next-line: no-unknown
             local builtin = require('telescope.builtin')
             telescope.setup({
                 extensions = {
@@ -29,21 +30,11 @@ return {
             telescope.load_extension('fzf')
 
             -- TODO: Add more keymaps
-            -- vim.keymap.set('n', '<C-p>', builtin.git_files, {})
-            -- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-            vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-            vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-            vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+            local set = require('atro.utils.generic').keyset
+            set('n', ';f', builtin.find_files, {})
+            set('n', ';o', builtin.oldfiles, {})
+            set('n', ';g', builtin.live_grep, {})
+            set('n', ';b', builtin.buffers, {})
         end
     },
-    {
-        -- INFO: Adds tabs to telescope for better navigation
-        "FabianWirth/search.nvim",
-        dependencies = {
-            "nvim-telescope/telescope.nvim"
-        },
-        keys = {
-            { "<C-p>", function() require('search').open() end, desc = "Search" }
-        }
-    }
 }

@@ -28,6 +28,10 @@ require("lazy").setup({
         },
     },
     performance = {
+        cache = {
+            enabled = true,
+        },
+        reset_packpath = true,
         rtp = {
             disabled_plugins = {
                 "2html_plugin",

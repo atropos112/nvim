@@ -23,8 +23,8 @@ return {
         init = function()
             vim.g.mkdp_filetypes = { "markdown" }
         end,
+        -- WARN: Do not put opts, it will break the plugin
         ft = { "markdown" },
-        opts = {},
     },
     {
         -- INFO: Allows pasting images into markdown files

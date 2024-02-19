@@ -3,13 +3,16 @@ return {
     {
         "folke/neodev.nvim",
         event = "VeryLazy",
-        config = function()
-            require("neodev").setup()
-        end
+        opts = {
+            library = { plugins = { "neotest" }, types = true },
+        },
     },
 
     -- Tract time usage
-    "wakatime/vim-wakatime",
+    {
+        "wakatime/vim-wakatime",
+        event = "BufRead",
+    },
 
     -- Downloads dependencies for LSP, formatter and debugger
     {

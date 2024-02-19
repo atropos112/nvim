@@ -9,7 +9,6 @@ return {
         config = function()
             local format_on_save = require("format-on-save")
             local formatters = require("format-on-save.formatters")
-            local registry = require("mason-registry")
 
             format_on_save.setup({
                 exclude_path_patterns = {

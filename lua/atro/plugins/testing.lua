@@ -11,11 +11,16 @@ return {
             "rouge8/neotest-rust",
             "Issafalcon/neotest-dotnet",
         },
-        event = "VeryLazy",
+        keys = {
+            {"n", "<leader>tr", function() require('neotest').run.run() end, {desc = "Run test"}},
+            {"n", "<leader>td", function() require('neotest').run.run({ strategy = "dap" }) end, {desc = "Debug test"}},
+            {"n", "<leader>ts", function() require('neotest').run.stop() end, {desc = "Stop test"}},
+            {"n", "<leader>tw", function() require('neotest').watch.toggle(vim.fn.expand("%")) end, {desc = "Watch test"}},
+            {"n", "<leader>tt", function() require('neotest').summary.toggle() end, {desc = "Toggle test summary"}},
+            {"n", "<leader>to", function() require('neotest').output_panel.toggle() end, {desc = "Toggle test output panel"}},
+        },
         config = function()
-            local neotest = require("neotest")
-
-            neotest.setup({
+            require("neotest").setup({
                 adapters = {
                     -- For all runners go to https://github.com/nvim-neotest/neotest#supported-runners
                     -- Python
@@ -33,14 +38,6 @@ return {
                     require("neotest-rust"),
                 },
             })
-
-
-            vim.keymap.set('n', '<leader>tr', function() neotest.run.run() end)
-            vim.keymap.set('n', '<leader>td', function() neotest.run.run({ strategy = "dap" }) end)
-            vim.keymap.set('n', '<leader>ts', function() neotest.run.stop() end)
-            vim.keymap.set('n', '<leader>tw', function() neotest.watch.toggle(vim.fn.expand("%")) end)
-            vim.keymap.set('n', '<leader>tt', function() neotest.summary.toggle() end)
-            vim.keymap.set('n', '<leader>to', function() neotest.output_panel.toggle() end)
         end,
     },
 }
