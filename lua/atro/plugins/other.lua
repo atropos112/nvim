@@ -31,16 +31,6 @@ return {
         opts = {},
     },
 
-    -- Nice loading graphics (on bottom right)
-    {
-        "j-hui/fidget.nvim",
-        event = "VeryLazy",
-        tag = "legacy",
-        config = function()
-            require("fidget").setup {}
-        end,
-    },
-
     -- Keep track of startup time
     {
         "dstein64/vim-startuptime",

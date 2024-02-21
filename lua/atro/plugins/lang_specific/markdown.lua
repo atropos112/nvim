@@ -1,19 +1,3 @@
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = "*.md",
-    callback = function()
-        require("lint").linters_by_ft.json = { "jsonlint" }
-        -- NOTE: Dependency sourcing
-        require("atro.utils.mason").install({
-            -- linter
-            "write-good",
-            "proselint",
-        })
-
-        -- NOTE: Linter
-        require("lint").linters_by_ft.markdown = { "write_good", "proselint" }
-    end
-})
-
 return {
     {
         -- INFO: Markdown preview functionality

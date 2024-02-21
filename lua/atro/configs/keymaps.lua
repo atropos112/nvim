@@ -21,3 +21,6 @@ set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 set("i", "<C-s>", "<cmd>w<CR>")
 set("v", "<C-s>", "<cmd>w<CR>")
 set("n", "<C-s>", "<cmd>w<CR>")
+
+
+set('n', '<leader>of', function() vim.diagnostic.open_float() end, { desc = "Diagnostic float" })

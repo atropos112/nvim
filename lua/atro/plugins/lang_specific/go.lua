@@ -18,7 +18,6 @@ return {
         end,
 
     },
-
     -- Golang plugin (all the lagnuage niceties in one plugin)
     {
         "fatih/vim-go",
@@ -27,23 +26,22 @@ return {
             "mfussenegger/nvim-lint",
             "williamboman/mason.nvim",
         },
+    },
+    -- Allows implementing interfaces conviniently
+    {
+        'edolphin-ydf/goimpl.nvim',
+        dependencies = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-lua/popup.nvim' },
+            { 'nvim-telescope/telescope.nvim' },
+            { 'nvim-treesitter/nvim-treesitter' },
+        },
+        ft = "go",
         config = function()
-            -- NOTE: Dependency sourcing
-            require("atro.utils.mason").install({
-                -- lsp
-                "gopls",
-
-                -- linter
-                "revive",
-                "typos"
-            })
-
-            -- NOTE: LSP
-            -- WARN: vim-go provides its own LSP setup for gopls, and thats why no On_Attach or Capabilities are defined here.
-            require("lspconfig").gopls.setup({})
-
-            -- NOTE: Linter
-            require("lint").linters_by_ft.markdown = { "revive", "typos" }
+            require("atro.utils.mason").install({ "impl" })
+            require('telescope').load_extension('goimpl')
+            vim.api.nvim_set_keymap('n', '<leader>im', [[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
+                { noremap = true, silent = true })
         end,
     }
 }

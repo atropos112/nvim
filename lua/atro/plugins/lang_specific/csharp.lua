@@ -5,22 +5,8 @@ return {
         config = function()
             -- NOTE: Dependency sourcing
             require("atro.utils.mason").install({
-                -- lsp
-                "csharp-language-server",
-
                 -- debugger
                 "netcoredbg",
-            })
-
-            -- NOTE: LSP
-            require("lspconfig").csharp_ls.setup({
-                on_attach = On_attach,
-                capabilities = Capabilities,
-                handlers = {
-                    ["textDocument/definition"] = require('csharpls_extended').handler,
-                    ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
-                },
-                cmd = { "csharp-ls" },
             })
 
             -- NOTE: Debugger

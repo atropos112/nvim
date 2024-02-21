@@ -1,47 +1,159 @@
 return {
     {
-        "neovim/nvim-lspconfig",
-    },
-    {
-        "b0o/schemastore.nvim"
-    },
-    {
         "williamboman/mason-lspconfig.nvim",
         dependencies = {
             "williamboman/mason.nvim",
-            "neovim/nvim-lspconfig"
+            "neovim/nvim-lspconfig",
+            "jubnzv/virtual-types.nvim",
+            "b0o/schemastore.nvim"
         },
         config = function()
-            require("mason").setup()
-            Capabilities = require("cmp_nvim_lsp").default_capabilities(Capabilities)
-            require("mason-lspconfig").setup({})
+            -- INFO: Defining On_Attach
+            local on_attach = function(_, bufnr)
+                local set = require('atro.utils.generic').keyset
 
-            vim.keymap.set('n', '<leader>of', function() vim.diagnostic.open_float() end, { desc = "Diagnostic float" })
+                local opts = { noremap = true, silent = true }
+                opts.buffer = bufnr
+
+                -- set keybinds
+                opts.desc = "Show LSP references"
+                set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+
+                opts.desc = "Go to declaration"
+                set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
+
+                opts.desc = "Show LSP definitions"
+                set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+
+                opts.desc = "Show LSP implementations"
+                set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+
+                opts.desc = "Show LSP type definitions"
+                set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+
+                opts.desc = "See available code actions"
+                set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+
+                opts.desc = "Smart rename"
+                set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+
+                opts.desc = "Show buffer diagnostics"
+                set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+
+                opts.desc = "Show line diagnostics"
+                set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+
+                opts.desc = "Go to previous diagnostic"
+                set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+
+                opts.desc = "Go to next diagnostic"
+                set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+
+                opts.desc = "Show documentation for what is under cursor"
+                set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+
+                opts.desc = "Restart LSP"
+                set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+                require("virtualtypes").on_attach()
+            end
+
+            -- INFO: Defining Capabilities
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+            -- INFO: Defining LSP Config
+            require("mason").setup()
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "lua_ls",
+                    "jsonls",
+                    "pyright",
+                    "yamlls",
+                    "dockerls",
+                    "docker_compose_language_service",
+                    "nil_ls",
+                    "rnix",
+                    "bashls",
+                    "typst_lsp",
+                    "rust_analyzer",
+                    "csharp_ls",
+                },
+                handlers = {
+                    function(server_name)
+                        require("lspconfig")[server_name].setup {
+                            on_attach = on_attach,
+                            capabilities = capabilities
+                        }
+                        print("Default load for LSP: " .. server_name)
+                    end,
+
+                    ["csharp_ls"] = function()
+                        require("lspconfig").csharp_ls.setup({
+                            on_attach = on_attach,
+                            capabilities = capabilities,
+                            handlers = {
+                                ["textDocument/definition"] = require('csharpls_extended').handler,
+                                ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
+                            },
+                            cmd = { "csharp-ls" },
+                        })
+                    end,
+
+                    ["gopls"] = function()
+                        -- NOTE: go plugin take over here so should not pass capabilities or on_attach.
+                        require("lspconfig").gopls.setup({})
+                    end,
+
+                    ["lua_ls"] = function()
+                        require('neodev').setup()
+                        require("lspconfig").lua_ls.setup {
+                            on_attach = on_attach,
+                            capabilities = capabilities,
+                            settings = {
+                                Lua = {
+                                    workspace = { checkThirdParty = false },
+                                    telemetry = { enable = false },
+                                },
+                            },
+                        }
+                    end,
+
+                    ["jsonls"] = function()
+                        require("lspconfig").jsonls.setup {
+                            on_attach = on_attach,
+                            capabilities = capabilities,
+                            settings = {
+                                json = {
+                                    schemas = require('schemastore').json.schemas(),
+                                    validate = { enable = true },
+                                },
+                            },
+                        }
+                    end,
+
+                    ["yamlls"] = function()
+                        require("lspconfig").yamlls.setup {
+                            on_attach = on_attach,
+                            capabilities = capabilities,
+                            settings = {
+                                yaml = {
+                                    schemaStore = {
+                                        enable = false,
+                                        url = "",
+                                    },
+                                    schemas = require('schemastore').yaml.schemas {
+                                        extra = {
+                                            url = 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json',
+                                            name = 'Argo CD Application',
+                                            fileMatch = 'argocd-application.yaml'
+                                        }
+                                    },
+                                },
+                            },
+                        }
+                    end,
+                }
+            })
         end,
     },
-    {
-        'VidocqH/lsp-lens.nvim',
-        event = "LspAttach",
-        opts = {
-            include_declaration = false, -- Reference include declaration
-            sections = {                 -- Enable / Disable specific request, formatter example looks 'Format Requests'
-                definition = false,
-                references = true,
-                implements = true,
-                git_authors = true,
-            },
-        }
-    },
-    {
-        "utilyre/barbecue.nvim",
-        name = "barbecue",
-        version = "*",
-        dependencies = {
-            "SmiteshP/nvim-navic",
-            "nvim-tree/nvim-web-devicons", -- optional dependency
-        },
-        opts = {
-            -- configurations go here
-        },
-    }
 }

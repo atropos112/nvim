@@ -134,5 +134,47 @@ return {
                 },
             })
         end,
-    }
+    },
+    {
+        "hedyhli/outline.nvim",
+        lazy = true,
+        cmd = { "Outline", "OutlineOpen" },
+        keys = { -- Example mapping to toggle outline
+            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+        },
+        opts = {
+            -- Your setup opts here
+        },
+    },
+    {
+        'VidocqH/lsp-lens.nvim',
+        event = "LspAttach",
+        opts = {
+            include_declaration = false, -- Reference include declaration
+            sections = {                 -- Enable / Disable specific request, formatter example looks 'Format Requests'
+                definition = false,
+                references = true,
+                implements = true,
+                git_authors = true,
+            },
+        }
+    },
+    {
+        "utilyre/barbecue.nvim",
+        name = "barbecue",
+        version = "*",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "nvim-tree/nvim-web-devicons", -- optional dependency
+        },
+        opts = {
+            -- configurations go here
+        },
+    },
+    {
+        "aznhe21/actions-preview.nvim",
+        config = function()
+            vim.keymap.set({ "v", "n" }, "ga", require("actions-preview").code_actions)
+        end,
+    },
 }

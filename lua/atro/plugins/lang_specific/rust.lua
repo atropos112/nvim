@@ -5,13 +5,7 @@ return {
         ft = { "rust" },
         config = function()
             -- NOTE: Dependency sourcing
-            require("atro.utils.mason").install({
-                -- lsp
-                "rust-analyzer",
-
-                -- debugger
-                "codelldb",
-            })
+            require("atro.utils.mason").install("codelldb")
 
             -- NOTE: Debugger
             local dap = require("dap")
@@ -52,4 +46,12 @@ return {
             }
         end,
     },
+    {
+        'saecki/crates.nvim',
+        tag = 'stable',
+        ft = { "toml" },
+        config = function()
+            require('crates').setup()
+        end,
+    }
 }
