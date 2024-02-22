@@ -84,7 +84,6 @@ return {
                             on_attach = on_attach,
                             capabilities = capabilities
                         }
-                        print("Default load for LSP: " .. server_name)
                     end,
 
                     ["csharp_ls"] = function()

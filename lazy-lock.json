@@ -1,6 +1,5 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
-  "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
   "LuaSnip": { "branch": "master", "commit": "2dbef19461198630b3d7c39f414d09fb07d1fdd2" },
   "actions-preview.nvim": { "branch": "master", "commit": "9e86d014a72a4121ee27f3d8952e1ea868c3c8c4" },
   "alpha-nvim": { "branch": "main", "commit": "1356b9ef31b985d541d94314f2cf73c61124bf1d" },
@@ -38,7 +37,7 @@
   "neodev.nvim": { "branch": "main", "commit": "a09881379ac7abddb8091c5edd292805a53ccf18" },
   "neogen": { "branch": "main", "commit": "70127baaff25611deaf1a29d801fc054ad9d2dc1" },
   "neoscroll.nvim": { "branch": "master", "commit": "6e3546751076890304428150e53bd59198a4505d" },
-  "neotest": { "branch": "master", "commit": "89a5b1fc22ee5d459262955fe564c3d14e35fd67" },
+  "neotest": { "branch": "master", "commit": "f6048f32be831907fb15018af2688ff6633704fc" },
   "neotest-dotnet": { "branch": "main", "commit": "cc387cbd39fd7455ea0a3e0348ccd0da35aa3443" },
   "neotest-python": { "branch": "master", "commit": "2e83d2bc00acbcc1fd529dbf0a0e677cabfe6b50" },
   "neotest-rust": { "branch": "main", "commit": "392b54e18174b8c69eba779f94a9fd0b318d383e" },
