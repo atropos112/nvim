@@ -11,17 +11,16 @@ return {
     },
     {
         "mfussenegger/nvim-dap",
-        lazy = true,
         dependencies = {
             "williamboman/mason.nvim",
         },
-        config = function()
-            local dap = require("dap")
-
-            set('n', '<leader>di', dap.step_into, { desc = "Step into" })
-            set('n', '<leader>c', dap.step_over, { desc = "Step over" })
-            -- INFO: You can do breakpoint with dap.toggle_breakpoint but it's not persistent and hence the persistent-breakpoints plugin usage instead.
-        end,
+        keys = {
+            { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
+            { "<leader>do", function() require("dap").step_over() end, desc = "Step over" },
+            { "<leader>dc", function() require("dap").continue() end,  desc = "Continue" },
+            { "<leader>dt", function() require("dap").terminate() end, desc = "Stop debugging" },
+        },
+        -- INFO: Don't add empty opts as it will break.
     },
     {
         'Weissle/persistent-breakpoints.nvim',
@@ -30,15 +29,17 @@ return {
         },
         config = function()
             local pb = require('persistent-breakpoints')
+            local pb_api = require('persistent-breakpoints.api')
+
             pb.setup {
                 load_breakpoints_event = { "BufReadPost" }
             }
-            -- WARN: I realise this looks super ugly and it appears like you can simply have require('persistent-breakpoints.api').toggle_breakpoint instead but it doesn't work.
-            set("n", "<leader>bb", "<cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<cr>",
+
+            set("n", "<leader>bb", function() pb_api.toggle_breakpoint() end,
                 { desc = "Toggle breakpoint", remap = true })
-            set("n", "<leader>bc", "<cmd>lua require('persistent-breakpoints.api').set_conditional_breakpoint()<cr>",
+            set("n", "<leader>bc", function() pb_api.set_conditional_breakpoint() end,
                 { desc = "Set conditional breakpoint" })
-            set("n", "<leader>ba", "<cmd>lua require('persistent-breakpoints.api').clear_all_breakpoints()<cr>",
+            set("n", "<leader>ba", function() pb_api.clear_all_breakpoints() end,
                 { desc = "Clear all breakpoints" })
         end,
     },
