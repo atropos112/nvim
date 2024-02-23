@@ -25,6 +25,9 @@ return {
                 -- yaml
                 "yamlfix",
                 "yamlfmt",
+
+                -- toml
+                "taplo",
             })
 
             require("conform").setup({
@@ -38,6 +41,7 @@ return {
                     md = { "mdformat" },
                     sh = { "shfmt" },
                     yaml = { "yamlfix", "yamlfmt" },
+                    toml = { "taplo" },
                 },
                 format_on_save = {
                     timeout_ms = 500,

@@ -50,11 +50,11 @@ return {
     {
         'rmagatti/goto-preview',
         event = "BufRead",
-        config = function()
-            require('goto-preview').setup {}
-            vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>",
-                { noremap = true })
-        end
+        keys = {
+            { "gp", function() require('goto-preview').goto_preview_definition() end, desc = "Goto Preview" },
+            { "gP", function() require('goto-preview').close_all_win() end,           desc = "Close all previews" },
+        },
+        opts = {}
     },
     {
         -- INFO: with :<n> you can peek at n-th line

@@ -63,6 +63,7 @@ return {
 
             -- INFO: Defining LSP Config
             require("mason").setup()
+            local lsp = require("lspconfig")
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "lua_ls",
@@ -76,36 +77,32 @@ return {
                     "bashls",
                     "typst_lsp",
                     "rust_analyzer",
-                    "csharp_ls",
                 },
+                -- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
                 handlers = {
                     function(server_name)
-                        require("lspconfig")[server_name].setup {
+                        lsp[server_name].setup {
                             on_attach = on_attach,
                             capabilities = capabilities
                         }
                     end,
 
-                    ["csharp_ls"] = function()
-                        require("lspconfig").csharp_ls.setup({
+                    -- INFO: Is covered partialy be the csharp plugin (look at csharp specific config file for details)
+                    ["omnisharp"] = function()
+                        lsp.omnisharp.setup {
                             on_attach = on_attach,
-                            capabilities = capabilities,
-                            handlers = {
-                                ["textDocument/definition"] = require('csharpls_extended').handler,
-                                ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
-                            },
-                            cmd = { "csharp-ls" },
-                        })
+                        }
                     end,
+
 
                     ["gopls"] = function()
                         -- NOTE: go plugin take over here so should not pass capabilities or on_attach.
-                        require("lspconfig").gopls.setup({})
+                        lsp.gopls.setup({})
                     end,
 
                     ["lua_ls"] = function()
                         require('neodev').setup()
-                        require("lspconfig").lua_ls.setup {
+                        lsp.lua_ls.setup {
                             on_attach = on_attach,
                             capabilities = capabilities,
                             settings = {
@@ -118,7 +115,7 @@ return {
                     end,
 
                     ["jsonls"] = function()
-                        require("lspconfig").jsonls.setup {
+                        lsp.jsonls.setup {
                             on_attach = on_attach,
                             capabilities = capabilities,
                             settings = {
@@ -131,7 +128,7 @@ return {
                     end,
 
                     ["yamlls"] = function()
-                        require("lspconfig").yamlls.setup {
+                        lsp.yamlls.setup {
                             on_attach = on_attach,
                             capabilities = capabilities,
                             settings = {

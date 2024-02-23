@@ -1,6 +1,11 @@
 return {
     {
-        "Decodetalkers/csharpls-extended-lsp.nvim",
+        "iabdelkareem/csharp.nvim",
+        dependencies = {
+            "williamboman/mason.nvim", -- Required, automatically installs omnisharp
+            "mfussenegger/nvim-dap",
+            "Tastyep/structlog.nvim",  -- Optional, but highly recommended for debugging
+        },
         ft = "cs",
         config = function()
             -- NOTE: Dependency sourcing
@@ -28,6 +33,10 @@ return {
                     end,
                 },
             }
+
+            -- INFO: Setting up the plugin itself
+            require("mason").setup() -- Mason setup must run before csharp
+            require("csharp").setup()
         end,
     }
 }
