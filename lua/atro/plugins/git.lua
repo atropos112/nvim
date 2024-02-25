@@ -1,12 +1,12 @@
 return {
-    {
-        "lewis6991/gitsigns.nvim",
-        opts = {},
-    },
-    {
-        'sindrets/diffview.nvim'
-    },
-    {
+	{
+		"lewis6991/gitsigns.nvim",
+		opts = {},
+	},
+	{
+		"sindrets/diffview.nvim",
+	},
+	{
 		"dinhhuy258/git.nvim",
 		event = "BufReadPre",
 		opts = {

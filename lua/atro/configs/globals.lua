@@ -1,8 +1,8 @@
 local g = vim.g
 
 -- use space as leader key
-g.mapleader = ' '
-g.maplocalleader = ' '
+g.mapleader = " "
+g.maplocalleader = " "
 
 -- disable netrw at the very start of your init.lua
 g.loaded_netrw = 1

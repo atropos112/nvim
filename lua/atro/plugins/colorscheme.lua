@@ -5,7 +5,7 @@ return {
 		priority = 1000, -- load before other plugins to keep theme consistent
 		-- Loads by default
 		init = function()
-			vim.cmd.colorscheme "catppuccin"
+			vim.cmd.colorscheme("catppuccin")
 		end,
 		opts = {
 			flavour = "macchiato", -- latte, frappe, macchiato, mocha
@@ -14,6 +14,6 @@ return {
 				cmp = true,
 				-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
 			},
-		}
-	}
+		},
+	},
 }

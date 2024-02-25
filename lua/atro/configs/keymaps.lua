@@ -1,4 +1,4 @@
-local set = require('atro.utils.generic').keyset
+local set = require("atro.utils.generic").keyset
 
 set("n", "<leader>pv", vim.cmd.Ex)
 
@@ -22,5 +22,6 @@ set("i", "<C-s>", "<cmd>w<CR>")
 set("v", "<C-s>", "<cmd>w<CR>")
 set("n", "<C-s>", "<cmd>w<CR>")
 
-
-set('n', '<leader>of', function() vim.diagnostic.open_float() end, { desc = "Diagnostic float" })
+set("n", "<leader>of", function()
+	vim.diagnostic.open_float()
+end, { desc = "Diagnostic float" })
