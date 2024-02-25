@@ -14,7 +14,6 @@ return {
                 go = { "revive" },
                 json = { 'jsonlint' },
                 yaml = { 'yamllint' },
-                markdown = { "markdownlint" },
                 python = { 'ruff' },
                 dockerfile = { 'hadolint' },
                 nix = { 'statix' }, -- NOTE: has to be manually installed (mason does not support it yet)

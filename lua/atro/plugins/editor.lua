@@ -5,6 +5,7 @@ return {
     },
     {
         "mg979/vim-visual-multi",
+        event = "VeryLazy",
     },
     {
         "folke/flash.nvim",
@@ -29,6 +30,7 @@ return {
     {
         -- INFO: Commenting plugin, allows commenting out lines and blocks of code
         "folke/todo-comments.nvim",
+        event = "BufRead",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
     },
@@ -163,16 +165,16 @@ return {
         "utilyre/barbecue.nvim",
         name = "barbecue",
         version = "*",
+        event = "BufRead",
         dependencies = {
             "SmiteshP/nvim-navic",
             "nvim-tree/nvim-web-devicons", -- optional dependency
         },
-        opts = {
-            -- configurations go here
-        },
+        opts = {},
     },
     {
         "aznhe21/actions-preview.nvim",
+        event = "LspAttach",
         config = function()
             vim.keymap.set({ "v", "n" }, "ga", require("actions-preview").code_actions)
         end,
