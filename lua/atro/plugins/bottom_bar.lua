@@ -1,12 +1,12 @@
 return {
 	{
 		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"f-person/git-blame.nvim",
 		},
-		event = "VeryLazy",
-		init = function()
+		config = function()
 			require("lualine").setup({
 				icons_enabled = true,
 				theme = "catppuccin",

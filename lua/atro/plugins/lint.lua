@@ -12,13 +12,13 @@ return {
 				end,
 			})
 
+			-- Tried:
+			-- yamllint : stopped using it as its buggy.
 			lint.linters_by_ft = {
 				go = { "revive" },
 				json = { "jsonlint" },
-				yaml = { "yamllint" },
 				python = { "ruff" },
 				dockerfile = { "hadolint" },
-				nix = { "statix" }, -- NOTE: has to be manually installed (mason does not support it yet)
 				sh = { "shellcheck" },
 			}
 		end,

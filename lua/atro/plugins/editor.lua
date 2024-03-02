@@ -216,7 +216,7 @@ return {
 				definition = false,
 				references = true,
 				implements = true,
-				git_authors = true,
+				git_authors = false,
 			},
 		},
 	},

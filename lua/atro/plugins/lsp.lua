@@ -96,7 +96,9 @@ return {
 
 					["gopls"] = function()
 						-- NOTE: go plugin take over here so should not pass capabilities or on_attach.
-						lsp.gopls.setup({})
+						lsp.gopls.setup({
+							capabilities = capabilities,
+						})
 					end,
 
 					["lua_ls"] = function()
