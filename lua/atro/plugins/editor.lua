@@ -238,4 +238,16 @@ return {
 			vim.keymap.set({ "v", "n" }, "ga", require("actions-preview").code_actions)
 		end,
 	},
+	{
+		"0xAdk/full_visual_line.nvim",
+		keys = "V",
+		opts = {},
+	},
+	{
+		"mvllow/modes.nvim",
+		event = "BufRead",
+		opts = {
+			line_opacity = 0.30,
+		},
+	},
 }

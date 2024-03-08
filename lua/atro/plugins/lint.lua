@@ -14,6 +14,7 @@ return {
 
 			-- Tried:
 			-- yamllint : stopped using it as its buggy.
+			-- statix: but its annoying to put up with the warning nvim produces about this.
 			lint.linters_by_ft = {
 				go = { "revive" },
 				json = { "jsonlint" },

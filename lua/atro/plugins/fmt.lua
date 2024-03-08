@@ -23,7 +23,6 @@ return {
 				"shfmt",
 
 				-- yaml
-				"yamlfix",
 				"yamlfmt",
 
 				-- toml
@@ -44,7 +43,7 @@ return {
 					just = { "just" },
 					md = { "mdformat" },
 					sh = { "shfmt" },
-					yaml = { "yamlfix", "yamlfmt" },
+					yaml = { "yamlfmt" },
 					toml = { "taplo" },
 					markdown = { "prettier" },
 				},
