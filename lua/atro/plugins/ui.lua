@@ -4,6 +4,9 @@ return {
 		event = "VeryLazy",
 		opts = {
 			lsp = {
+				signature = {
+					enabled = false,
+				},
 				progress = {
 					enabled = false,
 				},

@@ -77,6 +77,7 @@ return {
 					"bashls",
 					"typst_lsp",
 					"rust_analyzer",
+					"zls",
 				},
 				-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 				handlers = {
@@ -151,6 +152,13 @@ return {
 					end,
 				},
 			})
+		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "VeryLazy",
+		config = function(_, opts)
+			require("lsp_signature").setup(opts)
 		end,
 	},
 }
