@@ -114,51 +114,51 @@ return {
 			})
 		end,
 	},
-
-	-- INFO: Auto-detects projects if it finds correct file/dirs (such as .git) or if LSP is triggered those are then accessible via Telescope using :Telescope projects
-	{
-		"Zeioth/project.nvim",
-		event = "VeryLazy",
-		cmd = "ProjectRoot",
-		opts = {
-			-- How to find root directory
-			patterns = {
-				".git",
-				"_darcs",
-				".hg",
-				".bzr",
-				".svn",
-				"Makefile",
-				"package.json",
-				".solution",
-			},
-			-- Don't list the next projects
-			exclude_dirs = {
-				"~/",
-			},
-			silent_chdir = true,
-			manual_mode = false,
-
-			-- Don't auto-chdir for specific filetypes.
-			exclude_filetype_chdir = { "", "OverseerList", "alpha" },
-
-			-- Don't auto-chdir for specific buftypes.
-			exclude_buftype_chdir = { "nofile", "terminal" },
-
-			--ignore_lsp = { "lua_ls" },
-		},
-		keys = {
-			{
-				";p",
-				mode = { "n" },
-				function()
-					require("telescope").extensions.projects.projects({})
-				end,
-				desc = "Show Projects",
-			},
-		},
-		config = function(_, opts)
-			require("project_nvim").setup(opts)
-		end,
-	},
+	--
+	-- -- INFO: Auto-detects projects if it finds correct file/dirs (such as .git) or if LSP is triggered those are then accessible via Telescope using :Telescope projects
+	-- {
+	-- 	"Zeioth/project.nvim",
+	-- 	event = "VeryLazy",
+	-- 	cmd = "ProjectRoot",
+	-- 	opts = {
+	-- 		-- How to find root directory
+	-- 		patterns = {
+	-- 			".git",
+	-- 			"_darcs",
+	-- 			".hg",
+	-- 			".bzr",
+	-- 			".svn",
+	-- 			"Makefile",
+	-- 			"package.json",
+	-- 			".solution",
+	-- 		},
+	-- 		-- Don't list the next projects
+	-- 		exclude_dirs = {
+	-- 			"~/",
+	-- 		},
+	-- 		silent_chdir = true,
+	-- 		manual_mode = false,
+	--
+	-- 		-- Don't auto-chdir for specific filetypes.
+	-- 		exclude_filetype_chdir = { "", "OverseerList", "alpha" },
+	--
+	-- 		-- Don't auto-chdir for specific buftypes.
+	-- 		exclude_buftype_chdir = { "nofile", "terminal" },
+	--
+	-- 		--ignore_lsp = { "lua_ls" },
+	-- 	},
+	-- 	keys = {
+	-- 		{
+	-- 			";p",
+	-- 			mode = { "n" },
+	-- 			function()
+	-- 				require("telescope").extensions.projects.projects({})
+	-- 			end,
+	-- 			desc = "Show Projects",
+	-- 		},
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("project_nvim").setup(opts)
+	-- 	end,
+	-- },
 }
