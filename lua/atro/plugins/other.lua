@@ -8,12 +8,6 @@ return {
 		},
 	},
 
-	-- Tract time usage
-	{
-		"wakatime/vim-wakatime",
-		event = "BufRead",
-	},
-
 	-- Downloads dependencies for LSP, formatter and debugger
 	{
 		"williamboman/mason.nvim",

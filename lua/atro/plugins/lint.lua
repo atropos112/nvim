@@ -27,8 +27,6 @@ return {
 			-- INFO: List of available linters can be found hereby
 			-- https://github.com/mfussenegger/nvim-lint#available-linters
 			lint.linters_by_ft = {
-				go = { "revive" },
-				json = { "jsonlint" },
 				python = { "ruff" },
 				dockerfile = { "hadolint" },
 				sh = { "shellcheck" },
@@ -42,7 +40,7 @@ return {
 			"mfussenegger/nvim-lint",
 		},
 		opts = {
-			automatic_installation = true,
+			automatic_installation = false,
 		},
 	},
 }
