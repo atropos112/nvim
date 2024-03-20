@@ -69,6 +69,7 @@ return {
 					"lua_ls",
 					"jsonls",
 					"pyright",
+					"pylsp",
 					"yamlls",
 					"dockerls",
 					"docker_compose_language_service",
