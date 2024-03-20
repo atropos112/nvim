@@ -195,4 +195,11 @@ return {
 		keys = "V",
 		opts = {},
 	},
+	{
+		"mvllow/modes.nvim",
+		event = "BufRead",
+		opts = {
+			line_opacity = 0.30,
+		},
+	},
 }

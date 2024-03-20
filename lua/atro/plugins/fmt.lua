@@ -43,7 +43,7 @@ return {
 					just = { "just" },
 					md = { "mdformat" },
 					sh = { "shfmt" },
-					yaml = { "yamlfmt" },
+					-- yaml = { "yamlfmt" },
 					toml = { "taplo" },
 					markdown = { "prettier" },
 				},

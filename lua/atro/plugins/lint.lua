@@ -12,6 +12,15 @@ return {
 				end,
 			})
 
+			-- To see what the defaults are go to https://github.com/mfussenegger/nvim-lint/tree/master/lua/lint/linters
+			-- Here I am changing default args for hadolint to do some ignores
+			lint.linters.hadolint.args = {
+				"--ignore=DL3007",
+				"-f",
+				"json",
+				"-",
+			}
+
 			-- Tried:
 			-- yamllint : stopped using it as its buggy.
 			-- statix: but its annoying to put up with the warning nvim produces about this.
