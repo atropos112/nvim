@@ -8,7 +8,7 @@ return {
 				auto_install = true,
 				ignore_install = {},
 				modules = {},
-				ensure_installed = { "c", "lua", "vim", "go", "python", "nix", "rust", "bash", "dockerfile", "toml" },
+				ensure_installed = { "python" },
 				sync_install = false,
 				highlight = { enable = true },
 				indent = { enable = true },

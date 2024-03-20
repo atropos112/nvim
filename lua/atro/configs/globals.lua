@@ -11,3 +11,8 @@ g.loaded_netrwPlugin = 1
 -- Markdown Preview
 g.mkdp_auto_start = 0
 g.mkdp_auto_close = 0
+
+-- Work proxy
+g.copilot_proxy = "euro-webproxy.drama.man.com:8080"
+g.copilot_proxy_strict_ssl = false
+vim.cmd([[ autocmd BufNewFile,BufRead *.mb2 set filetype groovy]])

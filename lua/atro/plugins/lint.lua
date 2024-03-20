@@ -26,8 +26,6 @@ return {
 			-- statix: but its annoying to put up with the warning nvim produces about this.
 			-- INFO: List of available linters can be found here
 			lint.linters_by_ft = {
-				go = { "revive" },
-				json = { "jsonlint" },
 				python = { "ruff" },
 				dockerfile = { "hadolint" },
 				sh = { "shellcheck" },
@@ -41,7 +39,7 @@ return {
 			"mfussenegger/nvim-lint",
 		},
 		opts = {
-			automatic_installation = true,
+			automatic_installation = false,
 		},
 	},
 }

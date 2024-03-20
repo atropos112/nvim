@@ -6,9 +6,8 @@ return {
 			"mfussenegger/nvim-dap",
 		},
 		config = function()
-			require("atro.utils.mason").install("debugpy")
 			local dappy = require("dap-python")
-			dappy.setup("~/.local/share/nvim/mason/packages/debugpy/venv/bin/python") -- thats where Mason will drop it
+			dappy.setup("/turbo/jkiedrowski/pyenvs/nvim/bin/python")
 			dappy.test_runner = "pytest"
 		end,
 	},

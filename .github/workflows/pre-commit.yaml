@@ -3,10 +3,13 @@ name: Pre-commit
 on:
     workflow_dispatch: # allows manual triggering
     pull_request:
-        branches: [main]
+        branches:
+            - main
+            - work
     push:
         branches:
             - main
+            - work
 jobs:
     pre-commit:
         name: Run pre-commit hooks

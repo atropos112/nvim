@@ -2,9 +2,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
-			"b0o/schemastore.nvim",
 		},
 		config = function()
 			-- INFO: Defining On_Attach
@@ -59,102 +57,16 @@ return {
 			-- INFO: Defining Capabilities
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+			-- INFO: Defining LSP Config
 			local lsp = require("lspconfig")
-
-			-- INFO: Using my own utils function instead of mason-lspconfig as it checks if the stuff is already installed
-			-- outside of mason. This is useful for NixOS setup where mason version just doesn't work sometimes due to libc issues.
-			require("atro.utils.mason").install({
-				"python-lsp-server",
-				"bash-language-server",
-				"rnix-lsp",
-				"lua-language-server",
-				"docker-compose-language-service",
-				"nil",
-			})
-
-			-- INFO: Below Are per language LSP configurations
-			-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 			lsp.pylsp.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
-				settings = {
-					pylsp = {
-						plugins = {
-							pycodestyle = {
-								ignore = {},
-								maxLineLength = 120,
-							},
-						},
-					},
-				},
-			})
-
-			lsp.bashls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
-
-			lsp.rnix.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
-
-			lsp.nil_ls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
-
-			-- NOTE: go plugin take over here so should not pass capabilities or on_attach.
-			lsp.gopls.setup({
-				capabilities = capabilities,
-			})
-
-			lsp.jsonls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					json = {
-						schemas = require("schemastore").json.schemas(),
-						validate = { enable = true },
-					},
-				},
-			})
-
-			require("neodev").setup()
-			lsp.lua_ls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						workspace = { checkThirdParty = false },
-						telemetry = { enable = false },
-					},
-				},
-			})
-
-			-- INFO: Is covered partially be the csharp plugin (look at csharp specific config file for details)
-			lsp.omnisharp.setup({
-				on_attach = on_attach,
-			})
-
-			lsp.yamlls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					yaml = {
-						schemaStore = {
-							enable = false,
-							url = "",
-						},
-						schemas = require("schemastore").yaml.schemas({
-							extra = {
-								url = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
-								name = "Argo CD Application",
-								fileMatch = "argocd-application.yaml",
-							},
-						}),
-					},
-				},
+				cmd = { "pylsp" },
+				root_dir = function()
+					return "/turbo/jkiedrowski/pyenvs/nvim/bin/"
+				end,
 			})
 		end,
 	},
