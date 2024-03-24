@@ -129,51 +129,25 @@ return {
 			})
 		end,
 	},
-	--
-	-- -- INFO: Auto-detects projects if it finds correct file/dirs (such as .git) or if LSP is triggered those are then accessible via Telescope using :Telescope projects
-	-- {
-	-- 	"Zeioth/project.nvim",
-	-- 	event = "VeryLazy",
-	-- 	cmd = "ProjectRoot",
-	-- 	opts = {
-	-- 		-- How to find root directory
-	-- 		patterns = {
-	-- 			".git",
-	-- 			"_darcs",
-	-- 			".hg",
-	-- 			".bzr",
-	-- 			".svn",
-	-- 			"Makefile",
-	-- 			"package.json",
-	-- 			".solution",
-	-- 		},
-	-- 		-- Don't list the next projects
-	-- 		exclude_dirs = {
-	-- 			"~/",
-	-- 		},
-	-- 		silent_chdir = true,
-	-- 		manual_mode = false,
-	--
-	-- 		-- Don't auto-chdir for specific filetypes.
-	-- 		exclude_filetype_chdir = { "", "OverseerList", "alpha" },
-	--
-	-- 		-- Don't auto-chdir for specific buftypes.
-	-- 		exclude_buftype_chdir = { "nofile", "terminal" },
-	--
-	-- 		--ignore_lsp = { "lua_ls" },
-	-- 	},
-	-- 	keys = {
-	-- 		{
-	-- 			";p",
-	-- 			mode = { "n" },
-	-- 			function()
-	-- 				require("telescope").extensions.projects.projects({})
-	-- 			end,
-	-- 			desc = "Show Projects",
-	-- 		},
-	-- 	},
-	-- 	config = function(_, opts)
-	-- 		require("project_nvim").setup(opts)
-	-- 	end,
-	-- },
+	{
+		"nvim-pack/nvim-spectre",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			require("spectre").setup()
+			vim.keymap.set("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', {
+				desc = "Toggle Spectre",
+			})
+			vim.keymap.set("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+				desc = "Search current word",
+			})
+			vim.keymap.set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+				desc = "Search current word",
+			})
+			vim.keymap.set("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+				desc = "Search on current file",
+			})
+		end,
+	},
 }

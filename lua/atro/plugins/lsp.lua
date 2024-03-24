@@ -88,6 +88,23 @@ return {
 						})
 					end,
 
+					["pylsp"] = function()
+						lsp.pylsp.setup({
+							on_attach = on_attach,
+							capabilities = capabilities,
+							settings = {
+								pylsp = {
+									plugins = {
+										pycodestyle = {
+											ignore = {},
+											maxLineLength = 120,
+										},
+									},
+								},
+							},
+						})
+					end,
+
 					-- INFO: Is covered partialy be the csharp plugin (look at csharp specific config file for details)
 					["omnisharp"] = function()
 						lsp.omnisharp.setup({
@@ -154,15 +171,43 @@ return {
 			})
 		end,
 	},
+
+	-- Shows where you are in the file LSP wise (which class/function etc)
 	{
 		"ray-x/lsp_signature.nvim",
 		event = "VeryLazy",
 		config = function(_, opts)
 			require("lsp_signature").setup(opts)
-
-			-- INFO: Install any additional LSP content
-			-- INFO: This is not a good place for this, just need a lazy loading location
-			require("atro.utils.venv").install_package("~/.local/share/nvim/mason/packages/python-lsp-server/venv/bin/pip", "pylsp-rope")
 		end,
+	},
+
+	-- Multi-line <-> Single-line toogling
+	{
+		"Wansmer/treesj",
+		keys = { "<space>m", "<leader>M" },
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("treesj").setup({
+				use_default_keymaps = false,
+			})
+			vim.keymap.set("n", "<leader>m", require("treesj").toggle)
+			vim.keymap.set("n", "<leader>M", function()
+				require("treesj").toggle({ split = { recursive = true } })
+			end)
+		end,
+	},
+
+	-- Show LSP explorer of functions and classes etc.
+	{
+		"hedyhli/outline.nvim",
+		lazy = true,
+		cmd = { "Outline", "OutlineOpen" },
+		keys = { -- Example mapping to toggle outline
+			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+		},
+		opts = {},
 	},
 }

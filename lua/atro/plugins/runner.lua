@@ -1,14 +1,17 @@
 return {
 	{
 		"Zeioth/compiler.nvim",
-		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+		cmd = {
+			"CompilerOpen",
+			"CompilerToggleResults",
+			"CompilerRedo",
+		},
 		dependencies = { "stevearc/overseer.nvim" },
 		opts = {},
 	},
 	{
 		"stevearc/overseer.nvim",
-		commit = "68a2d344cea4a2e11acfb5690dc8ecd1a1ec0ce0",
-		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+		event = "VeryLazy",
 		opts = {
 			task_list = {
 				direction = "bottom",

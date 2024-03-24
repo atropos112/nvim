@@ -1,4 +1,51 @@
 return {
+	-- Snippets control
+	{
+		"L3MON4D3/LuaSnip",
+		build = "make install_jsregexp",
+	},
+
+	{
+		"nvimtools/none-ls.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			-- WARN: In general if possible use lint.lua for linting,
+			-- fmt.lua for formatting and cmp.lua for autocompletion.
+			-- Sometimes its not possible or comes with compromises.
+			-- In such cases use this plugin.
+			require("atro.utils.mason").install({
+				"codespell",
+				"impl",
+				"gomodifytags",
+				"staticcheck",
+			})
+			local null_ls = require("null-ls")
+
+			-- INFO: List of available linters can be found here
+			-- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.diagnostics.codespell,
+
+					-- Nix
+					null_ls.builtins.diagnostics.statix,
+					null_ls.builtins.diagnostics.deadnix,
+
+					-- Go
+					null_ls.builtins.code_actions.impl,
+					null_ls.builtins.code_actions.gomodifytags,
+					null_ls.builtins.diagnostics.staticcheck,
+					null_ls.builtins.formatting.goimports,
+
+					-- Just
+					null_ls.builtins.formatting.just,
+				},
+			})
+		end,
+	},
 	-- Github Copilot
 	{
 		"zbirenbaum/copilot.lua",

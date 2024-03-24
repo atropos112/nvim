@@ -28,3 +28,7 @@ o.foldcolumn = "0" -- '0' is not bad
 o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
 o.foldenable = true
+
+-- screen jumping
+o.laststatus = 3
+o.splitkeep = "screen"

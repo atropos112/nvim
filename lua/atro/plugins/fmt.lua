@@ -20,6 +20,7 @@ return {
 
 				-- shell
 				"shfmt",
+				"shellharden",
 
 				-- yaml
 				"yamlfmt",
@@ -29,19 +30,26 @@ return {
 
 				-- lua
 				"stylua",
+
+				-- go
+				"goimports",
+
+				-- Nix
+				"nixpkgs-fmt",
 			})
 
+			-- INFO: List of available linters can be found here
+			-- https://github.com/stevearc/conform.nvim#formatters
 			require("conform").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
 					python = { "ruff_fix", "ruff_format" },
-					nix = { "alejandra" }, -- INFO: This is installed via NixOS, no Mason support.
 					cs = { "csharpier" },
-					go = { "gofmt" },
+					go = { "gofmt", "goimports" },
 					json = { "fixjson" },
 					just = { "just" },
 					md = { "mdformat" },
-					sh = { "shfmt" },
+					sh = { "shfmt", "shellharden" },
 					yaml = { "yamlfmt" },
 					toml = { "taplo" },
 					markdown = { "prettier" },
