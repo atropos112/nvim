@@ -7,8 +7,7 @@ return {
 		config = function()
 			require("atro.utils.mason").install({
 				-- python
-				"isort",
-				"black",
+				"ruff",
 
 				-- csharp
 				"csharpier",
@@ -35,7 +34,7 @@ return {
 			require("conform").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
-					python = { "isort", "black" },
+					python = { "ruff_fix", "ruff_format" },
 					nix = { "alejandra" }, -- INFO: This is installed via NixOS, no Mason support.
 					cs = { "csharpier" },
 					go = { "gofmt" },
