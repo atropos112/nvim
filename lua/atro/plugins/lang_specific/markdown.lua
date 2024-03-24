@@ -20,4 +20,12 @@ return {
 			{ "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
 		},
 	},
+	{
+		"lukas-reineke/headlines.nvim",
+		ft = { "markdown" },
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {},
+	},
 }

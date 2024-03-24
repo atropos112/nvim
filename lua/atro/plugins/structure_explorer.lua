@@ -1,18 +1,18 @@
 return {
 	{
 		"nvim-tree/nvim-tree.lua",
-		version = "*",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+		cmd = {
+			"NvimTreeOpen",
+			"NvimTreeClose",
+			"NvimTreeToggle",
+			"NvimTreeFindFile",
+			"NvimTreeFindFileToggle",
+		},
+		keys = {
+			{ "<leader>nt", "<cmd>lua require('nvim-tree.api').tree.toggle()<CR>", desc = "NvimTree" },
 		},
 		config = function()
-			require("nvim-tree").setup({})
-			vim.api.nvim_set_keymap("n", "<leader>nt", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+			require("nvim-tree").setup()
 		end,
 	},
-	-- LOOK INTO THIS.
-	-- {
-	--     "stevearc/oil.nvim",
-	--     opts = {}
-	-- }
 }
