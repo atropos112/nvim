@@ -1,8 +1,7 @@
 local M = {}
 
-M.install_package = function(venv_path, package)
+M.install_package = function(pip_path, package)
 	-- Construct the pip command to list installed packages
-	local pip_path = venv_path .. "/bin/pip" -- Use "/Scripts/pip" on Windows
 	local list_command = pip_path .. " list"
 
 	-- Execute the command to get the list of installed packages

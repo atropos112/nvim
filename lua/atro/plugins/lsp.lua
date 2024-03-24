@@ -162,7 +162,7 @@ return {
 
 			-- INFO: Install any additional LSP content
 			-- INFO: This is not a good place for this, just need a lazy loading location
-			require("atro.utils.venv").install_package("~/.local/share/nvim/mason/packages/python-lsp-server/venv", "pylsp-rope")
+			require("atro.utils.venv").install_package("~/.local/share/nvim/mason/packages/python-lsp-server/venv/bin/pip", "pylsp-rope")
 		end,
 	},
 }
