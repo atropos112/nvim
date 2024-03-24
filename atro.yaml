@@ -1,5 +1,6 @@
+---
 origin: git@github.com:atropos112/nvim.git
 copyToRepo:
-  - sourcePath: "."
-    destinationRepo: "git@github.com:atropos112/docs"
-    destinationPath: "repos/nvim"
+    - sourcePath: .
+      destinationRepo: git@github.com:atropos112/docs
+      destinationPath: repos/nvim

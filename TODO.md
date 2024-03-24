@@ -1,6 +1,6 @@
 # Needs documenting
 
-1. Gitsigns details 
+1. Gitsigns details
     - https://github.com/lewis6991/gitsigns.nvim?tab=readme-ov-file
 
 2. Neotree detailed setup with keymaps
@@ -13,7 +13,7 @@
     - https://invidious.atro.xyz/watch?v=SWldGqw9wkc
 
 
---- 
+---
 1. How did you "make" each language "work"
     - For C# explain how https://github.com/Hoffs/omnisharp-extended-lsp.nvim was needed to allow go-def to work on non-owned code (decompiled). This really needs to be documented, the `~/.omnisharp/omnisharp.json`
     - For Go explain how you use a package and all works
@@ -24,9 +24,9 @@
 
 4. More research needed
     - Into youtube videos
-    - Other's peoples work. 
+    - Other's peoples work.
 
-5. Document somewhere all my defined keymaps, `:nmap`, `:vmap`, `:imap` can help with this. 
+5. Document somewhere all my defined keymaps, `:nmap`, `:vmap`, `:imap` can help with this.
     - Document window jumping `<C-w>` followed by arrows/hjkl.
     - Document window resizing `<C-w>` followed by +/- for vertical increase/decrease and >/< for horizontal increase/decrease.
 
