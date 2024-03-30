@@ -26,10 +26,6 @@ set("n", "<leader>of", function()
 	vim.diagnostic.open_float()
 end, { desc = "Diagnostic float" })
 
--- go back and forth when doing f/F select
-set("n", "N", ";", { desc = "forward in f/F selcet" })
-set("n", "P", ",", { desc = "backward in f/F select" })
-
 -- move lines up and down by 5 lines up and down
 set("n", "<C-j>", "5jzz")
 set("n", "<C-k>", "5kzz")

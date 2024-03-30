@@ -54,11 +54,12 @@ return {
 					toml = { "taplo" },
 					markdown = { "prettier" },
 				},
-				format_on_save = {
-					timeout_ms = 500,
-					lsp_fallback = true,
-				},
 			})
+
+			require("atro.utils.generic").keyset("n", "<A-s>", function()
+				require("conform").format()
+				vim.cmd("w")
+			end, { desc = "Format and save" })
 		end,
 	},
 }
