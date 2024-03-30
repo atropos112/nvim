@@ -31,9 +31,15 @@ return {
 
 			-- TODO: Add more keymaps
 			local set = require("atro.utils.generic").keyset
+
+			-- ZSA Moonlander specific
+			set("n", "<A-f>", builtin.find_files, {})
+			set("n", "<A-p>", builtin.live_grep, {})
+
+			-- General
 			set("n", ";f", builtin.find_files, {})
-			set("n", ";o", builtin.oldfiles, {})
 			set("n", ";g", builtin.live_grep, {})
+			set("n", ";o", builtin.oldfiles, {})
 			set("n", ";b", builtin.buffers, {})
 		end,
 	},

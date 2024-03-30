@@ -16,28 +16,28 @@ return {
 		},
 		keys = {
 			{
-				"<leader>di",
+				"<A-S-C-i>",
 				function()
 					require("dap").step_into()
 				end,
 				desc = "Step into",
 			},
 			{
-				"<leader>do",
+				"<A-S-C-o>",
 				function()
 					require("dap").step_over()
 				end,
 				desc = "Step over",
 			},
 			{
-				"<leader>dc",
+				"<A-S-C-c>",
 				function()
 					require("dap").continue()
 				end,
 				desc = "Continue",
 			},
 			{
-				"<leader>dt",
+				"<A-S-C-t>",
 				function()
 					require("dap").terminate()
 				end,
