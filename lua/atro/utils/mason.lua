@@ -4,6 +4,7 @@ local M = {}
 local name_to_bin = {
 	["csharp-language-server"] = "csharp-ls",
 	["python-lsp-server"] = "pylsp",
+	["docker-compose-language-service"] = "docker-compose-langserver",
 }
 
 M.install = function(ensure_installed)
@@ -15,7 +16,7 @@ M.install = function(ensure_installed)
 	-- Function to check if the executable exists in the PATH
 	local function executable_exists(name)
 		if name_to_bin[name] then
-			name = name_to_bin[name]
+			return vim.fn.executable(name) == 1 or vim.fn.executable(name_to_bin[name]) == 1
 		end
 		return vim.fn.executable(name) == 1
 	end

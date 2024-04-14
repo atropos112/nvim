@@ -27,5 +27,5 @@ set("n", "<leader>of", function()
 end, { desc = "Diagnostic float" })
 
 -- move lines up and down by 5 lines up and down
-set("n", "<C-j>", "5jzz")
-set("n", "<C-k>", "5kzz")
+set("n", "<C-j>", "7jzz")
+set("n", "<C-k>", "7kzz")

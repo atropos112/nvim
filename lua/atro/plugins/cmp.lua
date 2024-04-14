@@ -89,6 +89,11 @@ return {
 			luasnip.config.setup({})
 
 			cmp.setup({
+				view = {
+					entries = {
+						follow_cursor = true,
+					},
+				},
 				formatting = {
 					format = lspkind.cmp_format({
 						mode = "symbol", -- show only symbol annotations

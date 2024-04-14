@@ -24,8 +24,7 @@ return {
 			-- Tried:
 			-- yamllint : stopped using it as its buggy.
 			-- statix: but its annoying to put up with the warning nvim produces about this.
-			-- INFO: List of available linters can be found hereby
-			-- https://github.com/mfussenegger/nvim-lint#available-linters
+			-- INFO: List of available linters can be found here
 			lint.linters_by_ft = {
 				go = { "revive" },
 				json = { "jsonlint" },
