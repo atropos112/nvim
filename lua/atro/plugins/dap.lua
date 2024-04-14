@@ -16,34 +16,41 @@ return {
 		},
 		keys = {
 			{
-				"<A-S-C-i>",
+				"<leader>di",
 				function()
 					require("dap").step_into()
 				end,
+				mode = "n",
 				desc = "Step into",
 			},
 			{
-				"<A-S-C-o>",
+				"<leader>do",
 				function()
 					require("dap").step_over()
 				end,
+				mode = "n",
 				desc = "Step over",
 			},
 			{
-				"<A-S-C-c>",
+				"<leader>dc",
 				function()
 					require("dap").continue()
 				end,
+				mode = "n",
 				desc = "Continue",
 			},
 			{
-				"<A-S-C-t>",
+				"<leader>dt",
 				function()
 					require("dap").terminate()
 				end,
+				mode = "n",
 				desc = "Stop debugging",
 			},
 		},
+		config = function()
+			require("dap").set_log_level("ERROR")
+		end,
 		-- INFO: Don't add empty opts as it will break.
 	},
 	{
