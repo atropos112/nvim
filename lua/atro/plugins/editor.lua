@@ -194,7 +194,9 @@ return {
 			"SmiteshP/nvim-navic",
 			"nvim-tree/nvim-web-devicons", -- optional dependency
 		},
-		opts = {},
+		opts = {
+			attach_navic = false,
+		},
 	},
 	{
 		"aznhe21/actions-preview.nvim",

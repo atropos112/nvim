@@ -18,9 +18,7 @@ set("x", "<leader>p", [["_dP]])
 set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Save with Ctrl + s, in all modes
-set("i", "<C-s>", "<cmd>w<CR>")
-set("v", "<C-s>", "<cmd>w<CR>")
-set("n", "<C-s>", "<cmd>w<CR>")
+set({ "i", "v", "n" }, "<A-s>", "<cmd>w<CR>")
 
 set("n", "<leader>of", function()
 	vim.diagnostic.open_float()

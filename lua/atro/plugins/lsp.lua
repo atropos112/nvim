@@ -4,13 +4,22 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
+			"SmiteshP/nvim-navic",
 			"b0o/schemastore.nvim",
 		},
 		config = function()
 			-- INFO: Defining On_Attach
-			local on_attach = function(_, bufnr)
-				local set = require("atro.utils.generic").keyset
+			local on_attach = function(client, bufnr)
+				local navic_exclude = {
+					"basedpyright", -- already attached to pylsp
+					"rnix", -- doesn't support navic
+					"pylyzer", -- already attached to pylsp
+				}
+				if not vim.tbl_contains(navic_exclude, client.name) then
+					require("nvim-navic").attach(client, bufnr)
+				end
 
+				local set = require("atro.utils.generic").keyset
 				local opts = { noremap = true, silent = true }
 				opts.buffer = bufnr
 
@@ -65,6 +74,7 @@ return {
 			-- outside of mason. This is useful for NixOS setup where mason version just doesn't work sometimes due to libc issues.
 			require("atro.utils.mason").install({
 				"python-lsp-server",
+				"basedpyright",
 				"bash-language-server",
 				"rnix-lsp",
 				"lua-language-server",
@@ -74,6 +84,7 @@ return {
 
 			-- INFO: Below Are per language LSP configurations
 			-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+			-- INFO: Can also use :h lspconfig-all to see all available configurations
 			lsp.pylsp.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
@@ -84,6 +95,31 @@ return {
 								ignore = {},
 								maxLineLength = 120,
 							},
+							rope_completion = {
+								enabled = true,
+							},
+							rope_autoimport = {
+								enabled = true,
+								completions = {
+									enabled = true,
+								},
+								code_actions = {
+									enabled = true,
+								},
+							},
+						},
+					},
+				},
+			})
+
+			lsp.basedpyright.setup({
+				on_attach = on_attach,
+				capabilities = capabilities,
+				settings = {
+					basedpyright = {
+						analysis = {
+							autoSearchPaths = true,
+							typeCheckingMode = "standard",
 						},
 					},
 				},
