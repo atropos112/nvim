@@ -15,6 +15,7 @@ return {
 					"rnix", -- doesn't support navic
 					"pylyzer", -- already attached to pylsp
 				}
+
 				if not vim.tbl_contains(navic_exclude, client.name) then
 					require("nvim-navic").attach(client, bufnr)
 				end
@@ -79,119 +80,148 @@ return {
 				"rnix-lsp",
 				"lua-language-server",
 				"docker-compose-language-service",
+				"dockerfile-language-server",
 				"nil",
+				-- "gofumpt",
 			})
 
 			-- INFO: Below Are per language LSP configurations
 			-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+			-- Helper function that "starts the conversation"
+			local function setup_lsp(server, config, skip_on_attach, skip_capabilities)
+				config = config or {}
+				skip_on_attach = skip_on_attach or false
+				skip_capabilities = skip_capabilities or false
+
+				if not skip_on_attach then
+					config.on_attach = config.on_attach or on_attach
+				end
+
+				if not skip_capabilities then
+					config.capabilities = config.capabilities or capabilities
+				end
+
+				lsp[server].setup(config)
+			end
+
 			-- INFO: Can also use :h lspconfig-all to see all available configurations
-			lsp.pylsp.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					pylsp = {
-						plugins = {
-							pycodestyle = {
-								ignore = {},
-								maxLineLength = 120,
+			local lang_supported = require("atro.utils.config").lang_supported
+			if lang_supported("python") then
+				setup_lsp("basedpyright", {
+					settings = {
+						basedpyright = {
+							analysis = {
+								autoSearchPaths = true,
+								typeCheckingMode = "standard",
 							},
-							rope_completion = {
-								enabled = true,
-							},
-							rope_autoimport = {
-								enabled = true,
-								completions = {
+						},
+					},
+				})
+
+				setup_lsp("pylsp", {
+					settings = {
+						pylsp = {
+							plugins = {
+								pycodestyle = {
+									ignore = {},
+									maxLineLength = 120,
+								},
+								rope_completion = {
 									enabled = true,
 								},
-								code_actions = {
+								rope_autoimport = {
 									enabled = true,
+									completions = {
+										enabled = true,
+									},
+									code_actions = {
+										enabled = true,
+									},
 								},
 							},
 						},
 					},
-				},
-			})
+				})
+			end
 
-			lsp.basedpyright.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					basedpyright = {
-						analysis = {
-							autoSearchPaths = true,
-							typeCheckingMode = "standard",
+			if lang_supported("nix") then
+				setup_lsp("rnix")
+				setup_lsp("nixd")
+				setup_lsp("nil_ls")
+			end
+
+			if lang_supported("docker") then
+				setup_lsp("dockerls")
+			end
+
+			if lang_supported("zig") then
+				setup_lsp("zls")
+			end
+
+			if lang_supported("bash") then
+				setup_lsp("bashls")
+			end
+
+			if lang_supported("go") then
+				setup_lsp("gopls", {
+					settings = {
+						gopls = {
+							gofumpt = true,
 						},
 					},
-				},
-			})
+					-- NOTE: go plugin take over here so should not pass capabilities or on_attach.
+				}, true, false)
+			end
 
-			lsp.bashls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
-
-			lsp.rnix.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
-
-			lsp.nil_ls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
-
-			-- NOTE: go plugin take over here so should not pass capabilities or on_attach.
-			lsp.gopls.setup({
-				capabilities = capabilities,
-			})
-
-			lsp.jsonls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					json = {
-						schemas = require("schemastore").json.schemas(),
-						validate = { enable = true },
-					},
-				},
-			})
-
-			require("neodev").setup()
-			lsp.lua_ls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						workspace = { checkThirdParty = false },
-						telemetry = { enable = false },
-					},
-				},
-			})
-
-			-- INFO: Is covered partially be the csharp plugin (look at csharp specific config file for details)
-			lsp.omnisharp.setup({
-				on_attach = on_attach,
-			})
-
-			lsp.yamlls.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					yaml = {
-						schemaStore = {
-							enable = false,
-							url = "",
+			if lang_supported("json") then
+				setup_lsp("jsonls", {
+					settings = {
+						json = {
+							schemas = require("schemastore").json.schemas(),
+							validate = { enable = true },
 						},
-						schemas = require("schemastore").yaml.schemas({
-							extra = {
-								url = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
-								name = "Argo CD Application",
-								fileMatch = "argocd-application.yaml",
+					},
+				})
+			end
+
+			if lang_supported("lua") then
+				require("neodev").setup()
+				setup_lsp("lua_ls", {
+					{
+						settings = {
+							Lua = {
+								workspace = { checkThirdParty = false },
+								telemetry = { enable = false },
 							},
-						}),
+						},
 					},
-				},
-			})
+				})
+			end
+
+			if lang_supported("csharp") then
+				-- INFO: Is covered partially be the omnisharp plugin (look at csharp specific config file for details)
+				setup_lsp("omnisharp", {}, false, true)
+			end
+
+			if lang_supported("yaml") then
+				setup_lsp("yamlls", {
+					settings = {
+						yaml = {
+							schemaStore = {
+								enable = false,
+								url = "",
+							},
+							schemas = require("schemastore").yaml.schemas({
+								extra = {
+									url = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
+									name = "Argo CD Application",
+									fileMatch = "argocd-application.yaml",
+								},
+							}),
+						},
+					},
+				})
+			end
 		end,
 	},
 
@@ -204,7 +234,7 @@ return {
 		end,
 	},
 
-	-- Multi-line <-> Single-line toogling
+	-- Multi-line <-> Single-line toggling
 	{
 		"Wansmer/treesj",
 		keys = { "<space>m", "<leader>M" },

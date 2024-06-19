@@ -50,6 +50,7 @@ return {
 			conform.setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
+					zig = { "zig fmt" },
 					python = { "ruff_fix", "ruff_format" },
 					cs = { "csharpier" },
 					go = { "gofmt", "goimports" },

@@ -40,8 +40,8 @@ return {
 					null_ls.builtins.diagnostics.staticcheck,
 					null_ls.builtins.formatting.goimports,
 
-					-- Just
-					null_ls.builtins.formatting.just,
+					-- Python
+					null_ls.builtins.diagnostics.mypy,
 				},
 			})
 		end,

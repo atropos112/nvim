@@ -1,4 +1,17 @@
 return {
+	{
+		"tzachar/highlight-undo.nvim",
+		event = "BufRead",
+		opts = {},
+	},
+
+	{
+		"voxelprismatic/rabbit.nvim",
+		event = "BufRead",
+		config = function()
+			require("rabbit").setup("<leader>rr") -- Any keybind you like
+		end,
+	},
 	-- API info of vim
 	{
 		"folke/neodev.nvim",
@@ -18,6 +31,17 @@ return {
 	{
 		"williamboman/mason.nvim",
 		opts = {},
+	},
+	{
+		"zapling/mason-lock.nvim",
+		dependencies = {
+			"williamboman/mason.nvim",
+		},
+		config = function()
+			require("mason-lock").setup({
+				lockfile_path = vim.fn.stdpath("config") .. "/mason-lock.json", -- (default)
+			})
+		end,
 	},
 
 	-- Tells you what keybindings are available

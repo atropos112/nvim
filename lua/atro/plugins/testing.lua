@@ -1,11 +1,13 @@
 return {
 	{
 		"nvim-neotest/neotest",
+		event = "VeryLazy",
 		dependencies = {
+			"nvim-neotest/nvim-nio",
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-extensions/nvim-ginkgo",
-			--"nvim-neotest/neotest-go",
+			"nvim-neotest/neotest-go",
 			"nvim-neotest/neotest-python",
 			"rouge8/neotest-rust",
 			"Issafalcon/neotest-dotnet",
@@ -55,8 +57,19 @@ return {
 			},
 		},
 		config = function()
+			local neotest_ns = vim.api.nvim_create_namespace("neotest")
+			vim.diagnostic.config({
+				virtual_text = {
+					format = function(diagnostic)
+						local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+						return message
+					end,
+				},
+			}, neotest_ns)
+
 			-- INFO: This can't be set in opts because the dependencies are not loaded yet at that time.
 			require("neotest").setup({
+
 				adapters = {
 					-- For all runners go to https://github.com/nvim-neotest/neotest#supported-runners
 					-- Python
@@ -66,8 +79,8 @@ return {
 						},
 					}),
 					-- Go
-					--require("neotest-go"),
-					require("nvim-ginkgo"),
+					require("neotest-go"),
+					--require("nvim-ginkgo"),
 					-- .NET
 					require("neotest-dotnet"),
 					-- Rust
