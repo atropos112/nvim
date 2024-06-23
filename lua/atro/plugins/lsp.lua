@@ -75,7 +75,16 @@ return {
 
 			local lsp = require("lspconfig")
 
-			-- Takes in settings with my custom added keys, takes those keys out and then sets up the LSP
+			-- INFO: This provides a way to streamline LSP loading.
+			-- The settings can contain the following:
+			-- skip_on_attach: boolean - if true, will not attach on_attach function
+			-- skip_capabilities: boolean - if true, will not attach capabilities
+			-- mason_name: string - the name of the mason package to install if not already installed.
+			-- If not provided will attempt to install using the lsp name, this only installs if the binary is not found.
+			-- This is only used if skip_install is not true.
+			-- skip_install: boolean - if true, will not attempt to install the mason package (regardless if binary exists or not).
+			--
+			-- INFO: The keys above are removed in the process from the settings table and what is left is passed to the lsp setup function.
 			local function setup_lsp(server, settings)
 				settings = settings or {}
 
@@ -114,6 +123,37 @@ return {
 			-- INFO: Can also use :h lspconfig-all to see all available configurations
 			-- INFO: Below Are per language LSP configurations
 			-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+			-- NOTE: below lsp_config dictionary is used in tandem with the setup_lsp function above which conceals a lot of complexity.
+			-- Here is an example of usage, suppose your typical lsp setup looks like this:
+			-- lsp.pylsp.setup({
+			-- 	on_attach = on_attach,
+			-- 	capabilities = capabilities,
+			-- 	settings = {
+			-- 		pylsp = {
+			-- 			plugins = {
+			-- 				pycodestyle = {
+			-- 					ignore = {},
+			-- 					maxLineLength = 120,
+			-- 				},
+			-- 			},
+			-- 		},
+			-- 	},
+			-- })
+			-- This would translate to having an entry in lsp_configs blow that looks like:
+			-- lsp_configs = {
+			-- 	pylsp = {
+			-- 		mason_name = "python-lsp-server",
+			--  	skip_capabilities = false,
+			-- 		plugins = {
+			-- 			pycodestyle = {
+			-- 				ignore = {},
+			-- 				maxLineLength = 120,
+			-- 			},
+			-- 		},
+			-- 	},
+			-- }
+			-- where mason_name is typically not needed but necessary for pylsp as it has a different mason name to its lsp name.
+			-- here skip_capabilities (and skip_on_attach) is set to false by default and is shown above just for demonstation purposes.
 			local lsp_configs = {
 				basedpyright = {
 					analysis = {
