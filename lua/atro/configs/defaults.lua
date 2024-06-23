@@ -1,13 +1,29 @@
 return {
-	supported_languages = {
-		"zig",
-		"nix",
-		"lua",
-		"python",
-		"csharp",
-		"go",
-		"yaml",
-		"json",
-		"docker",
+	LSPs = {
+		-- Nix
+		"nixd",
+		"rnix",
+
+		-- Lua
+		"lua_ls",
+
+		-- JSON
+		"jsonls",
+
+		-- YAML
+		"yamlls",
+
+		-- Go
+		"gopls",
+
+		-- Python
+		"pylsp",
+		"basedpyright",
+
+		-- C#
+		"omnisharp",
+
+		-- Docker
+		"dockerls",
 	},
 }

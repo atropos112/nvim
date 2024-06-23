@@ -5,7 +5,6 @@ return {
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
 			"SmiteshP/nvim-navic",
-			"b0o/schemastore.nvim",
 		},
 		config = function()
 			-- INFO: Defining On_Attach
@@ -73,155 +72,132 @@ return {
 
 			-- INFO: Using my own utils function instead of mason-lspconfig as it checks if the stuff is already installed
 			-- outside of mason. This is useful for NixOS setup where mason version just doesn't work sometimes due to libc issues.
-			require("atro.utils.mason").install({
-				"python-lsp-server",
-				"basedpyright",
-				"bash-language-server",
-				"rnix-lsp",
-				"lua-language-server",
-				"docker-compose-language-service",
-				"dockerfile-language-server",
-				"nil",
-				-- "gofumpt",
-			})
+			local ensure_lsp_installed = require("atro.utils.mason").install
 
 			-- INFO: Below Are per language LSP configurations
 			-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 			-- Helper function that "starts the conversation"
-			local function setup_lsp(server, config, skip_on_attach, skip_capabilities)
-				config = config or {}
-				skip_on_attach = skip_on_attach or false
-				skip_capabilities = skip_capabilities or false
+			local function setup_lsp(server, settings)
+				settings = settings or {}
+
+				-- skip's
+				local skip_on_attach = settings.skip_on_attach or false
+				settings.skip_on_attach = nil -- remove the key
+
+				local skip_capabilities = settings.skip_capabilities or false
+				settings.skip_capabilities = nil
+
+				-- mason install
+				local skip_install = settings.skip_install or false
+				if not skip_install then
+					ensure_lsp_installed(settings.mason_name or server)
+					settings.mason_name = nil
+				end
+
+				-- create lsp settings
+				local lsp_settings = {
+					settings = {},
+				}
+				-- By now settings should only have the LSP specific settings not any special keys of mine.
+				lsp_settings.settings[server] = settings or {}
 
 				if not skip_on_attach then
-					config.on_attach = config.on_attach or on_attach
+					lsp_settings.on_attach = settings.on_attach or on_attach
 				end
 
 				if not skip_capabilities then
-					config.capabilities = config.capabilities or capabilities
+					lsp_settings.capabilities = settings.capabilities or capabilities
 				end
 
-				lsp[server].setup(config)
+				lsp[server].setup(lsp_settings)
 			end
 
+			local lsp_configs = {
+				basedpyright = {
+					analysis = {
+						autoSearchPaths = true,
+						typeCheckingMode = "standard",
+					},
+				},
+
+				pylsp = {
+					mason_name = "python-lsp-server",
+					plugins = {
+						pycodestyle = {
+							ignore = {},
+							maxLineLength = 120,
+						},
+						rope_completion = {
+							enabled = true,
+						},
+						rope_autoimport = {
+							enabled = true,
+							completions = {
+								enabled = true,
+							},
+							code_actions = {
+								enabled = true,
+							},
+						},
+					},
+				},
+
+				rnix = {
+					mason_name = "rnix-lsp",
+				},
+
+				nixd = {
+					skip_install = true,
+					diagnostic = {
+						suppress = { "sema-escaping-with" },
+					},
+				},
+
+				nil_ls = {
+					mason_name = "nil",
+				},
+
+				dockerls = {
+					mason_name = "dockerfile-language-server",
+				},
+
+				zls = {},
+
+				bashls = {
+					mason_name = "bash-language-server",
+				},
+
+				gopls = {
+					gofumpt = true,
+					-- NOTE: go plugin take over here so should not pass on_attach.
+					skip_on_attach = true,
+				},
+
+				jsonls = {
+					mason_name = "json-lsp",
+				},
+
+				lua_ls = {
+					mason_name = "lua-language-server",
+				},
+
+				omnisharp = {
+					skip_capabilities = true,
+				},
+
+				yamlls = {
+					skip_install = true,
+				},
+			}
+
+			for _, v in ipairs(_G.user_conf.LSPs) do
+				if lsp_configs[v] then
+					setup_lsp(v, lsp_configs[v])
+				else
+					error("LSP not configured: " .. v)
+				end
+			end
 			-- INFO: Can also use :h lspconfig-all to see all available configurations
-			local lang_supported = require("atro.utils.config").lang_supported
-			if lang_supported("python") then
-				setup_lsp("basedpyright", {
-					settings = {
-						basedpyright = {
-							analysis = {
-								autoSearchPaths = true,
-								typeCheckingMode = "standard",
-							},
-						},
-					},
-				})
-
-				setup_lsp("pylsp", {
-					settings = {
-						pylsp = {
-							plugins = {
-								pycodestyle = {
-									ignore = {},
-									maxLineLength = 120,
-								},
-								rope_completion = {
-									enabled = true,
-								},
-								rope_autoimport = {
-									enabled = true,
-									completions = {
-										enabled = true,
-									},
-									code_actions = {
-										enabled = true,
-									},
-								},
-							},
-						},
-					},
-				})
-			end
-
-			if lang_supported("nix") then
-				setup_lsp("rnix")
-				setup_lsp("nixd")
-				setup_lsp("nil_ls")
-			end
-
-			if lang_supported("docker") then
-				setup_lsp("dockerls")
-			end
-
-			if lang_supported("zig") then
-				setup_lsp("zls")
-			end
-
-			if lang_supported("bash") then
-				setup_lsp("bashls")
-			end
-
-			if lang_supported("go") then
-				setup_lsp("gopls", {
-					settings = {
-						gopls = {
-							gofumpt = true,
-						},
-					},
-					-- NOTE: go plugin take over here so should not pass capabilities or on_attach.
-				}, true, false)
-			end
-
-			if lang_supported("json") then
-				setup_lsp("jsonls", {
-					settings = {
-						json = {
-							schemas = require("schemastore").json.schemas(),
-							validate = { enable = true },
-						},
-					},
-				})
-			end
-
-			if lang_supported("lua") then
-				require("neodev").setup()
-				setup_lsp("lua_ls", {
-					{
-						settings = {
-							Lua = {
-								workspace = { checkThirdParty = false },
-								telemetry = { enable = false },
-							},
-						},
-					},
-				})
-			end
-
-			if lang_supported("csharp") then
-				-- INFO: Is covered partially be the omnisharp plugin (look at csharp specific config file for details)
-				setup_lsp("omnisharp", {}, false, true)
-			end
-
-			if lang_supported("yaml") then
-				setup_lsp("yamlls", {
-					settings = {
-						yaml = {
-							schemaStore = {
-								enable = false,
-								url = "",
-							},
-							schemas = require("schemastore").yaml.schemas({
-								extra = {
-									url = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
-									name = "Argo CD Application",
-									fileMatch = "argocd-application.yaml",
-								},
-							}),
-						},
-					},
-				})
-			end
 		end,
 	},
 
