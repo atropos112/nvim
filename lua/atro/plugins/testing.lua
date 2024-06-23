@@ -1,17 +1,14 @@
+local util_config = require("atro.utils.config")
 return {
 	{
 		"nvim-neotest/neotest",
 		event = "VeryLazy",
-		dependencies = {
+		dependencies = util_config.WithTestingAdapterDeps({
 			"nvim-neotest/nvim-nio",
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			"nvim-extensions/nvim-ginkgo",
-			"nvim-neotest/neotest-go",
-			"nvim-neotest/neotest-python",
-			"rouge8/neotest-rust",
-			"Issafalcon/neotest-dotnet",
-		},
+			"nvim-lua/plenary.nvim",
+		}),
 		keys = {
 			{
 				"<leader>tr",
@@ -70,22 +67,9 @@ return {
 			-- INFO: This can't be set in opts because the dependencies are not loaded yet at that time.
 			require("neotest").setup({
 
-				adapters = {
-					-- For all runners go to https://github.com/nvim-neotest/neotest#supported-runners
-					-- Python
-					require("neotest-python")({
-						dap = {
-							justMyCode = false,
-						},
-					}),
-					-- Go
-					require("neotest-go"),
-					--require("nvim-ginkgo"),
-					-- .NET
-					require("neotest-dotnet"),
-					-- Rust
-					require("neotest-rust"),
-				},
+				-- For all runners go to https://github.com/nvim-neotest/neotest#supported-runners
+				-- adapters = require("atro.utils.config").RequireAllTestingAdapters(),
+				adapters = util_config.RequireAllTestingAdapters(),
 			})
 		end,
 	},

@@ -1,4 +1,4 @@
-return {
+local other_plugins = {
 	{
 		"tzachar/highlight-undo.nvim",
 		event = "BufRead",
@@ -17,14 +17,11 @@ return {
 		"folke/neodev.nvim",
 		event = "VeryLazy",
 		opts = {
-			library = { plugins = { "neotest" }, types = true },
+			library = {
+				plugins = { "neotest", "nvim-dap-ui" },
+				types = true,
+			},
 		},
-	},
-
-	-- Tract time usage
-	{
-		"wakatime/vim-wakatime",
-		event = "BufRead",
 	},
 
 	-- Downloads dependencies for LSP, formatter and debugger
@@ -173,3 +170,16 @@ return {
 		end,
 	},
 }
+
+if _G.user_conf.TalkToExternal == true then
+	table.insert(
+		other_plugins,
+		-- Tract time usage
+		{
+			"wakatime/vim-wakatime",
+			event = "BufRead",
+		}
+	)
+end
+
+return other_plugins

@@ -9,6 +9,7 @@ else
 end
 
 -- Function to replace defaults with overrides
+-- Overrides happen at the top level only so changing SupportedLanguages in the overrides will replace the whole list
 local function apply_overrides(user_defaults, user_overrides)
 	local result = {}
 	for k, v in pairs(user_defaults) do

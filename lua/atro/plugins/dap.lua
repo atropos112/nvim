@@ -86,7 +86,58 @@ return {
 		event = "VeryLazy",
 		config = function()
 			local dap, dapui = require("dap"), require("dapui")
-			dapui.setup()
+			-- INFO: To see what config is available do :dapui.setup()
+			dapui.setup({
+				layouts = {
+					{
+						elements = {
+							{
+								id = "scopes",
+								size = 0.25,
+							},
+							-- {
+							-- 	id = "breakpoints",
+							-- 	size = 0.25,
+							-- },
+							{
+								id = "stacks",
+								size = 0.25,
+							},
+							{
+								id = "watches",
+								size = 0.50,
+							},
+						},
+						position = "left",
+						size = 60,
+					},
+					{
+						elements = {
+							{
+								id = "console",
+								size = 0.2,
+							},
+							{
+								id = "repl",
+								size = 0.8,
+							},
+						},
+						position = "bottom",
+						size = 10,
+					},
+				},
+				sidebar = {
+					open_on_start = true,
+					elements = {
+						"scopes",
+						"breakpoints",
+						"stacks",
+						"watches",
+					},
+					size = 40,
+					position = "left",
+				},
+			})
 
 			vim.keymap.set("n", "<leader>ds", function()
 				dapui.open()

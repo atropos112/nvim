@@ -68,15 +68,14 @@ return {
 			-- INFO: Defining Capabilities
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-			local lsp = require("lspconfig")
 
 			-- INFO: Using my own utils function instead of mason-lspconfig as it checks if the stuff is already installed
 			-- outside of mason. This is useful for NixOS setup where mason version just doesn't work sometimes due to libc issues.
 			local ensure_lsp_installed = require("atro.utils.mason").install
 
-			-- INFO: Below Are per language LSP configurations
-			-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-			-- Helper function that "starts the conversation"
+			local lsp = require("lspconfig")
+
+			-- Takes in settings with my custom added keys, takes those keys out and then sets up the LSP
 			local function setup_lsp(server, settings)
 				settings = settings or {}
 
@@ -112,6 +111,9 @@ return {
 				lsp[server].setup(lsp_settings)
 			end
 
+			-- INFO: Can also use :h lspconfig-all to see all available configurations
+			-- INFO: Below Are per language LSP configurations
+			-- NOTE: For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 			local lsp_configs = {
 				basedpyright = {
 					analysis = {
@@ -190,14 +192,13 @@ return {
 				},
 			}
 
-			for _, v in ipairs(_G.user_conf.LSPs) do
+			for _, v in ipairs(require("atro.utils.config").SelectedLSPs()) do
 				if lsp_configs[v] then
 					setup_lsp(v, lsp_configs[v])
 				else
 					error("LSP not configured: " .. v)
 				end
 			end
-			-- INFO: Can also use :h lspconfig-all to see all available configurations
 		end,
 	},
 

@@ -41,7 +41,7 @@ return {
 					null_ls.builtins.formatting.goimports,
 
 					-- Python
-					null_ls.builtins.diagnostics.mypy,
+					-- null_ls.builtins.diagnostics.mypy,
 				},
 			})
 		end,
