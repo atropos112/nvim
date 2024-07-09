@@ -1,4 +1,7 @@
-local other_plugins = {
+local set = require("atro.utils.generic").keyset
+
+---@type LazySpec[]
+local plugins = {
 	{
 		"tzachar/highlight-undo.nvim",
 		event = "BufRead",
@@ -8,29 +11,51 @@ local other_plugins = {
 	{
 		"voxelprismatic/rabbit.nvim",
 		event = "BufRead",
-		config = function()
-			require("rabbit").setup("<leader>rr") -- Any keybind you like
-		end,
-	},
-	-- API info of vim
-	{
-		"folke/neodev.nvim",
-		event = "VeryLazy",
 		opts = {
-			library = {
-				plugins = { "neotest", "nvim-dap-ui" },
-				types = true,
+			colors = {}, -- defaults
+			window = {
+				title = "Rabbit",
+				plugin_name_position = "bottom",
+				emphasis_width = 8,
+				width = 64,
+				height = 24,
+				float = {
+					"bottom",
+					"right",
+				},
+				split = "right",
+				overflow = ":::",
+				path_len = 12,
+			},
+			default_keys = {
+				close = { "<Esc>", "q", "<leader>" },
+				select = { "<CR>" },
+				open = { "<leader>rr" },
+				file_add = { "a" },
+				file_del = { "<Del>" },
+				group = { "A" },
+				group_up = { "-" },
+			},
+			plugin_opts = {},
+			enable = {
+				"history",
+				"reopen",
+				"oxide",
+				"harpoon",
 			},
 		},
 	},
+	-- API info of vim
 
 	-- Downloads dependencies for LSP, formatter and debugger
 	{
 		"williamboman/mason.nvim",
+		event = "VeryLazy",
 		opts = {},
 	},
 	{
 		"zapling/mason-lock.nvim",
+		event = "VeryLazy",
 		dependencies = {
 			"williamboman/mason.nvim",
 		},
@@ -59,7 +84,7 @@ local other_plugins = {
 	-- Search for keybindings
 	{
 		"sudormrfbin/cheatsheet.nvim",
-
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 			"nvim-lua/popup.nvim",
@@ -126,7 +151,7 @@ local other_plugins = {
 			},
 		},
 	},
-	-- INFO: Better increase/descrease, works on versions, dates, bools etc.
+	-- INFO: Better increase/decrease, works on versions, dates, bools etc.
 	{
 		"monaqa/dial.nvim",
         -- stylua: ignore
@@ -155,16 +180,16 @@ local other_plugins = {
 		},
 		config = function()
 			require("spectre").setup()
-			vim.keymap.set("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', {
+			set("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', {
 				desc = "Toggle Spectre",
 			})
-			vim.keymap.set("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+			set("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
 				desc = "Search current word",
 			})
-			vim.keymap.set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+			set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
 				desc = "Search current word",
 			})
-			vim.keymap.set("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+			set("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
 				desc = "Search on current file",
 			})
 		end,
@@ -172,14 +197,13 @@ local other_plugins = {
 }
 
 if _G.user_conf.TalkToExternal == true then
-	table.insert(
-		other_plugins,
-		-- Tract time usage
-		{
-			"wakatime/vim-wakatime",
-			event = "BufRead",
-		}
-	)
+	---@type LazySpec
+	local wakatime_plugin = {
+		"wakatime/vim-wakatime",
+		event = "BufRead",
+	}
+
+	table.insert(plugins, wakatime_plugin)
 end
 
-return other_plugins
+return plugins

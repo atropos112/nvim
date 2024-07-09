@@ -1,11 +1,9 @@
 {
-  "basedpyright": "1.12.5",
-  "bash-language-server": "5.3.4",
+  "basedpyright": "1.13.1",
   "codespell": "2.3.0",
   "csharpier": "0.28.2",
-  "debugpy": "1.8.1",
-  "docker-compose-language-service": "0.2.0",
-  "dockerfile-language-server": "0.12.0",
+  "debugpy": "1.8.2",
+  "dockerfile-language-server": "0.13.0",
   "fixjson": "1.1.2",
   "goimports": "v0.22.0",
   "gomodifytags": "v1.16.0",
@@ -13,15 +11,15 @@
   "json-lsp": "4.10.0",
   "jsonlint": "1.6.3",
   "omnisharp": "v1.39.11",
-  "prettier": "3.3.1",
+  "prettier": "3.3.2",
   "revive": "v1.3.7",
   "rnix-lsp": "0.2.5",
-  "ruff": "0.4.8",
+  "ruff": "0.5.0",
   "shellcheck": "v0.10.0",
   "shellharden": "4.3.1",
   "shfmt": "v3.8.0",
   "staticcheck": "v0.4.7",
   "stylua": "v0.20.0",
   "taplo": "0.8.1",
-  "yamlfmt": "v0.12.1"
+  "yamlfmt": "v0.13.0"
 }

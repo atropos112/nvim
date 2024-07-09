@@ -21,7 +21,7 @@ return {
 			LSPs = { "jsonls" },
 		},
 		python = {
-			LSPs = { "pylsp", "basedpyright" },
+			LSPs = { "basedpyright" },
 			TestAdapter = {
 				author = "nvim-neotest",
 				name = "neotest-python",

@@ -22,12 +22,12 @@ if require("atro.utils.config").IsLangSupported("markdown") then
 			},
 		},
 		{
-			"lukas-reineke/headlines.nvim",
+			"OXY2DEV/markview.nvim",
 			ft = { "markdown" },
 			dependencies = {
 				"nvim-treesitter/nvim-treesitter",
+				"nvim-tree/nvim-web-devicons",
 			},
-			opts = {},
 		},
 	}
 else

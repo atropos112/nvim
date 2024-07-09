@@ -5,15 +5,27 @@ return {
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
 			"SmiteshP/nvim-navic",
+			"sontungexpt/better-diagnostic-virtual-text",
 		},
 		config = function()
 			-- INFO: Defining On_Attach
 			local on_attach = function(client, bufnr)
 				local navic_exclude = {
-					"basedpyright", -- already attached to pylsp
+					"pylsp", -- already attached to basedpyright
 					"rnix", -- doesn't support navic
-					"pylyzer", -- already attached to pylsp
 				}
+				local lsp = vim.lsp
+
+				-- nil can replace with the options of each buffer
+				require("better-diagnostic-virtual-text.api").setup_buf(bufnr, nil)
+
+				lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
+					border = "single",
+					focusable = false,
+					relative = "cursor",
+				})
+
+				require("inlay-hints").on_attach(client, bufnr)
 
 				if not vim.tbl_contains(navic_exclude, client.name) then
 					require("nvim-navic").attach(client, bufnr)
@@ -102,12 +114,17 @@ return {
 					settings.mason_name = nil
 				end
 
+				-- Alternative server name (optional)
+				local server_name = settings.server_name or server
+				settings.server_name = nil
+
 				-- create lsp settings
 				local lsp_settings = {
 					settings = {},
 				}
+
 				-- By now settings should only have the LSP specific settings not any special keys of mine.
-				lsp_settings.settings[server] = settings or {}
+				lsp_settings.settings[server_name] = settings or {}
 
 				if not skip_on_attach then
 					lsp_settings.on_attach = settings.on_attach or on_attach
@@ -153,12 +170,13 @@ return {
 			-- 	},
 			-- }
 			-- where mason_name is typically not needed but necessary for pylsp as it has a different mason name to its lsp name.
-			-- here skip_capabilities (and skip_on_attach) is set to false by default and is shown above just for demonstation purposes.
+			-- here skip_capabilities (and skip_on_attach) is set to false by default and is shown above just for demonsrtation purposes.
 			local lsp_configs = {
 				basedpyright = {
 					analysis = {
 						autoSearchPaths = true,
 						typeCheckingMode = "standard",
+						useLibraryCodeForTypes = true,
 					},
 				},
 
@@ -279,5 +297,13 @@ return {
 			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
 		},
 		opts = {},
+	},
+	{
+		"MysticalDevil/inlay-hints.nvim",
+		event = "LspAttach",
+		dependencies = { "neovim/nvim-lspconfig" },
+		config = function()
+			require("inlay-hints").setup()
+		end,
 	},
 }
