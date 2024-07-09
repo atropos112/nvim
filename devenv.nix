@@ -20,16 +20,22 @@
 
   pre-commit.hooks = {
     shellcheck.enable = true;
-    lua-ls = {
+    lua-ls.enable = true;
+    markdownlint = {
       enable = true;
       settings.configuration = {
-        diagnostics = {
-          globals = ["vim"];
+        MD045 = false; # no-alt-line
+        MD033 = {
+          allowed_elements = [
+            "p"
+            "img"
+          ];
+        };
+        MD013 = {
+          line_length = 360;
         };
       };
     };
-    luacheck.enable = true;
-    markdownlint.enable = true;
     gitleaks = {
       enable = true;
       name = "gitleaks";
