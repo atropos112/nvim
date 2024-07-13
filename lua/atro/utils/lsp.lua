@@ -4,18 +4,18 @@ local M = {}
 ---@param bufnr number
 ---@return nil
 M.on_attach = function(client, bufnr)
-	local lsp = vim.lsp
-
-	-- nil can replace with the options of each buffer
 	require("inlay-hints").on_attach(client, bufnr)
 	require("nvim-navic").attach(client, bufnr)
-	-- require("better-diagnostic-virtual-text.api").setup_buf(bufnr, nil) -- WARN: Currently broken.
 
+	-- Better diagnostic virtual text, needs to take over hover and signature help handlers
+	require("better-diagnostic-virtual-text.api").setup_buf(bufnr, nil)
+	local lsp = vim.lsp
 	lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
 		border = "single",
 		focusable = false,
 		relative = "cursor",
 	})
+	lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, { border = "single" })
 
 	local opts = { noremap = true, silent = true }
 	opts.buffer = bufnr

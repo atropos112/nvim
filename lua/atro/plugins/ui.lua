@@ -4,6 +4,9 @@ return {
 		event = "VeryLazy",
 		opts = {
 			lsp = {
+				hover = {
+					enabled = false, -- to allow better diagnostic virtual text
+				},
 				signature = {
 					enabled = false,
 				},

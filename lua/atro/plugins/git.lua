@@ -1,10 +1,17 @@
 return {
 	{
+		"f-person/git-blame.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
+	{
 		"lewis6991/gitsigns.nvim",
+		event = "VeryLazy",
 		opts = {},
 	},
 	{
 		"sindrets/diffview.nvim",
+		event = "VeryLazy",
 	},
 	{
 		"dinhhuy258/git.nvim",

@@ -59,6 +59,16 @@ local plugins = {
 			require("inlay-hints").setup()
 		end,
 	},
+	{
+		"sontungexpt/better-diagnostic-virtual-text",
+		event = "LspAttach",
+		opts = {
+			inline = false,
+			ui = {
+				above = true,
+			},
+		},
+	},
 }
 
 return plugins
