@@ -1,6 +1,8 @@
+local M = {}
+
 -- INFO: Can also use :h lspconfig-all to see all available configurations
 -- INFO: Below Are per language LSP configurations
-local lsp_configs = {
+M.lsp_configs = {
 	basedpyright = {
 		analysis = {
 			autoSearchPaths = true,
@@ -78,3 +80,5 @@ local lsp_configs = {
 		skip_install = true,
 	},
 }
+
+return M

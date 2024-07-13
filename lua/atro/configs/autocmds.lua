@@ -4,6 +4,9 @@ local function augroup(name)
 	return vim.api.nvim_create_augroup("atro_" .. name, { clear = true })
 end
 
+-- Jenkins
+-- vim.api.nvim_cre
+
 -- Check if we need to reload the file when it changed
 -- Vim tends to check this well enough, but sometimes it doesn't
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {

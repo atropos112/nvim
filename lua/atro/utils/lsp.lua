@@ -9,7 +9,7 @@ M.on_attach = function(client, bufnr)
 	-- nil can replace with the options of each buffer
 	require("inlay-hints").on_attach(client, bufnr)
 	require("nvim-navic").attach(client, bufnr)
-	require("better-diagnostic-virtual-text.api").setup_buf(bufnr, nil)
+	-- require("better-diagnostic-virtual-text.api").setup_buf(bufnr, nil) -- WARN: Currently broken.
 
 	lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
 		border = "single",
@@ -130,7 +130,7 @@ M.setup_lsp = function(server, settings, lsp)
 	-- mason install
 	local skip_install = settings.skip_install or false
 	if not skip_install then
-		require("atro.utils.mason").install(settings.mason_name or server)
+		require("atro.utils.load").install(settings.mason_name or server)
 		settings.mason_name = nil
 	end
 
@@ -160,7 +160,7 @@ M.setup_lsp = function(server, settings, lsp)
 end
 
 M.setup_lsps = function()
-	local lsp_configs = require("atro.configs.user_configs.lsp").lsp_configs
+	local lsp_configs = require("atro.configs.lsp").lsp_configs
 	local lsp = require("lspconfig")
 	for _, v in ipairs(require("atro.utils.config").SelectedLSPs()) do
 		if lsp_configs[v] then

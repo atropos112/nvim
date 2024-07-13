@@ -125,32 +125,6 @@ local plugins = {
 		},
 		opts = {},
 	},
-	{
-		"m4xshen/hardtime.nvim",
-		event = "BufRead",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-		},
-		opts = {
-			max_count = 8,
-			restriction_mode = "hint", -- Might change it to "block" at some point.
-			-- INFO: I like arrow keys, in insert mode, and disagree with it being a bad pactice ESC + l + i is more steps then arrow right. Only argument on the other side here is that arrow keys are far from where fingers typically are but I use moonlander zsa keyboard so this doesn't apply to me (my thumbs are always near arrows anyway).
-			disabled_keys = {
-				["<Up>"] = {},
-				["<Down>"] = {},
-				["<Left>"] = {},
-				["<Right>"] = {},
-			},
-			restricted_keys = {
-				["<C-N>"] = {},
-				["<Up>"] = { "i", "n" },
-				["<Down>"] = { "i", "n" },
-				["<Left>"] = { "i", "n" },
-				["<Right>"] = { "i", "n" },
-			},
-		},
-	},
 	-- INFO: Better increase/decrease, works on versions, dates, bools etc.
 	{
 		"monaqa/dial.nvim",

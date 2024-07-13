@@ -6,7 +6,7 @@ if require("atro.utils.config").IsLangSupported("rust") then
 			ft = { "rust" },
 			config = function()
 				-- NOTE: Dependency sourcing
-				require("atro.utils.mason").install("codelldb")
+				require("atro.utils.load").install("codelldb")
 
 				-- NOTE: Debugger
 				local dap = require("dap")

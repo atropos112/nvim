@@ -7,7 +7,7 @@ local plugins = {
 		"stevearc/conform.nvim",
 		event = { "BufRead", "BufNewFile" },
 		config = function()
-			require("atro.utils.mason").install_fmts()
+			require("atro.utils.load").install_fmts()
 
 			local conform = require("conform")
 
@@ -25,7 +25,7 @@ local plugins = {
 			-- INFO: List of available linters can be found here
 			-- https://github.com/stevearc/conform.nvim#formatters
 			conform.setup({
-				formatters_by_ft = require("atro.configs.user_configs.fmt").fmt_configs,
+				formatters_by_ft = require("atro.configs.fmt").fmt_configs,
 
 				require("atro.utils.generic").keyset({ "n", "v", "i" }, "<C-s>", function()
 					require("conform").format()

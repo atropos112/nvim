@@ -16,55 +16,61 @@ return {
 			-- fmt.lua for formatting and cmp.lua for autocompletion.
 			-- Sometimes its not possible or comes with compromises.
 			-- In such cases use this plugin.
-			require("atro.utils.mason").install({
-				"codespell",
-				"impl",
-				"gomodifytags",
-				"staticcheck",
-			})
+			local install = require("atro.utils.load").install
+			local is_lang_supported = require("atro.utils.config").IsLangSupported
 			local null_ls = require("null-ls")
 
 			-- INFO: List of available linters can be found here
 			-- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
-			null_ls.setup({
-				sources = {
-					null_ls.builtins.diagnostics.codespell,
+			local sources = { null_ls.builtins.diagnostics.codespell }
+			install("codespell")
 
-					-- Nix
-					null_ls.builtins.diagnostics.statix,
-					null_ls.builtins.diagnostics.deadnix,
+			if is_lang_supported("nix") then
+				table.insert(sources, null_ls.builtins.diagnostics.statix)
+				table.insert(sources, null_ls.builtins.diagnostics.deadnix)
+			end
+			if is_lang_supported("go") then
+				table.insert(sources, null_ls.builtins.diagnostics.staticcheck)
+				table.insert(sources, null_ls.builtins.code_actions.impl)
+				table.insert(sources, null_ls.builtins.code_actions.gomodifytags)
+				table.insert(sources, null_ls.builtins.formatting.goimports)
+				install({
+					"impl",
+					"gomodifytags",
+					"staticcheck",
+				})
+			end
 
-					-- Go
-					null_ls.builtins.code_actions.impl,
-					null_ls.builtins.code_actions.gomodifytags,
-					null_ls.builtins.diagnostics.staticcheck,
-					null_ls.builtins.formatting.goimports,
-
-					-- Python
-					-- null_ls.builtins.diagnostics.mypy,
-				},
-			})
+			null_ls.setup({ sources = sources })
 		end,
 	},
 	-- Github Copilot
 	{
 		"zbirenbaum/copilot.lua",
-		event = "InsertEnter",
-		opts = {
-			suggestion = {
-				auto_trigger = true,
-				keymap = {
-					accept = "<A-g>",
+		event = "LspAttach",
+		config = function()
+			require("copilot").setup({
+				suggestion = {
+					auto_trigger = true,
+					keymap = {
+						accept = "<A-g>", -- default
+					},
 				},
-			},
-			filetypes = {
-				yaml = true,
-				markdown = true,
-				gitcommit = true,
-				gitrebase = true,
-				["."] = true,
-			},
-		},
+				filetypes = {
+					yaml = true,
+					markdown = true,
+					gitcommit = true,
+					gitrebase = true,
+					["."] = true,
+				},
+			})
+
+			local set = require("atro.utils.generic").keyset
+
+			set("i", "©", function() -- macbook compatibility
+				require("copilot.suggestion").accept()
+			end, { desc = "Accept Copilot suggestion" })
+		end,
 	},
 	--- Main autocomplete plugin
 	{

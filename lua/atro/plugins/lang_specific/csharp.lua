@@ -10,7 +10,7 @@ if require("atro.utils.config").IsLangSupported("c_sharp") then
 			ft = "cs",
 			config = function()
 				-- NOTE: Dependency sourcing
-				require("atro.utils.mason").install({
+				require("atro.utils.load").install({
 					-- debugger
 					"netcoredbg",
 				})

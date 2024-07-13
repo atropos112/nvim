@@ -38,7 +38,7 @@ if require("atro.utils.config").IsLangSupported("go") then
 			},
 			ft = "go",
 			config = function()
-				require("atro.utils.mason").install({
+				require("atro.utils.load").install({
 					"impl",
 				})
 				require("telescope").load_extension("goimpl")

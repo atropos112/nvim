@@ -7,9 +7,9 @@ if require("atro.utils.config").IsLangSupported("python") then
 				"mfussenegger/nvim-dap",
 			},
 			config = function()
-				require("atro.utils.mason").install("debugpy")
+				require("atro.utils.load").install("debugpy")
 				local dappy = require("dap-python")
-				dappy.setup("~/.local/share/nvim/mason/packages/debugpy/venv/bin/python") -- that's where Mason will drop it
+				dappy.setup(_G.user_conf.SupportedLanguages.python.DAP.path)
 				dappy.test_runner = "pytest"
 			end,
 		},

@@ -29,6 +29,10 @@ return {
 					justMyCode = false,
 				},
 			},
+			DAP = {
+				-- that's where Mason will drop it
+				path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
+			},
 		},
 		c_sharp = {
 			LSPs = { "omnisharp" },

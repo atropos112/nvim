@@ -27,4 +27,30 @@ M.merge_tables_at_root = function(base, override)
 	return result
 end
 
+--- @param path string
+M.file_exists = function(path)
+	-- Expand ~ to the home directory
+	if path:sub(1, 1) == "~" then
+		path = vim.fn.expand(path)
+	end
+
+	local f = io.open(path, "r")
+	if f then
+		f:close()
+		return true
+	else
+		return false
+	end
+end
+
+M.dir_exists = function(path)
+	-- Expand ~ to the home directory
+	if path:sub(1, 1) == "~" then
+		path = vim.fn.expand(path)
+	end
+
+	local stat = vim.loop.fs_stat(path)
+	return stat and stat.type == "directory"
+end
+
 return M

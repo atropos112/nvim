@@ -1,11 +1,8 @@
 local defaults = require("atro.configs.user_configs.defaults")
 -- No assumption is made as to if there are overrides or not, the file might be missing.
-local overrides
-local status, overrides_res = pcall(require, "atro.configs.user_configs.overrides")
-if status then
-	overrides = overrides_res
-else
-	overrides = {}
+local overrides = {}
+if require("atro.utils.generic").file_exists(vim.fn.getcwd() .. "/lua/atro/configs/user_configs/overrides.lua") then
+	overrides = require("atro.configs.user_configs.overrides")
 end
 
 -- Apply overrides
