@@ -1,35 +1,34 @@
 local M = {}
 
--- any cases where name of package is different from the binary name
-local name_to_bin = {
-	["csharp-language-server"] = "csharp-ls",
-	["python-lsp-server"] = "pylsp",
-	["docker-compose-language-service"] = "docker-compose-langserver",
-}
+---@type AtroPackage
+AtroPackage = require("atro.types.atro_package")
 
+---Install a package if it is not already installed
+---@param ensure_installed string[] | string
+---@return nil
 M.install = function(ensure_installed)
 	-- Allow for passing in a single string
 	if type(ensure_installed) == "string" then
 		ensure_installed = { ensure_installed }
 	end
 
-	-- Function to check if the executable exists in the PATH
-	local function executable_exists(name)
-		if name_to_bin[name] then
-			return vim.fn.executable(name) == 1 or vim.fn.executable(name_to_bin[name]) == 1
-		end
-		return vim.fn.executable(name) == 1
-	end
-
 	local registry = require("mason-registry")
 	registry.refresh(function()
 		for _, pkg_name in ipairs(ensure_installed) do
-			local pkg = registry.get_package(pkg_name)
-			if not executable_exists(pkg_name) and not pkg:is_installed() then
-				pkg:install()
-			end
+			AtroPackage:new(pkg_name):install(registry)
 		end
 	end)
+end
+
+M.install_fmts = function()
+	local fmt_configs = require("atro.configs.user_configs.fmt").fmt_configs
+	local is_lang_supported = require("atro.utils.config").IsLangSupported
+
+	for lang, fmts in ipairs(fmt_configs) do
+		if is_lang_supported(lang) then
+			M.install(fmts)
+		end
+	end
 end
 
 return M

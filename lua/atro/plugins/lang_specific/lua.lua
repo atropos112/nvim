@@ -10,6 +10,7 @@ if require("atro.utils.config").IsLangSupported("lua") then
 				library = {
 					"luvit-meta/library",
 					"lazy.nvim",
+					"atro.types",
 				},
 				-- always enable unless `vim.g.lazydev_enabled = false`
 				-- This is the default

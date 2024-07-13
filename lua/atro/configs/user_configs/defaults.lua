@@ -3,7 +3,7 @@ return {
 	SupportedLanguages = {
 		c = {},
 		nix = {
-			LSPs = { "nixd", "rnix" },
+			LSPs = { "nixd" },
 		},
 		lua = {
 			LSPs = { "lua_ls" },

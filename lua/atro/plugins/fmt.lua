@@ -1,40 +1,17 @@
 -- INFO: Fmt = Formatter
 -- INFO: A formatter is another mechanism that helps ensure a standard output from the variable and sometimes inconsistent value input.
-return {
+
+---@type LazySpec[]
+local plugins = {
 	{
 		"stevearc/conform.nvim",
 		event = { "BufRead", "BufNewFile" },
 		config = function()
-			require("atro.utils.mason").install({
-				-- python
-				"ruff",
+			require("atro.utils.mason").install_fmts()
 
-				-- csharp
-				"csharpier",
-
-				-- json
-				"fixjson",
-
-				-- markdown
-				"prettier",
-
-				-- shell
-				"shfmt",
-				"shellharden",
-
-				-- yaml
-				"yamlfmt",
-
-				-- toml
-				"taplo",
-
-				-- lua
-				"stylua",
-
-				-- go
-				"goimports",
-			})
 			local conform = require("conform")
+
+			-- custom settings
 			conform.formatters.yamlfmt = {
 				prepend_args = function(_, _)
 					return {
@@ -48,21 +25,7 @@ return {
 			-- INFO: List of available linters can be found here
 			-- https://github.com/stevearc/conform.nvim#formatters
 			conform.setup({
-				formatters_by_ft = {
-					lua = { "stylua" },
-					zig = { "zig fmt" },
-					python = { "ruff_fix", "ruff_format" },
-					cs = { "csharpier" },
-					go = { "gofmt", "goimports" },
-					json = { "fixjson" },
-					just = { "just" },
-					nix = { "alejandra" },
-					md = { "mdformat" },
-					sh = { "shfmt", "shellharden" },
-					yaml = { "yamlfmt" },
-					toml = { "taplo" },
-					markdown = { "prettier" },
-				},
+				formatters_by_ft = require("atro.configs.user_configs.fmt").fmt_configs,
 
 				require("atro.utils.generic").keyset({ "n", "v", "i" }, "<C-s>", function()
 					require("conform").format()
@@ -72,3 +35,5 @@ return {
 		end,
 	},
 }
+
+return plugins
