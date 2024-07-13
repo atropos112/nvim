@@ -15,11 +15,13 @@ function AtroPackage:new(name)
 		["csharp-language-server"] = "csharp-ls",
 		["python-lsp-server"] = "pylsp",
 		["docker-compose-language-service"] = "docker-compose-langserver",
+		["lua_ls"] = "lua-language-server",
 	}
 
 	local mason_name_exceptions = {
 		["ruff_fix"] = "ruff",
 		["ruff_format"] = "ruff",
+		["lua_ls"] = "lua-language-server",
 	}
 
 	local skip_install_exceptions = {
