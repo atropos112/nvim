@@ -6,7 +6,7 @@ local plugins = {
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
 			"SmiteshP/nvim-navic",
-			"sontungexpt/better-diagnostic-virtual-text",
+			"atropos112/better-diagnostic-virtual-text",
 			"b0o/schemastore.nvim",
 		},
 		config = function()
@@ -61,7 +61,7 @@ local plugins = {
 		end,
 	},
 	{
-		"sontungexpt/better-diagnostic-virtual-text",
+		"atropos112/better-diagnostic-virtual-text",
 		event = "LspAttach",
 		opts = {
 			inline = false,
