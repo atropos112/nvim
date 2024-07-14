@@ -7,6 +7,7 @@ local plugins = {
 			"jubnzv/virtual-types.nvim",
 			"SmiteshP/nvim-navic",
 			"sontungexpt/better-diagnostic-virtual-text",
+			"b0o/schemastore.nvim",
 		},
 		config = function()
 			require("atro.utils.lsp").setup_lsps()

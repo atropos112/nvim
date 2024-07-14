@@ -87,17 +87,52 @@ M.lsp_configs = {
 		skip_on_attach = true,
 	},
 
-	jsonls = {},
+	jsonls = {
+		server_name = "json",
+		schemas = require("schemastore").json.schemas(),
+		validate = { enable = true },
+	},
 
 	lua_ls = {
 		server_name = "Lua",
+		telemetry = {
+			enabled = false,
+		},
+		workspace = {
+			checkThirdParty = false,
+		},
+		diagnostics = {
+			disable = { "missing-fields" },
+		},
 	},
 
 	omnisharp = {
 		skip_capabilities = true,
 	},
 
-	yamlls = {},
+	yamlls = {
+		server_name = "yaml",
+		schemaStore = {
+			enable = false, -- using schemastore plugin instead (more functionalities)
+			url = "", -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+		},
+		schemas = require("schemastore").yaml.schemas({
+			extra = {
+				{
+					name = "Argo Events",
+					description = "Argo Events Event Sources and Sensors",
+					url = "https://raw.githubusercontent.com/argoproj/argo-events/master/api/jsonschema/schema.json",
+					fileMatch = { "*.ae.yaml", "*.ae.yml" },
+				},
+				{
+					name = "Argo Workflow",
+					description = "Argo Workflow configuration file",
+					url = "https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json",
+					fileMatch = { "*.awf.yaml", "*.awf.yml" },
+				},
+			},
+		}),
+	},
 }
 
 return M
