@@ -1,6 +1,7 @@
 {
   "basedpyright": "1.13.3",
   "codespell": "2.3.0",
+  "debugpy": "1.8.2",
   "dockerfile-language-server": "0.13.0",
   "fixjson": "1.1.2",
   "goimports": "v0.23.0",
@@ -13,4 +14,3 @@
   "stylua": "v0.20.0",
   "yamlfmt": "v0.13.0"
 }
-

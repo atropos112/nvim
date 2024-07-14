@@ -118,6 +118,9 @@ M.lsp_configs = {
 		},
 		schemas = require("schemastore").yaml.schemas({
 			extra = {
+				-- INFO: Can find more schemas here:
+				-- https://github.com/SchemaStore/schemastore/blob/master/src/api/json/catalog.json
+				-- Often have to add filematch to "discover" the schema.
 				{
 					name = "Argo Events",
 					description = "Argo Events Event Sources and Sensors",

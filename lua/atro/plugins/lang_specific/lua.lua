@@ -14,7 +14,6 @@ if require("atro.utils.config").IsLangSupported("lua") then
 					"LazyVim",
 					"atro.types",
 					"lazydev.nvim",
-					--"rabbit.nvim/luadoc",
 					"rabbit.nvim",
 				},
 				enabled = function()

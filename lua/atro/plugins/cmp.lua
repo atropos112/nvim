@@ -75,7 +75,7 @@ return {
 	--- Main autocomplete plugin
 	{
 		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+		event = "BufRead",
 		dependencies = {
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
@@ -83,6 +83,7 @@ return {
 			"rafamadriz/friendly-snippets",
 			"hrsh7th/cmp-nvim-lsp",
 			"onsails/lspkind.nvim",
+			"rcarriga/cmp-dap",
 		},
 		config = function()
 			--- cmp is responsible for autocomplete
@@ -103,7 +104,7 @@ return {
 				formatting = {
 					format = lspkind.cmp_format({
 						mode = "symbol", -- show only symbol annotations
-						maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+						maxwidth = 70, -- prevent the popup from showing more than provided characters (e.g 70 will not show more than 50 characters)
 						-- can also be a function to dynamically calculate max width such as
 						-- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
 						ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
@@ -156,6 +157,13 @@ return {
 					{ name = "calc" },
 					{ name = "tmux" },
 					{ name = "emoji" },
+				},
+			})
+
+			--- INFO: For cmp for dap
+			cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+				sources = {
+					{ name = "dap" },
 				},
 			})
 		end,
