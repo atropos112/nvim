@@ -12,7 +12,6 @@ M.lsp_configs = {
 	},
 
 	pylsp = {
-		mason_name = "python-lsp-server",
 		plugins = {
 			pycodestyle = {
 				ignore = {},
@@ -33,9 +32,7 @@ M.lsp_configs = {
 		},
 	},
 
-	rnix = {
-		mason_name = "rnix-lsp",
-	},
+	rnix = {},
 
 	nixd = {
 		skip_install = true,
@@ -44,19 +41,13 @@ M.lsp_configs = {
 		},
 	},
 
-	nil_ls = {
-		mason_name = "nil",
-	},
+	nil_ls = {},
 
-	dockerls = {
-		mason_name = "dockerfile-language-server",
-	},
+	dockerls = {},
 
 	zls = {},
 
-	bashls = {
-		mason_name = "bash-language-server",
-	},
+	bashls = {},
 
 	gopls = {
 		gofumpt = true,
@@ -64,20 +55,15 @@ M.lsp_configs = {
 		skip_on_attach = true,
 	},
 
-	jsonls = {
-		mason_name = "json-lsp",
-	},
+	jsonls = {},
 
-	lua_ls = {
-		mason_name = "lua-language-server",
-	},
+	lua_ls = {},
 
 	omnisharp = {
 		skip_capabilities = true,
 	},
 
 	yamlls = {
-		skip_install = true,
 	},
 }
 

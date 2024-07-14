@@ -12,36 +12,8 @@ local plugins = {
 		"voxelprismatic/rabbit.nvim",
 		event = "BufRead",
 		opts = {
-			colors = {}, -- defaults
-			window = {
-				title = "Rabbit",
-				plugin_name_position = "bottom",
-				emphasis_width = 8,
-				width = 64,
-				height = 24,
-				float = {
-					"bottom",
-					"right",
-				},
-				split = "right",
-				overflow = ":::",
-				path_len = 12,
-			},
 			default_keys = {
-				close = { "<Esc>", "q", "<leader>" },
-				select = { "<CR>" },
-				open = { "<leader>rr" },
-				file_add = { "a" },
-				file_del = { "<Del>" },
-				group = { "A" },
-				group_up = { "-" },
-			},
-			plugin_opts = {},
-			enable = {
-				"history",
-				"reopen",
-				"oxide",
-				"harpoon",
+				open = { "<leader>rb" },
 			},
 		},
 	},

@@ -1,5 +1,49 @@
 ---@meta
 
+---@param name string
+---@return string
+local name_to_binary = function(name)
+	local exceptions = {
+		["lua_ls"] = "lua-language-server",
+		["jsonls"] = "vscode-json-language-server",
+		["yamlls"] = "yaml-language-server",
+		["ruff_fix"] = "ruff",
+		["ruff_format"] = "ruff",
+	}
+
+
+	return exceptions[name] or name
+end
+
+---@param name string
+---@return string
+local name_to_mason_name = function(name)
+	local exceptions = {
+		["ruff_fix"] = "ruff",
+		["ruff_format"] = "ruff",
+		["lua_ls"] = "lua-language-server",
+		["pylsp"] = "python-lsp-server", -- its binary is pylsp though.
+		["rnix"] = "rnix-lsp",
+		["dockerls"] = "dockerfile-language-server",
+		["bashls"] = "bash-language-server",
+		["jsonls"] = "json-lsp",
+		["nil_ls"] = "nil",
+		["yamlls"] = "yaml-language-server",
+	}
+
+	return exceptions[name] or name
+end
+
+---@param name string
+---@return boolean
+local name_to_skip_install = function(name)
+	local exceptions = {
+		"zig fmt",
+	}
+
+	return vim.list_contains(exceptions, name)
+end
+
 ---@class AtroPackage
 ---@field name string The name used by non-mason tools
 ---@field bin_name string The name of the corresponding binary that will appear in the path when installed
@@ -11,27 +55,10 @@ AtroPackage.__index = AtroPackage
 ---@param name string
 ---@return AtroPackage
 function AtroPackage:new(name)
-	local binary_name_exceptions = {
-		["csharp-language-server"] = "csharp-ls",
-		["python-lsp-server"] = "pylsp",
-		["docker-compose-language-service"] = "docker-compose-langserver",
-		["lua_ls"] = "lua-language-server",
-	}
-
-	local mason_name_exceptions = {
-		["ruff_fix"] = "ruff",
-		["ruff_format"] = "ruff",
-		["lua_ls"] = "lua-language-server",
-	}
-
-	local skip_install_exceptions = {
-		["zig fmt"] = true,
-	}
-
 	self.name = name
-	self.bin_name = binary_name_exceptions[name] or name
-	self.mason_name = mason_name_exceptions[name] or name
-	self.skip_install = skip_install_exceptions[name] or false
+	self.bin_name = name_to_binary(name)
+	self.mason_name = name_to_mason_name(name)
+	self.skip_install = name_to_skip_install(name)
 
 	return self
 end

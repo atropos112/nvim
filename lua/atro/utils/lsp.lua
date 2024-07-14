@@ -128,11 +128,10 @@ M.setup_lsp = function(server, settings, lsp)
 	settings.skip_capabilities = nil
 
 	-- mason install
-	local skip_install = settings.skip_install or false
-	if not skip_install then
-		require("atro.utils.load").install(settings.mason_name or server)
-		settings.mason_name = nil
+	if not settings.skip_install then
+		require("atro.utils.load").install(server)
 	end
+	settings.skip_install = nil
 
 	-- Alternative server name (optional)
 	local server_name = settings.server_name or server
