@@ -3,7 +3,7 @@ local o = vim.opt
 --  Other
 o.clipboard = "unnamedplus" -- make copy work with rest of OS
 o.number = true -- show numbers on the left
-o.relativenumber = true -- make those numbers relative
+o.relativenumber = false -- make those numbers relative or not
 o.signcolumn = "yes"
 o.updatetime = 50
 o.termguicolors = true

@@ -34,9 +34,17 @@ return {
 		opts = {},
 	},
 	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = "VeryLazy",
-		main = "ibl",
-		opts = {},
+		"shellRaining/hlchunk.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("hlchunk").setup({
+				chunk = {
+					style = "#00ffff",
+					enable = true,
+					delay = 0,
+					duration = 50,
+				},
+			})
+		end,
 	},
 }
