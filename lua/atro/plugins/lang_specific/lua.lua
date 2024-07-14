@@ -6,17 +6,24 @@ if require("atro.utils.config").IsLangSupported("lua") then
 			dependencies = {
 				"Bilal2453/luvit-meta",
 			},
+			---@type lazydev.Config
 			opts = {
 				library = {
 					"luvit-meta/library",
 					"lazy.nvim",
+					"LazyVim",
 					"atro.types",
+					"lazydev.nvim",
+					--"rabbit.nvim/luadoc",
+					"rabbit.nvim",
 				},
-				-- always enable unless `vim.g.lazydev_enabled = false`
-				-- This is the default
-				enabled = function(_)
-					return vim.g.lazydev_enabled == nil and true or vim.g.lazydev_enabled
+				enabled = function()
+					return true
 				end,
+				integrations = {
+					cmp = true,
+					lspconfig = true,
+				},
 			},
 		},
 	}

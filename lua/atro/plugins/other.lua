@@ -11,9 +11,17 @@ local plugins = {
 	{
 		"voxelprismatic/rabbit.nvim",
 		event = "BufRead",
+		version = "*", -- newest bleeding edge for them types.
 		opts = {
+			---@type Rabbit.Keymap
 			default_keys = {
-				open = { "<leader>rb" },
+				open = { "<leader>r" },
+				close = { "<Esc>", "q", "<leader>" },
+				select = { "<CR>" },
+				file_add = { "a" },
+				file_del = { "<Del>" },
+				group = { "A" },
+				group_up = { "-" },
 			},
 		},
 	},

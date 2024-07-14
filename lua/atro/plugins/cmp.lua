@@ -148,6 +148,7 @@ return {
 					end, { "i", "s" }),
 				}),
 				sources = {
+					{ name = "lazydev" },
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "path" },

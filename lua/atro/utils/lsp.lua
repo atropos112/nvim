@@ -40,9 +40,6 @@ M.on_attach = function(client, bufnr)
 	opts.desc = "See available code actions"
 	set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-	opts.desc = "Smart rename"
-	set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
-
 	opts.desc = "Show buffer diagnostics"
 	set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
@@ -58,8 +55,6 @@ M.on_attach = function(client, bufnr)
 	opts.desc = "Show documentation for what is under cursor"
 	set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
-	opts.desc = "Restart LSP"
-	set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 	require("virtualtypes").on_attach()
 end
 
@@ -74,45 +69,12 @@ end
 --- The settings can contain the following:
 --- skip_on_attach: boolean - if true, will not attach on_attach function
 --- skip_capabilities: boolean - if true, will not attach capabilities
---- mason_name: string - the name of the mason package to install if not already installed.
 --- If not provided will attempt to install using the lsp name, this only installs if the binary is not found.
 --- This is only used if skip_install is not true.
 --- skip_install: boolean - if true, will not attempt to install the mason package (regardless if binary exists or not).
 ---
 --- The keys above are removed in the process from the settings table and what is left is passed to the lsp setup function.
 ---
---- For per-LSP config details look here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
---- below lsp_config dictionary is used in tandem with the setup_lsp function above which conceals a lot of complexity.
---- Here is an example of usage, suppose your typical lsp setup looks like this:
---- lsp.pylsp.setup({
---- 	on_attach = on_attach,
---- 	capabilities = capabilities,
---- 	settings = {
---- 		pylsp = {
---- 			plugins = {
---- 				pycodestyle = {
---- 					ignore = {},
---- 					maxLineLength = 120,
---- 				},
---- 			},
---- 		},
---- 	},
---- })
---- This would translate to having an entry in lsp_configs blow that looks like:
---- lsp_configs = {
---- 	pylsp = {
---- 		mason_name = "python-lsp-server",
----  	skip_capabilities = false,
---- 		plugins = {
---- 			pycodestyle = {
---- 				ignore = {},
---- 				maxLineLength = 120,
---- 			},
---- 		},
---- 	},
---- }
---- where mason_name is typically not needed but necessary for pylsp as it has a different mason name to its lsp name.
---- here skip_capabilities (and skip_on_attach) is set to false by default and is shown above just for demonsrtation purposes.
 ---@param server string
 ---@param settings table
 ---@param lsp table

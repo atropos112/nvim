@@ -25,7 +25,7 @@ end
 local install_from_configs_table = function(configs_table)
 	local is_lang_supported = require("atro.utils.config").IsLangSupported
 
-	for lang, fmts in ipairs(configs_table) do
+	for lang, fmts in pairs(configs_table) do
 		if is_lang_supported(lang) then
 			M.install(fmts)
 		end
