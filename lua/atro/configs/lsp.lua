@@ -49,18 +49,6 @@ M.lsp_configs = {
 				ignore = {},
 				maxLineLength = 120,
 			},
-			rope_completion = {
-				enabled = true,
-			},
-			rope_autoimport = {
-				enabled = true,
-				completions = {
-					enabled = true,
-				},
-				code_actions = {
-					enabled = true,
-				},
-			},
 		},
 	},
 

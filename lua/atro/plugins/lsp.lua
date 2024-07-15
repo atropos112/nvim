@@ -61,14 +61,8 @@ local plugins = {
 		end,
 	},
 	{
-		"atropos112/better-diagnostic-virtual-text",
-		event = "LspAttach",
-		opts = {
-			inline = false,
-			ui = {
-				above = true,
-			},
-		},
+		"sontungexpt/better-diagnostic-virtual-text",
+		lazy = true,
 	},
 }
 
