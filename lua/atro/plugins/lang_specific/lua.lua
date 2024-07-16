@@ -15,6 +15,7 @@ if require("atro.utils.config").IsLangSupported("lua") then
 					"atro.types",
 					"lazydev.nvim",
 					"rabbit.nvim",
+					"which-key.nvim",
 				},
 				enabled = function()
 					return true

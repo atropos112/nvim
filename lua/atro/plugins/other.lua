@@ -54,11 +54,8 @@ local plugins = {
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
 		end,
-		opts = {
-			triggers_blacklist = {
-				n = { "d", "y" },
-			},
-		},
+		---@type wk.Opts
+		opts = {},
 	},
 
 	-- Search for keybindings
