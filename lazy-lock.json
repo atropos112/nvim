@@ -78,6 +78,7 @@
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "34867c69838078df7d6919b130c0541c0b400c47" },
   "nvim-ufo": { "branch": "main", "commit": "1b5f2838099f283857729e820cc05e2b19df7a2c" },
   "nvim-web-devicons": { "branch": "master", "commit": "c0cfc1738361b5da1cd0a962dd6f774cc444f856" },
+  "otter.nvim": { "branch": "main", "commit": "837f258040d0174ff8495584088046f98499b1ac" },
   "outline.nvim": { "branch": "main", "commit": "2175b6da5b7b5be9de14fd3f54383a17f5e4609c" },
   "overseer.nvim": { "branch": "master", "commit": "87526babdb563b9e2f0646b420359389732326dc" },
   "persistent-breakpoints.nvim": { "branch": "main", "commit": "01e43512ef8d137f2b9e5c1c74fd35c37e787b59" },

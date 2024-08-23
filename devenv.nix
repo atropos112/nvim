@@ -4,7 +4,6 @@
   config,
   ...
 }: {
-
   enterShell = ''
     echo
     echo 🦾 Useful project scripts:

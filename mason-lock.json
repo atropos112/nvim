@@ -1,5 +1,8 @@
 {
   "basedpyright": "1.13.3",
+  "bash-language-server": "5.4.0",
+  "beautysh": "6.2.1",
+  "codelldb": "v1.10.0",
   "codespell": "2.3.0",
   "debugpy": "1.8.2",
   "dockerfile-language-server": "0.13.0",
@@ -10,7 +13,11 @@
   "omnisharp": "v1.39.11",
   "prettier": "3.3.3",
   "revive": "v1.3.7",
+  "rust-analyzer": "2024-07-29",
+  "shellharden": "4.3.1",
+  "shfmt": "v3.8.0",
   "staticcheck": "v0.4.7",
   "stylua": "v0.20.0",
+  "taplo": "0.9.3",
   "yamlfmt": "v0.13.0"
 }

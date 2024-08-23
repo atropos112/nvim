@@ -60,10 +60,6 @@ local plugins = {
 			require("inlay-hints").setup()
 		end,
 	},
-	{
-		"sontungexpt/better-diagnostic-virtual-text",
-		lazy = true,
-	},
 }
 
 return plugins

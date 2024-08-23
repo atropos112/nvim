@@ -11,7 +11,6 @@ local name_to_binary = function(name)
 		["ruff_format"] = "ruff",
 	}
 
-
 	return exceptions[name] or name
 end
 

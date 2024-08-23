@@ -1,7 +1,13 @@
 return {
 	TalkToExternal = true,
 	SupportedLanguages = {
+		bash = {
+			LSPs = { "bashls" },
+		},
 		c = {},
+		toml = {
+			LSPs = { "taplo" },
+		},
 		nix = {
 			LSPs = { "nixd" },
 		},
@@ -21,7 +27,7 @@ return {
 			LSPs = { "jsonls" },
 		},
 		python = {
-			LSPs = { "basedpyright" },
+			LSPs = { "pylsp", "basedpyright" },
 			TestAdapter = {
 				author = "nvim-neotest",
 				name = "neotest-python",

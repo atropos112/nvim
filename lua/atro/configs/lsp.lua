@@ -124,6 +124,8 @@ M.lsp_configs = {
 			},
 		}),
 	},
+
+	taplo = {},
 }
 
 return M

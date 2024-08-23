@@ -120,6 +120,7 @@ local plugins = {
 					augend.constant.alias.bool,
 					augend.semver.alias.semver,
 					augend.constant.new({ elements = { "let", "const" } }),
+					augend.constant.new({ elements = { "True", "False" } }),
 				},
 			})
 		end,
@@ -144,6 +145,13 @@ local plugins = {
 				desc = "Search on current file",
 			})
 		end,
+	},
+	{
+		"jmbuhr/otter.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {},
 	},
 }
 

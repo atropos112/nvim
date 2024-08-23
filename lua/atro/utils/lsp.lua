@@ -4,23 +4,63 @@ local M = {}
 ---@param bufnr number
 ---@return nil
 M.on_attach = function(client, bufnr)
-	-- Better diagnostic virtual text, needs to take over hover and signature help handlers
-	require("better-diagnostic-virtual-text.api").setup_buf(bufnr, {
-		inline = false,
-		ui = {
-			above = true,
-		},
-	})
 	require("inlay-hints").on_attach(client, bufnr)
-	require("nvim-navic").attach(client, bufnr)
 
-	local lsp = vim.lsp
-	lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
-		border = "single",
-		focusable = false,
-		relative = "cursor",
-	})
-	lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, { border = "single" })
+	if client.name == "basedpyright" then
+		client.server_capabilities = {
+			documentFormattingProvider = false,
+			documentRangeFormattingProvider = false,
+			hoverProvider = false,
+			signatureHelpProvider = false,
+			definitionProvider = false,
+			typeDefinitionProvider = false,
+			implementationProvider = false,
+			referencesProvider = false,
+			documentHighlightProvider = false,
+			documentSymbolProvider = false,
+			workspaceSymbolProvider = false,
+			renameProvider = false,
+			codeLensProvider = false,
+			documentLinkProvider = false,
+			colorProvider = false,
+			semanticTokensProvider = false,
+			foldingRangeProvider = false,
+			executeCommandProvider = false,
+			callHierarchyProvider = false,
+			selectionRangeProvider = false,
+			linkedEditingRangeProvider = false,
+
+			-- Keeping the defaults below
+			codeActionProvider = {
+				codeActionKinds = { "quickfix", "source.organizeImports" },
+				workDoneProgress = true,
+			},
+			completionProvider = {
+				completionItem = {
+					labelDetailsSupport = true,
+				},
+				resolveProvider = true,
+				triggerCharacters = { ".", "[", '"', "'" },
+				workDoneProgress = true,
+			},
+			inlayHintProvider = true,
+
+			textDocumentSync = {
+				change = 2,
+				openClose = true,
+				save = {
+					includeText = false,
+				},
+				willSave = false,
+				willSaveWaitUntil = false,
+			},
+		}
+	end
+
+	-- Only attach navic to one LSP client if it supports documentSymbolProvider
+	if client.server_capabilities.documentSymbolProvider and not (vim.b[bufnr].navic_client_id ~= nil and vim.b[bufnr].navic_client_name ~= client.name) then
+		require("nvim-navic").attach(client, bufnr)
+	end
 
 	local opts = { noremap = true, silent = true }
 	opts.buffer = bufnr
