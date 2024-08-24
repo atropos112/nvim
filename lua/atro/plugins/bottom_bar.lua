@@ -4,6 +4,7 @@ return {
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"linrongbin16/lsp-progress.nvim",
+			"folke/noice.nvim",
 		},
 		event = "VeryLazy",
 		config = function()
@@ -11,10 +12,21 @@ return {
 				icons_enabled = true,
 				theme = "catppuccin",
 				sections = {
+					lualine_a = {},
+					lualine_b = { "branch", "diff", "diagnostics" },
 					lualine_c = {
 						-- invoke `progress` here.
 						require("lsp-progress").progress,
 					},
+					lualine_x = {
+						{
+							require("noice").api.statusline.mode.get,
+							cond = require("noice").api.statusline.mode.has,
+							color = { fg = "#ff9e64" },
+						},
+					},
+					lualine_y = { "progress" },
+					lualine_z = { "location" },
 				},
 			})
 

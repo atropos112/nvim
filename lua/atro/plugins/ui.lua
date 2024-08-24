@@ -3,10 +3,18 @@ return {
 		"folke/noice.nvim",
 		event = "VeryLazy",
 		opts = {
-			lsp = {
-				hover = {
-					enabled = false, -- to allow better diagnostic virtual text
+			-- Don't want written messages to be shown
+			routes = {
+				{
+					filter = {
+						event = "msg_show",
+						kind = "",
+						find = "written",
+					},
+					opts = { skip = true },
 				},
+			},
+			lsp = {
 				signature = {
 					enabled = false,
 				},
