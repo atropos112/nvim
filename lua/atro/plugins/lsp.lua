@@ -6,7 +6,6 @@ local plugins = {
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
 			"SmiteshP/nvim-navic",
-			"atropos112/better-diagnostic-virtual-text",
 			"b0o/schemastore.nvim",
 		},
 		config = function()

@@ -29,17 +29,6 @@ return {
 				table.insert(sources, null_ls.builtins.diagnostics.statix)
 				table.insert(sources, null_ls.builtins.diagnostics.deadnix)
 			end
-			if is_lang_supported("go") then
-				table.insert(sources, null_ls.builtins.diagnostics.staticcheck)
-				table.insert(sources, null_ls.builtins.code_actions.impl)
-				table.insert(sources, null_ls.builtins.code_actions.gomodifytags)
-				table.insert(sources, null_ls.builtins.formatting.goimports)
-				install({
-					"impl",
-					"gomodifytags",
-					"staticcheck",
-				})
-			end
 
 			null_ls.setup({ sources = sources })
 		end,
