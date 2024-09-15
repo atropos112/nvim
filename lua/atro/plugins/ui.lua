@@ -1,5 +1,19 @@
 return {
 	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("tiny-inline-diagnostic").setup({
+				options = {
+					show_source = true,
+					multilines = true,
+					throttle = 0,
+				},
+			})
+			vim.diagnostic.config({ virtual_text = false })
+		end,
+	},
+	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
 		opts = {
