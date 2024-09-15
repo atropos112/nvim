@@ -22,24 +22,14 @@ end
 
 ---@param configs_table table
 ---@return nil
-local install_from_configs_table = function(configs_table)
+M.install_from_configs_table = function(configs_table)
 	local is_lang_supported = require("atro.utils.config").IsLangSupported
 
-	for lang, fmts in pairs(configs_table) do
+	for lang, item in pairs(configs_table) do
 		if is_lang_supported(lang) then
-			M.install(fmts)
+			M.install(item)
 		end
 	end
-end
-
----@return nil
-M.install_fmts = function()
-	install_from_configs_table(require("atro.configs.fmt").fmt_configs)
-end
-
----@return nil
-M.install_linters = function()
-	install_from_configs_table(require("atro.configs.lint").linter_configs)
 end
 
 ---@param directory string A path to a directory of which all lua files are to be loaded

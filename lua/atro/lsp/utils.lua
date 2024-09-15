@@ -1,4 +1,5 @@
 local M = {}
+local lsp_configs = require("atro.lsp.configs").lsp_configs
 
 ---@param client table
 ---@param bufnr number
@@ -106,7 +107,7 @@ end
 ---@return table
 M.get_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
+	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 	return capabilities
 end
 
@@ -166,11 +167,10 @@ M.setup_lsp = function(server, settings, lsp)
 end
 
 M.setup_lsps = function()
-	local lsp_configs = require("atro.configs.lsp").lsp_configs
 	local lsp = require("lspconfig")
 	for _, v in ipairs(require("atro.utils.config").SelectedLSPs()) do
-		if lsp_configs[v] then
-			lsp = M.setup_lsp(v, lsp_configs[v], lsp)
+		if lsp_configs()[v] then
+			lsp = M.setup_lsp(v, lsp_configs()[v], lsp)
 		else
 			error("LSP not configured: " .. v)
 		end

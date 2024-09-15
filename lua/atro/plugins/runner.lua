@@ -7,8 +7,39 @@ return {
 			"CompilerRedo",
 		},
 		dependencies = { "stevearc/overseer.nvim" },
-		opts = {},
+		keys = {
+			{
+				mode = { "n" },
+				"<Leader>cc",
+				"<cmd>CompilerOpen<cr>",
+				desc = "Open the compiler window",
+			},
+			{
+				mode = { "n" },
+				"<Leader>cs",
+				"<cmd>CompilerStop<cr>",
+				desc = "Toggle the compiler results",
+			},
+			{
+				mode = { "n" },
+				"<Leader>ct",
+				"<cmd>CompilerToggleResults<cr>",
+				desc = "Toggle the compiler results",
+			},
+			{
+				mode = { "n" },
+				"<Leader>cr",
+				"<cmd>CompilerStop<cr> <cmd>CompilerRedo<cr>",
+				desc = "Recompile the current file",
+			},
+		},
+		config = function()
+			require("compiler").setup({})
+		end,
+		-- opts = {},
 	},
+
+	-- INFO: Can make custom tasks with https://github.com/stevearc/overseer.nvim/blob/master/doc/guides.md#custom-tasks
 	{
 		"stevearc/overseer.nvim",
 		event = "VeryLazy",
