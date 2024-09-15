@@ -217,4 +217,21 @@ return {
 			line_opacity = 0.30,
 		},
 	},
+	{
+		"AckslD/nvim-neoclip.lua",
+		-- lazy = true,
+		event = "BufEnter",
+		dependencies = {
+			"kkharji/sqlite.lua",
+			"nvim-telescope/telescope.nvim",
+		},
+		keys = {
+			{
+				"<leader>pp",
+				"<cmd>Telescope neoclip<cr>",
+				desc = "Open neoclip",
+			},
+		},
+		opts = {},
+	},
 }

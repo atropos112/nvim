@@ -18,7 +18,7 @@ if require("atro.utils.config").IsLangSupported("markdown") then
 			event = "BufEnter",
 			opts = {},
 			keys = {
-				{ "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
+				{ "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
 			},
 		},
 		{
