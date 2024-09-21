@@ -232,6 +232,8 @@ return {
 				desc = "Open neoclip",
 			},
 		},
-		opts = {},
+		opts = {
+			enable_persistent_history = true,
+		},
 	},
 }

@@ -9,11 +9,16 @@ return {
 		end,
 	},
 	{
-		"rmagatti/auto-session",
+		"jedrzejboczar/possession.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
 		opts = {
-			log_level = "error",
-			cwd_change_handling = {
-				restore_upcoming_session = true, -- Disabled by default, set to true to enable
+			autoload = "last_cwd",
+			autosave = {
+				current = true,
+				cwd = true,
+				tmp = true,
 			},
 		},
 	},
