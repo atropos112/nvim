@@ -41,7 +41,7 @@ local plugins = {
 		},
 		config = function()
 			require("mason-lock").setup({
-				lockfile_path = vim.fn.stdpath("config") .. "/mason-lock.json", -- (default)
+				lockfile_path = os.getenv("HOME") .. "/.config/nvim/mason-lock.json",
 			})
 		end,
 	},
