@@ -17,6 +17,28 @@ M.dap_configs = function()
 				debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
 			},
 			rust = {}, -- Entirely handled by rustacean.nvim plugin
+			cs = {
+
+				adapters = {
+					netcoredbg = {
+						type = "executable",
+						command = "netcoredbg",
+						args = { "--interpreter=vscode" },
+					},
+				},
+
+				configs = {
+					{
+						type = "netcoredbg",
+						name = "launch - netcoredbg",
+						request = "launch",
+						program = function()
+							---@diagnostic disable-next-line
+							return vim.fn.input("Path to dll", vim.fn.getcwd() .. "/bin/Debug/", "file")
+						end,
+					},
+				},
+			},
 		}
 	end
 
