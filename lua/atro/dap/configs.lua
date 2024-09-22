@@ -17,20 +17,6 @@ M.dap_configs = function()
 				debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
 			},
 			rust = {}, -- Entirely handled by rustacean.nvim plugin
-			lua = {
-				adapters = {
-					nlua = function(callback, config)
-						callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
-					end,
-				},
-				configs = {
-					{
-						type = "nlua",
-						request = "attach",
-						name = "Attach to running Neovim instance",
-					},
-				},
-			},
 		}
 	end
 

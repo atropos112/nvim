@@ -18,57 +18,6 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.definitionProvider = true
 	end
 
-	if client.name == "basedpyright" then
-		client.server_capabilities = {
-			documentFormattingProvider = false,
-			documentRangeFormattingProvider = false,
-			hoverProvider = false,
-			signatureHelpProvider = false,
-			definitionProvider = false,
-			typeDefinitionProvider = false,
-			implementationProvider = false,
-			referencesProvider = false,
-			documentHighlightProvider = false,
-			documentSymbolProvider = false,
-			workspaceSymbolProvider = false,
-			renameProvider = false,
-			codeLensProvider = false,
-			documentLinkProvider = false,
-			colorProvider = false,
-			semanticTokensProvider = false,
-			foldingRangeProvider = false,
-			executeCommandProvider = false,
-			callHierarchyProvider = false,
-			selectionRangeProvider = false,
-			linkedEditingRangeProvider = false,
-
-			-- Keeping the defaults below
-			codeActionProvider = {
-				codeActionKinds = { "quickfix", "source.organizeImports" },
-				workDoneProgress = true,
-			},
-			completionProvider = {
-				completionItem = {
-					labelDetailsSupport = true,
-				},
-				resolveProvider = true,
-				triggerCharacters = { ".", "[", '"', "'" },
-				workDoneProgress = true,
-			},
-			inlayHintProvider = true,
-
-			textDocumentSync = {
-				change = 2,
-				openClose = true,
-				save = {
-					includeText = false,
-				},
-				willSave = false,
-				willSaveWaitUntil = false,
-			},
-		}
-	end
-
 	-- Only attach navic to one LSP client if it supports documentSymbolProvider
 	if client.server_capabilities.documentSymbolProvider and not (vim.b[bufnr].navic_client_id ~= nil and vim.b[bufnr].navic_client_name ~= client.name) then
 		require("nvim-navic").attach(client, bufnr)
