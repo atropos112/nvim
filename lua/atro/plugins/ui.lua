@@ -15,7 +15,9 @@ return {
 	},
 	{
 		"folke/noice.nvim",
-		event = "VeryLazy",
+		version = "*",
+		lazy = false,
+		--event = "VeryLazy",
 		opts = {
 			-- Don't want written messages to be shown
 			routes = {
@@ -44,6 +46,7 @@ return {
 	},
 	{
 		"rcarriga/nvim-notify",
+		version = "*",
 		event = "VeryLazy",
 		opts = {},
 	},
