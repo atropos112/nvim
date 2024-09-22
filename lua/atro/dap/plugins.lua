@@ -222,6 +222,14 @@ M.dap_plugins_and_load = function()
 		})
 	end
 
+	if langSupported("lua") then
+		table.insert(_G._dap_plugins, {
+			"jbyuki/one-small-step-for-vimkind",
+			ft = "lua",
+			lazy = false,
+		})
+	end
+
 	return _G._dap_plugins
 end
 

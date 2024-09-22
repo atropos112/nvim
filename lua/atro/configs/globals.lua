@@ -22,16 +22,3 @@ if sqlite_so_path then
 	g.sqlite_clib_path = sqlite_so_path
 end
 
----@type rustaceanvim.Opts | fun():rustaceanvim.Opts | nil
-g.rustaceanvim = function()
-	local dap_cfgs = require("atro.dap.configs").dap_configs()
-	local codelldb_path = dap_cfgs.rust.codelldb_path
-	local liblldb_path = dap_cfgs.rust.liblldb_path
-
-	local cfg = require("rustaceanvim.config")
-	return {
-		dap = {
-			adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
-		},
-	}
-end

@@ -1,7 +1,11 @@
 local M = {}
 
 M.lint_plugins = function()
-	return {
+	if _G.lint_plugins then
+		return _G.lint_plugins
+	end
+
+	_G.lint_plugins = {
 		{
 			"mfussenegger/nvim-lint",
 			event = { "BufRead", "BufNewFile" },
@@ -30,6 +34,14 @@ M.lint_plugins = function()
 			end,
 		},
 	}
+
+	vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+		callback = function()
+			require("lint").try_lint()
+		end,
+	})
+
+	return _G.lint_plugins
 end
 
 return M

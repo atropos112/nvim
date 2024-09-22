@@ -16,44 +16,18 @@ M.dap_configs = function()
 			python = {
 				debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
 			},
-			rust = {
-				codelldb_path = "~/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb",
-				liblldb_path = "~/.local/share/nvim/mason/packages/codelldb/extension/lldb/lib/liblldb.so",
-
+			rust = {}, -- Entirely handled by rustacean.nvim plugin
+			lua = {
 				adapters = {
-					codelldb = {
-						type = "server",
-						port = "${port}",
-						executable = {
-							-- assuming codelldb is in your PATH
-							command = "codelldb",
-							args = { "--port", "${port}" },
-						},
-					},
+					nlua = function(callback, config)
+						callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
+					end,
 				},
-
 				configs = {
 					{
-						name = "Debug with codelldb",
-						type = "codelldb",
-						request = "launch",
-						program = function()
-							-- we build first
-							vim.fn.jobstart("cargo build", {
-								on_exit = function(_, code)
-									if code == 0 then
-										vim.notify("Build successful")
-									else
-										vim.notify("Build failed")
-									end
-								end,
-							})
-							local parent = vim.fn.getcwd()
-							-- then we run the program
-							return parent .. "/target/debug/" .. vim.fn.fnamemodify(parent, ":t")
-						end,
-						cwd = "${workspaceFolder}",
-						stopOnEntry = false,
+						type = "nlua",
+						request = "attach",
+						name = "Attach to running Neovim instance",
 					},
 				},
 			},

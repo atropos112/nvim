@@ -42,6 +42,11 @@ return {
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
+
+			-- INFO: This plugin is nice but not really necessary on its own
+			-- However noice.nvim has dap selection broken and this plugin "plugs in" a version
+			-- that works (over-writting the buggy behaviour)
+			"stevearc/dressing.nvim",
 		},
 	},
 	{

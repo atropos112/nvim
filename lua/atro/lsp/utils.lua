@@ -7,6 +7,17 @@ local lsp_configs = require("atro.lsp.configs").lsp_configs
 M.on_attach = function(client, bufnr)
 	require("inlay-hints").on_attach(client, bufnr)
 
+	-- WARN: Python is a very special case. I have two LSPs there and basedpyright's go to def doesn't always work.
+	-- So turning it off, only relying on pylsp's go to definition.
+	-- Adjust capabilities based on the LSP client
+	if client.name == "basedpyright" then
+		-- Disable GoToDefinition for basedpyright
+		client.server_capabilities.definitionProvider = false
+	elseif client.name == "pylsp" then
+		-- Ensure GoToDefinition is enabled for pylsp
+		client.server_capabilities.definitionProvider = true
+	end
+
 	if client.name == "basedpyright" then
 		client.server_capabilities = {
 			documentFormattingProvider = false,

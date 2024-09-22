@@ -38,6 +38,7 @@ end
 local name_to_skip_install = function(name)
 	local exceptions = {
 		"zig fmt",
+		"nlua",
 	}
 
 	return vim.list_contains(exceptions, name)
