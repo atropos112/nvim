@@ -181,6 +181,11 @@ local plugins = {
 			"nvim-treesitter/nvim-treesitter",
 		},
 	},
+	{
+		"mistweaverco/kulala.nvim",
+		lazy = true,
+		opts = {},
+	},
 }
 
 if _G.user_conf.TalkToExternal == true then

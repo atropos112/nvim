@@ -112,25 +112,8 @@ M.lsp_configs = function()
 					enable = false, -- using schemastore plugin instead (more functionalities)
 					url = "", -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
 				},
-				schemas = require("schemastore").yaml.schemas({
-					extra = {
-						-- INFO: Can find more schemas here:
-						-- https://github.com/SchemaStore/schemastore/blob/master/src/api/json/catalog.json
-						-- Often have to add filematch to "discover" the schema.
-						{
-							name = "Argo Events",
-							description = "Argo Events Event Sources and Sensors",
-							url = "https://raw.githubusercontent.com/argoproj/argo-events/master/api/jsonschema/schema.json",
-							fileMatch = { "*.ae.yaml", "*.ae.yml" },
-						},
-						{
-							name = "Argo Workflow",
-							description = "Argo Workflow configuration file",
-							url = "https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json",
-							fileMatch = { "*.awf.yaml", "*.awf.yml" },
-						},
-					},
-				}),
+
+				schemas = require("atro.lsp.yaml_schemas").yaml_schemas(),
 			},
 
 			taplo = {},

@@ -8,6 +8,7 @@
   "fixjson": "1.1.2",
   "goimports": "v0.25.0",
   "jsonlint": "1.6.3",
+  "netcoredbg": "3.1.1-1042",
   "omnisharp": "v1.39.12",
   "prettier": "3.3.3",
   "revive": "v1.3.9",

@@ -19,29 +19,29 @@ if require("atro.utils.config").IsLangSupported("go") then
 			end,
 		},
 		-- Golang plugin (all the lagnuage niceties in one plugin)
-		-- {
-		-- 	"fatih/vim-go",
-		-- 	ft = "go",
-		-- 	dependencies = {
-		-- 		"mfussenegger/nvim-lint",
-		-- 		"williamboman/mason.nvim",
-		-- 	},
-		-- },
-
 		{
-			"ray-x/go.nvim",
-			dependencies = { -- optional packages
-				"ray-x/guihua.lua",
-				"neovim/nvim-lspconfig",
-				"nvim-treesitter/nvim-treesitter",
+			"fatih/vim-go",
+			ft = "go",
+			dependencies = {
+				"mfussenegger/nvim-lint",
+				"williamboman/mason.nvim",
 			},
-			config = function()
-				require("go").setup()
-			end,
-			event = { "CmdlineEnter" },
-			ft = { "go", "gomod" },
-			build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 		},
+
+		-- {
+		-- 	"ray-x/go.nvim",
+		-- 	dependencies = { -- optional packages
+		-- 		"ray-x/guihua.lua",
+		-- 		"neovim/nvim-lspconfig",
+		-- 		"nvim-treesitter/nvim-treesitter",
+		-- 	},
+		-- 	config = function()
+		-- 		require("go").setup()
+		-- 	end,
+		-- 	event = { "CmdlineEnter" },
+		-- 	ft = { "go", "gomod" },
+		-- 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+		-- },
 		-- Allows implementing interfaces
 		{
 			"edolphin-ydf/goimpl.nvim",

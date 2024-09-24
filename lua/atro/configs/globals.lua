@@ -22,3 +22,8 @@ if sqlite_so_path then
 	g.sqlite_clib_path = sqlite_so_path
 end
 
+vim.filetype.add({
+	extension = {
+		["http"] = "http",
+	},
+})
