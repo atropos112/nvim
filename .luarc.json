@@ -1,5 +1,6 @@
 {
     "diagnostics.globals": [
-        "init_debug"
+        "init_debug",
+        "Layers"
     ]
 }

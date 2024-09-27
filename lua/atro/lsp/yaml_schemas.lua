@@ -34,25 +34,72 @@ M.yaml_schemas = function()
 				name = "Cnpg-Cluster",
 				description = "CNPG Cluster configuration file",
 				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/postgresql.cnpg.io/cluster_v1.json",
-				fileMatch = { "*.cnpg.cluster.yml", "*.cnpg.cluster.yaml" },
+				fileMatch = { "*.psql.yml", "*.psql.yaml", "psql.yaml", "psql.yml" },
 			},
 			{
 				name = "Cnpg-ScheduledBackup",
 				description = "CNPG ScheduledBackup configuration file",
 				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/postgresql.cnpg.io/scheduledbackup_v1.json",
-				fileMatch = { "*.cnpg.backup.yml", "*.cnpg.backup.yaml" },
+				fileMatch = { "*.psql.backup.yml", "*.psql.backup.yaml", "psql.backup.yaml", "psql.backup.yml" },
 			},
 			{
 				name = "VM-PodScrape",
 				description = "VictoriaMetrics PodScrape configuration file",
 				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/operator.victoriametrics.com/vmpodscrape_v1beta1.json",
-				fileMatch = { "*.vm.podscrape.yml", "*.vm.podscrape.yaml" },
+				fileMatch = { "*.vm.ps.yml", "*.vm.ps.yaml" },
 			},
 			{
 				name = "ExtSecrets-SecretStore",
 				description = "External Secrets SecretStore configuration file",
 				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/external-secrets.io/secretstore_v1beta1.json",
-				fileMatch = { "*.secretstore.yml", "*.secretstore.yaml" },
+				fileMatch = { "*.extsec.store.yml", "*extsec.store.yaml", "extsec.store.yaml", "extsec.store.yml" },
+			},
+
+			{
+				name = "ExtSecrets-ExternalSecret",
+				description = "External Secrets ExternalSecret configuration file",
+				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/external-secrets.io/externalsecret_v1beta1.json",
+				fileMatch = { "*.extsec.yml", "*extsec.yaml", "extsec.yaml", "extsec.yml" },
+			},
+			{
+				name = "ExtSecrets-ClusterExternalSecret",
+				description = "External Secrets ClusterExternalSecret configuration file",
+				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/external-secrets.io/clusterexternalsecret_v1beta1.json",
+				fileMatch = { "*.extsec.cluster.yml", "*extsec.cluster.yaml" },
+			},
+
+			{
+				name = "Atrok AppBundle",
+				description = "Atrok App bundle configuration",
+				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/atro.xyz/appbundle_v1alpha1.json",
+				fileMatch = { "*.ab.yml", "*.ab.yaml" },
+			},
+
+			{
+				name = "Atrok AppBundleBase",
+				description = "Atrok App bundle base configuration",
+				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/atro.xyz/appbundlebase_v1alpha1.json",
+				fileMatch = { "*.abb.yml", "*.abb.yaml" },
+			},
+
+			{
+				name = "DragonFly",
+				description = "DragonFly configuration",
+				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/dragonflydb.io/dragonfly_v1alpha1.json",
+				fileMatch = { "dragonfly.yaml", "dragonfly.yml", "*.df.yaml", "*.df.yml" },
+			},
+
+			{
+				name = "ArgoCD Application",
+				description = "ArgoCD Application configuration",
+				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/argoproj.io/application_v1alpha1.json",
+				fileMatch = { "*.app.yaml", "*.app.yml" },
+			},
+			{
+				name = "ArgoCD ApplicationSet",
+				description = "ArgoCD ApplicationSet configuration",
+				url = "https://raw.githubusercontent.com/atropos112/crd-schemas/refs/heads/main/argoproj.io/applicationset_v1alpha1.json",
+				fileMatch = { "*.appset.yaml", "*.appset.yml" },
 			},
 		},
 	})

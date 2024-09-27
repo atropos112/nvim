@@ -186,6 +186,52 @@ local plugins = {
 		lazy = true,
 		opts = {},
 	},
+	{
+		"cenk1cenk2/jq.nvim",
+		lazy = true,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"grapp-dev/nui-components.nvim",
+		},
+		opts = {},
+		keys = {
+			{
+				"<leader>q",
+				function()
+					require("jq").run({
+						commands = {
+							{
+								command = "yq",
+								filetype = "yaml",
+								arguments = "-r",
+							},
+							{
+								command = "jq",
+								filetype = "json",
+								arguments = "-r",
+							},
+							{
+								command = "yq",
+								filetype = "yml",
+								arguments = "-r",
+							},
+							{
+								command = "xq",
+								filetype = "xml",
+								arguments = "-r",
+							},
+						},
+					})
+				end,
+				desc = "Jq",
+			},
+		},
+	},
+	{
+		"anuvyklack/hydra.nvim",
+		lazy = true,
+	},
 }
 
 if _G.user_conf.TalkToExternal == true then
