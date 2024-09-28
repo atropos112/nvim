@@ -42,6 +42,7 @@ return {
 			set("n", ";g", builtin.live_grep, {})
 			set("n", ";o", builtin.oldfiles, {})
 			set("n", ";b", builtin.buffers, {})
+			set("n", ";p", builtin.find_files, {})
 		end,
 	},
 
