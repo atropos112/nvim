@@ -42,7 +42,7 @@ return {
 			set("n", ";g", builtin.live_grep, {})
 			set("n", ";o", builtin.oldfiles, {})
 			set("n", ";b", builtin.buffers, {})
-			set("n", ";p", builtin.find_files, {})
+			set("n", ";f", builtin.find_files, {})
 		end,
 	},
 
@@ -55,7 +55,7 @@ return {
 			require("telescope").load_extension("smart_open")
 		end,
 		keys = {
-			{ ";f", "<cmd>Telescope smart_open<CR>", desc = "Telescope file search" },
+			{ ";p", "<cmd>Telescope smart_open<CR>", desc = "Telescope file search" },
 		},
 		dependencies = {
 			"kkharji/sqlite.lua",

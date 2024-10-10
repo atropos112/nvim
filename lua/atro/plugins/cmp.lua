@@ -20,11 +20,7 @@ return {
 			local is_lang_supported = require("atro.utils.config").IsLangSupported
 			local null_ls = require("null-ls")
 
-			-- INFO: List of available linters can be found here
-			-- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
-			local sources = { null_ls.builtins.diagnostics.codespell }
-			install("codespell")
-
+			local sources = {}
 			if is_lang_supported("nix") then
 				table.insert(sources, null_ls.builtins.diagnostics.statix)
 				table.insert(sources, null_ls.builtins.diagnostics.deadnix)

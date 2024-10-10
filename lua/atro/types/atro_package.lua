@@ -9,6 +9,7 @@ local name_to_binary = function(name)
 		["yamlls"] = "yaml-language-server",
 		["ruff_fix"] = "ruff",
 		["ruff_format"] = "ruff",
+		["golangcilint"] = "golangci-lint",
 	}
 
 	return exceptions[name] or name
@@ -28,6 +29,7 @@ local name_to_mason_name = function(name)
 		["jsonls"] = "json-lsp",
 		["nil_ls"] = "nil",
 		["yamlls"] = "yaml-language-server",
+		["golangcilint"] = "golangci-lint",
 	}
 
 	return exceptions[name] or name
