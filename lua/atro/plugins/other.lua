@@ -232,6 +232,13 @@ local plugins = {
 		"anuvyklack/hydra.nvim",
 		lazy = true,
 	},
+	{
+		"csessh/stopinsert.nvim",
+		event = "VeryLazy",
+		opts = {
+			idle_time_ms = 1000 * 60 * 60, -- 1 hour
+		},
+	},
 }
 
 if _G.user_conf.TalkToExternal == true then
