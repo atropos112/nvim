@@ -1,7 +1,13 @@
 return {
 	{
 		"numToStr/Comment.nvim",
-		opts = {},
+		event = "BufRead",
+		opts = {
+			mappings = {
+				basic = true,
+				extra = true,
+			},
+		},
 	},
 	{
 		"smoka7/multicursors.nvim",
@@ -103,7 +109,7 @@ return {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		-- lazy = true,
+		lazy = true,
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				textobjects = {

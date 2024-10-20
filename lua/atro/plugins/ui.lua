@@ -16,8 +16,7 @@ return {
 	{
 		"folke/noice.nvim",
 		version = "*",
-		lazy = false,
-		--event = "VeryLazy",
+		event = "VeryLazy",
 		opts = {
 			-- Don't want written messages to be shown
 			routes = {

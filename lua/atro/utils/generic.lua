@@ -53,4 +53,30 @@ M.dir_exists = function(path)
 	return stat and stat.type == "directory"
 end
 
+--- @param t1 table
+--- @param t2 table
+--- @retun table
+M.TableConcat = function(t1, t2)
+	for i = 1, #t2 do
+		t1[#t1 + 1] = t2[i]
+	end
+	return t1
+end
+
+--- @param list table<string>
+--- @return table<string>
+M.Deduplicate = function(list)
+	local seen = {}
+	local result = {}
+
+	for _, value in ipairs(list) do
+		if not seen[value] then
+			seen[value] = true
+			table.insert(result, value)
+		end
+	end
+
+	return result
+end
+
 return M

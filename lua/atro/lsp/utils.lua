@@ -1,5 +1,6 @@
 local M = {}
 local lsp_configs = require("atro.lsp.configs").lsp_configs
+local install = require("atro.installer.installer").ensure_installed
 
 ---@param client table
 ---@param bufnr number
@@ -86,24 +87,21 @@ end
 ---@param lsp table
 ---@return table
 M.setup_lsp = function(server, settings, lsp)
-	settings = settings or {}
+	local modified_settings = settings or {}
 
 	-- skip's
-	local skip_on_attach = settings.skip_on_attach or false
-	settings.skip_on_attach = nil -- remove the key
+	local skip_on_attach = modified_settings.skip_on_attach or false
+	modified_settings.skip_on_attach = nil -- remove the key
 
-	local skip_capabilities = settings.skip_capabilities or false
-	settings.skip_capabilities = nil
+	local skip_capabilities = modified_settings.skip_capabilities or false
+	modified_settings.skip_capabilities = nil
 
-	-- mason install
-	if not settings.skip_install then
-		require("atro.utils.load").install(server)
-	end
-	settings.skip_install = nil
+	-- used for mason install
+	modified_settings.skip_install = nil
 
 	-- Alternative server name (optional)
-	local server_name = settings.server_name or server
-	settings.server_name = nil
+	local server_name = modified_settings.server_name or server
+	modified_settings.server_name = nil
 
 	-- create lsp settings
 	local lsp_settings = {
@@ -111,14 +109,14 @@ M.setup_lsp = function(server, settings, lsp)
 	}
 
 	-- By now settings should only have the LSP specific settings not any special keys of mine.
-	lsp_settings.settings[server_name] = settings or {}
+	lsp_settings.settings[server_name] = modified_settings or {}
 
 	if not skip_on_attach then
-		lsp_settings.on_attach = settings.on_attach or M.on_attach
+		lsp_settings.on_attach = modified_settings.on_attach or M.on_attach
 	end
 
 	if not skip_capabilities then
-		lsp_settings.capabilities = settings.capabilities or M.get_capabilities()
+		lsp_settings.capabilities = modified_settings.capabilities or M.get_capabilities()
 	end
 
 	lsp[server].setup(lsp_settings)
@@ -128,7 +126,7 @@ end
 
 M.setup_lsps = function()
 	local lsp = require("lspconfig")
-	for _, v in ipairs(require("atro.utils.config").SelectedLSPs()) do
+	for _, v in ipairs(require("atro.utils.config").UserSelectedLSPs()) do
 		if lsp_configs()[v] then
 			lsp = M.setup_lsp(v, lsp_configs()[v], lsp)
 		else

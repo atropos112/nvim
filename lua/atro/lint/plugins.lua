@@ -36,7 +36,6 @@ M.lint_plugins = function()
 					"-",
 				}
 
-				require("atro.lint.utils").install_linters()
 				lint.linters_by_ft = require("atro.lint.configs").linter_configs()
 			end,
 		},

@@ -5,10 +5,8 @@ M.fmt_plugins = function()
 	local plugins = {
 		{
 			"stevearc/conform.nvim",
-			event = { "BufRead", "BufNewFile" },
+			event = "VeryLazy",
 			config = function()
-				require("atro.fmt.utils").install_fmts()
-
 				local conform = require("conform")
 
 				-- custom settings

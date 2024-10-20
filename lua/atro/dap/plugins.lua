@@ -8,7 +8,7 @@ M.dap_plugins_and_load = function()
 	local langSupported = require("atro.utils.config").IsLangSupported
 	local set = vim.keymap.set
 	local dap_configs = require("atro.dap.configs").dap_configs()
-	local install = require("atro.utils.load").install
+	local install = require("atro.installer.installer").ensure_installed
 
 	-- NOTE: When loading dap configurations for a given language we either:
 	-- - Load it via plugin.
@@ -72,7 +72,6 @@ M.dap_plugins_and_load = function()
 				for lang, config in pairs(dap_configs) do
 					if config.adapters then
 						for adapter, adapter_config in pairs(config.adapters) do
-							install(adapter)
 							dap.adapters[adapter] = adapter_config
 						end
 					end
@@ -84,6 +83,7 @@ M.dap_plugins_and_load = function()
 		},
 		{
 			"Weissle/persistent-breakpoints.nvim",
+			event = "BufRead",
 			dependencies = {
 				"mfussenegger/nvim-dap",
 			},
@@ -108,6 +108,7 @@ M.dap_plugins_and_load = function()
 		},
 		{
 			"lucaSartore/nvim-dap-exception-breakpoints",
+			event = "VeryLazy",
 			dependencies = { "mfussenegger/nvim-dap" },
 
 			config = function()
@@ -215,9 +216,7 @@ M.dap_plugins_and_load = function()
 				"mfussenegger/nvim-dap",
 			},
 			config = function()
-				require("atro.utils.load").install("debugpy")
 				local dappy = require("dap-python")
-				install("debugpy")
 				local dap_path = require("atro.dap.configs").dap_configs().python.debugpy_python_path
 
 				if dap_path then

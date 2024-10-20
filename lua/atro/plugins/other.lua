@@ -25,27 +25,6 @@ local plugins = {
 			},
 		},
 	},
-	-- API info of vim
-
-	-- Downloads dependencies for LSP, formatter and debugger
-	{
-		"williamboman/mason.nvim",
-		event = "VeryLazy",
-		opts = {},
-	},
-	{
-		"zapling/mason-lock.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"williamboman/mason.nvim",
-		},
-		config = function()
-			require("mason-lock").setup({
-				lockfile_path = os.getenv("HOME") .. "/.config/nvim/mason-lock.json",
-			})
-		end,
-	},
-
 	-- Tells you what keybindings are available
 	{
 		"folke/which-key.nvim",
@@ -75,6 +54,7 @@ local plugins = {
 	-- Smooth scrolling
 	{
 		"karb94/neoscroll.nvim",
+		event = "BufRead",
 		config = function()
 			local neoscroll = require("neoscroll")
 			neoscroll.setup({})
@@ -148,6 +128,7 @@ local plugins = {
 	},
 	{
 		"nvim-pack/nvim-spectre",
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
@@ -169,6 +150,7 @@ local plugins = {
 	},
 	{
 		"jmbuhr/otter.nvim",
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 		},
@@ -241,6 +223,13 @@ local plugins = {
 	},
 }
 
+-- INFO: Add installer plugins
+local installer_plugins = require("atro.installer.plugins").installer_plugins()
+for _, plugin in ipairs(installer_plugins) do
+	table.insert(plugins, plugin)
+end
+
+-- INFO: If user wants to talk to external services
 if _G.user_conf.TalkToExternal == true then
 	---@type LazySpec
 	local wakatime_plugin = {

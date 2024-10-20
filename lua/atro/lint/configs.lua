@@ -1,6 +1,7 @@
 local M = {}
 
 M.linter_configs = function()
+	-- Cache
 	if _G._linter_configs then
 		return _G._linter_configs
 	end
@@ -28,6 +29,21 @@ M.linter_configs = function()
 	end
 
 	return _G._linter_configs
+end
+
+M.lint_packages = function()
+	local packages = {}
+	local configs = M.linter_configs()
+	local TableConcat = require("atro.utils.generic").TableConcat
+	local IsLangSupported = require("atro.utils.config").IsLangSupported
+
+	for lang, linters in pairs(configs) do
+		if IsLangSupported(lang) then
+			packages = TableConcat(packages, linters)
+		end
+	end
+
+	return packages
 end
 
 return M

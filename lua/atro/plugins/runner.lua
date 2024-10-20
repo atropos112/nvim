@@ -55,6 +55,7 @@ return {
 
 	{
 		"michaelb/sniprun",
+		event = "BufRead",
 		branch = "master",
 
 		build = "sh install.sh",

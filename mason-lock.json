@@ -1,9 +1,9 @@
 {
-  "basedpyright": "1.17.5",
+  "basedpyright": "1.19.0",
   "bash-language-server": "5.4.0",
   "codelldb": "v1.10.0",
   "codespell": "2.3.0",
-  "debugpy": "1.8.5",
+  "debugpy": "1.8.7",
   "dockerfile-language-server": "0.13.0",
   "fixjson": "1.1.2",
   "goimports": "v0.25.0",

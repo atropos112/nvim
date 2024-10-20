@@ -1,5 +1,19 @@
 local M = {}
 
+M.fmt_packages = function()
+	local packages = {}
+	local IsLangSupported = require("atro.utils.config").IsLangSupported
+	local TableConcat = require("atro.utils.generic").TableConcat
+
+	for lang, fmts in pairs(M.fmt_configs()) do
+		if IsLangSupported(lang) then
+			packages = TableConcat(packages, fmts)
+		end
+	end
+
+	return packages
+end
+
 M.fmt_configs = function()
 	if _G._fmt_configs then
 		return _G._fmt_configs

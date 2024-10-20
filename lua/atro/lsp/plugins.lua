@@ -5,6 +5,7 @@ M.lsp_plugins = function()
 	local plugins = {
 		{
 			"neovim/nvim-lspconfig",
+			event = "VeryLazy",
 			dependencies = {
 				"williamboman/mason.nvim",
 				"jubnzv/virtual-types.nvim",
@@ -17,7 +18,7 @@ M.lsp_plugins = function()
 		-- Shows where you are in the file LSP wise (which class/function etc)
 		{
 			"ray-x/lsp_signature.nvim",
-			event = "VeryLazy",
+			event = "LspAttach",
 			config = function(_, opts)
 				require("lsp_signature").setup(opts)
 			end,
@@ -45,7 +46,7 @@ M.lsp_plugins = function()
 		-- Show LSP explorer of functions and classes etc.
 		{
 			"hedyhli/outline.nvim",
-			lazy = true,
+			event = "LspAttach",
 			cmd = { "Outline", "OutlineOpen" },
 			keys = { -- Example mapping to toggle outline
 				{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },

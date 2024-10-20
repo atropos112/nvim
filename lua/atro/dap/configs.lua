@@ -1,5 +1,25 @@
 local M = {}
 
+-- INFO: This is not as built out and user configurable as LSPs because its much simpler in nature, no need to bother.
+--
+--- @return string[]
+M.dap_packages = function()
+	local dap_packages = {}
+	local IsLangSupported = require("atro.utils.config").IsLangSupported
+
+	if IsLangSupported("python") then
+		dap_packages[#dap_packages + 1] = "debugpy"
+	end
+	if IsLangSupported("cs") then
+		dap_packages[#dap_packages + 1] = "netcoredbg"
+	end
+	if IsLangSupported("go") then
+		dap_packages[#dap_packages + 1] = "dlv"
+	end
+
+	return dap_packages
+end
+
 M.dap_configs = function()
 	if _G._dap_configs then
 		return _G._dap_configs
@@ -18,7 +38,6 @@ M.dap_configs = function()
 			},
 			rust = {}, -- Entirely handled by rustacean.nvim plugin
 			cs = {
-
 				adapters = {
 					netcoredbg = {
 						type = "executable",

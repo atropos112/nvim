@@ -1,4 +1,28 @@
 local M = {}
+
+--- @return string[]
+M.lsp_packages = function()
+	if M._lsp_packages then
+		return M._lsp_packages
+	end
+
+	local user_selected = require("atro.utils.config").UserSelected("LSPs")
+	local packages_to_install = {}
+	local available_lsps = M.lsp_configs()
+
+	for lsp_name, lsp_config in pairs(available_lsps) do
+		if user_selected[lsp_name] then
+			if not lsp_config.skip_install then
+				table.insert(packages_to_install, lsp_name)
+			end
+		end
+	end
+
+	M._lsp_packages = packages_to_install
+
+	return packages_to_install
+end
+
 --- INFO: Can also use :h lspconfig-all to see all available configurations
 --- INFO: Below Are per language LSP configurations
 ---
@@ -22,7 +46,6 @@ local M = {}
 --- This would translate to having an entry in lsp_configs blow that looks like:
 --- lsp_configs = {
 --- 	pylsp = {
---- 		mason_name = "python-lsp-server",
 ---  	skip_capabilities = false,
 --- 		plugins = {
 --- 			pycodestyle = {

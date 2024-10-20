@@ -1,17 +1,25 @@
 local M = {}
 
-M.SelectedLSPs = function()
-	local LSPs = {}
+---@param key string
+---@return string[]
+M.UserSelected = function(key)
+	local keys = {}
 	for _, value in pairs(_G.user_conf.SupportedLanguages or {}) do
-		if value.LSPs then
-			for _, lsp in ipairs(value.LSPs) do
-				table.insert(LSPs, lsp)
+		if value[key] then
+			for _, item in ipairs(value[key]) do
+				table.insert(keys, item)
 			end
 		end
 	end
-	return LSPs
+	return keys
 end
 
+---@return string[]
+M.UserSelectedLSPs = function()
+	return M.UserSelected("LSPs")
+end
+
+---@return string[]
 M.SupportedLanguages = function()
 	local langs = {}
 	for key, _ in pairs(_G.user_conf.SupportedLanguages or {}) do
@@ -20,10 +28,13 @@ M.SupportedLanguages = function()
 	return langs
 end
 
+---@param lang string
+---@return boolean
 M.IsLangSupported = function(lang)
 	return _G.user_conf.SupportedLanguages[lang] ~= nil
 end
 
+---@return string[]
 function TestingAdapterFullNames()
 	local adapters = {}
 	for _, value in pairs(_G.user_conf.SupportedLanguages or {}) do
@@ -34,17 +45,13 @@ function TestingAdapterFullNames()
 	return adapters
 end
 
-function TableConcat(t1, t2)
-	for i = 1, #t2 do
-		t1[#t1 + 1] = t2[i]
-	end
-	return t1
-end
-
+---@param deps table<string>
+---@return table<string>
 M.WithTestingAdapterDeps = function(deps)
-	return TableConcat(deps, TestingAdapterFullNames())
+	return require("atro.utils.generic").TableConcat(deps, TestingAdapterFullNames())
 end
 
+---@return table<unknown>
 M.RequireAllTestingAdapters = function()
 	local reqs = {}
 

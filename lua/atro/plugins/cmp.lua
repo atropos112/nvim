@@ -2,6 +2,7 @@ return {
 	-- Snippets control
 	{
 		"L3MON4D3/LuaSnip",
+		event = "BufRead",
 		build = "make install_jsregexp",
 	},
 
@@ -16,7 +17,6 @@ return {
 			-- fmt.lua for formatting and cmp.lua for autocompletion.
 			-- Sometimes its not possible or comes with compromises.
 			-- In such cases use this plugin.
-			local install = require("atro.utils.load").install
 			local is_lang_supported = require("atro.utils.config").IsLangSupported
 			local null_ls = require("null-ls")
 
@@ -60,7 +60,7 @@ return {
 	--- Main autocomplete plugin
 	{
 		"hrsh7th/nvim-cmp",
-		event = "BufRead",
+		event = "VeryLazy",
 		dependencies = {
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
