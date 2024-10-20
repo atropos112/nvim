@@ -5,7 +5,7 @@ M.lsp_plugins = function()
 	local plugins = {
 		{
 			"neovim/nvim-lspconfig",
-			event = "VeryLazy",
+			event = "BufRead",
 			dependencies = {
 				"williamboman/mason.nvim",
 				"jubnzv/virtual-types.nvim",

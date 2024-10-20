@@ -10,11 +10,14 @@ M.lsp_packages = function()
 	local packages_to_install = {}
 	local available_lsps = M.lsp_configs()
 
-	for lsp_name, lsp_config in pairs(available_lsps) do
-		if user_selected[lsp_name] then
-			if not lsp_config.skip_install then
+	-- If user requested they will be included even if not in the list of LSPs
+	for _, lsp_name in ipairs(user_selected) do
+		if available_lsps[lsp_name] then
+			if not available_lsps[lsp_name].skip_install then
 				table.insert(packages_to_install, lsp_name)
 			end
+		else
+			table.insert(packages_to_install, lsp_name)
 		end
 	end
 

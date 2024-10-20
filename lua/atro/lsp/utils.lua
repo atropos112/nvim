@@ -127,11 +127,7 @@ end
 M.setup_lsps = function()
 	local lsp = require("lspconfig")
 	for _, v in ipairs(require("atro.utils.config").UserSelectedLSPs()) do
-		if lsp_configs()[v] then
-			lsp = M.setup_lsp(v, lsp_configs()[v], lsp)
-		else
-			error("LSP not configured: " .. v)
-		end
+		lsp = M.setup_lsp(v, lsp_configs()[v] or {}, lsp)
 	end
 end
 
