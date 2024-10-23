@@ -19,7 +19,7 @@ M.fmt_configs = function()
 		return _G._fmt_configs
 	end
 
-	-- Lazy eval
+	-- INFO: For list of available formatters go to https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters
 	if require("atro.utils.generic").file_exists(vim.fn.stdpath("config") .. "/lua/atro/fmt/overrides.lua") then
 		_G._fmt_configs = require("atro.fmt.overrides").fmt_configs()
 	else
@@ -33,7 +33,7 @@ M.fmt_configs = function()
 			go = { "gofmt", "goimports" },
 			json = { "fixjson" },
 			just = { "just" },
-			nix = { "alejandra" },
+			nix = { "alejandra" }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
 			md = { "mdformat" },
 			sh = { "shfmt", "shellharden" },
 			yaml = { "yamlfmt" },

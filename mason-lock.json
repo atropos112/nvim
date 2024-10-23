@@ -14,6 +14,7 @@
   "revive": "v1.3.9",
   "shellharden": "4.3.1",
   "shfmt": "v3.9.0",
+  "sqlls": "1.7.0",
   "stylua": "v0.20.0",
   "taplo": "0.9.3",
   "yamlfmt": "v0.13.0"

@@ -1,6 +1,9 @@
 local defaults = {
 	TalkToExternal = true,
 	SupportedLanguages = {
+		sql = {
+			LSPs = { "sqlls" },
+		},
 		bash = {
 			LSPs = { "bashls" },
 		},

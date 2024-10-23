@@ -86,16 +86,12 @@ M.lsp_configs = function()
 				},
 			},
 
-			rnix = {},
-
 			nixd = {
 				skip_install = true,
 				diagnostic = {
 					suppress = { "sema-escaping-with" },
 				},
 			},
-
-			nil_ls = {},
 
 			dockerls = {},
 

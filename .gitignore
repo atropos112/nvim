@@ -10,3 +10,5 @@ devenv.local.nix
 
 # overrides 
 lua/atro/configs/user_configs/overrides.lua
+
+db
