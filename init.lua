@@ -1,5 +1,5 @@
 require("atro.utils.logs"):init()
-LOGGER:info("Starting Atro")
+LOGGER:info("Loading configuration")
 require("atro.config"):init_default()
 require("atro.config"):init_user(os.getenv("HOME") .. "/.config/nvim-custom/init.lua")
 require("atro.lazy")

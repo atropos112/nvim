@@ -22,9 +22,13 @@ return {
 				"-",
 			}
 
+			local log = LOGGER:with({ phase = "Lint" })
+			log:info("Starting lint setup")
+
 			local linters_by_ft = {}
 			for lang, cfg in pairs(GCONF.languages) do
 				if cfg.linters then
+					log:debug("Including linters(s): " .. require("atro.utils").lst_to_str(cfg.linters))
 					linters_by_ft[lang] = cfg.linters
 				end
 			end

@@ -1,5 +1,37 @@
 local M = {}
 
+--- @param lst string[]
+--- @return string
+M.lst_to_str = function(lst)
+	local str = ""
+	for _, v in ipairs(lst) do
+		str = str .. v .. ", "
+	end
+	return str:sub(1, -3)
+end
+
+--- @param tbl table<any, string>
+--- @return string[]
+M.tbl_to_lst = function(tbl, key)
+	local lst = {}
+	for _, v in pairs(tbl) do
+		table.insert(lst, v[key])
+	end
+
+	return lst
+end
+
+--- @param tbllst table<any, table<any, string>>
+--- @param key string
+--- @return string
+M.tbllst_to_str = function(tbllst, key)
+	local str = ""
+	for _, v in ipairs(tbllst) do
+		str = str .. v[key] .. ", "
+	end
+	return str:sub(1, -3)
+end
+
 ---@param mode string|string[] Mode short-name, see |nvim_set_keymap()|.
 ---@param key string           Left-hand side |{lhs}| of the mapping.
 ---@param cmd string|function  Right-hand side |{rhs}| of the mapping, can be a Lua function.

@@ -1,13 +1,25 @@
-local deps = {
-	"nvim-neotest/nvim-nio",
-	"nvim-lua/plenary.nvim",
-	"nvim-treesitter/nvim-treesitter",
-	"nvim-lua/plenary.nvim",
-}
-for _, cfg in pairs(GCONF.languages) do
-	if cfg.test_adapter then
-		table.insert(deps, cfg.test_adapter.author .. "/" .. cfg.test_adapter.name)
+local log = LOGGER:with({ phase = "Testing" })
+
+local neotest_deps = function()
+	if _G.neotest_deps then
+		return _G.neotest_deps
 	end
+
+	local deps = {
+		"nvim-neotest/nvim-nio",
+		"nvim-lua/plenary.nvim",
+		"nvim-treesitter/nvim-treesitter",
+		"nvim-lua/plenary.nvim",
+	}
+	for _, cfg in pairs(GCONF.languages) do
+		if cfg.test_adapter then
+			table.insert(deps, cfg.test_adapter.author .. "/" .. cfg.test_adapter.name)
+		end
+	end
+	log:debug("Constructing neotest dependencies: " .. require("atro.utils").lst_to_str(deps))
+
+	_G.neotest_deps = deps
+	return deps
 end
 
 ---@type LazySpec[]
@@ -15,7 +27,7 @@ return {
 	{
 		"nvim-neotest/neotest",
 		event = "VeryLazy",
-		dependencies = deps,
+		dependencies = neotest_deps(),
 		keys = {
 			{
 				"<leader>tr",
@@ -72,8 +84,9 @@ return {
 			}, neotest_ns)
 
 			local adapters = {}
-			for _, cfg in pairs(GCONF.languages) do
+			for lang, cfg in pairs(GCONF.languages) do
 				if cfg.test_adapter then
+					log:with({ language = lang }):debug("Including test adapter " .. cfg.test_adapter.author .. "/" .. cfg.test_adapter.name)
 					table.insert(adapters, require(cfg.test_adapter.name)(cfg.test_adapter.config or {}))
 				end
 			end

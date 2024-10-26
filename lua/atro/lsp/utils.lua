@@ -24,7 +24,7 @@ local on_attach = function(client, bufnr)
 
 	local opts = { noremap = true, silent = true }
 	opts.buffer = bufnr
-	local set = require("atro.utils.generic").keyset
+	local set = require("atro.utils").keyset
 
 	-- set keybinds
 	opts.desc = "Show LSP references"
@@ -86,7 +86,11 @@ M.setup_lsp = function(server_name, lsp_config, lsp_module)
 	end
 
 	if lsp_config.settings then
-		final_cfg.settings = lsp_config.settings
+		if type(lsp_config.settings) == "function" then
+			final_cfg.settings = lsp_config.settings()
+		else
+			final_cfg.settings = lsp_config.settings
+		end
 	end
 
 	lsp_module[server_name].setup(final_cfg)

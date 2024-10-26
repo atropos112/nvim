@@ -51,7 +51,7 @@ return {
 				},
 			})
 
-			local set = require("atro.utils.generic").keyset
+			local set = require("atro.utils").keyset
 
 			set("i", "©", function() -- macbook compatibility
 				require("copilot.suggestion").accept()

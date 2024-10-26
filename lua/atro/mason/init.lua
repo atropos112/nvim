@@ -41,7 +41,7 @@ end
 
 ---@return nil
 M.ensure_packages_are_installed = function()
-	local deduplicate = require("atro.utils.generic").Deduplicate
+	local deduplicate = require("atro.utils").Deduplicate
 
 	---@type string[]
 	local packages = {}

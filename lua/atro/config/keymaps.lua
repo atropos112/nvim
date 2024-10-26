@@ -2,7 +2,7 @@ local M = {}
 
 ---@return nil
 function M.load_defaults()
-	local set = require("atro.utils.generic").keyset
+	local set = require("atro.utils").keyset
 
 	set("n", "<leader>pv", vim.cmd.Ex)
 

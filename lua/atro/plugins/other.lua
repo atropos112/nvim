@@ -1,4 +1,4 @@
-local set = require("atro.utils.generic").keyset
+local set = require("atro.utils").keyset
 
 ---@type LazySpec[]
 local plugins = {
