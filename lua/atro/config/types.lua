@@ -1,9 +1,11 @@
 ---@meta
+pcall(require, "dap")
 
 ---@class GlobalConfig
 ---@field talk_to_external boolean Should this nvim instance talk to external providers like Github Copilot
 ---@field global_linters string[] | nil List of global linters for all languages
 ---@field languages table<string, LanguageConfig> List of language specific configurations
+---@field logging Logging Log level for the logger
 
 ---@class LanguageConfig
 ---@field linters string[] | nil List of linters for this language
@@ -25,3 +27,16 @@
 ---@field name string Name of the test adapter
 ---@field author string Author of the test adapter
 ---@field config table<string, any> | nil Configuration for the test adapter
+
+---@class LogLevel
+LogLevel = {
+	TRACE = "TRACE",
+	DEBUG = "DEBUG",
+	INFO = "INFO",
+	WARN = "WARN",
+	ERROR = "ERROR",
+}
+
+---@class Logging
+---@field consol_log_level string Log level for the console
+---@field file_log_level string Log level for the file

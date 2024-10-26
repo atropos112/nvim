@@ -1,25 +1,4 @@
 {
-  "basedpyright": "1.19.0",
-  "bash-language-server": "5.4.0",
-  "codelldb": "v1.10.0",
-  "codespell": "2.3.0",
-  "csharpier": "0.29.2",
-  "debugpy": "1.8.7",
-  "dockerfile-language-server": "0.13.0",
-  "fixjson": "1.1.2",
-  "goimports": "v0.25.0",
-  "jsonlint": "1.6.3",
-  "markdownlint": "0.42.0",
-  "netcoredbg": "3.1.1-1042",
-  "omnisharp": "v1.39.12",
-  "prettier": "3.3.3",
-  "revive": "v1.3.9",
-  "shellcheck": "v0.10.0",
-  "shellharden": "4.3.1",
-  "shfmt": "v3.9.0",
-  "sqlls": "1.7.0",
-  "sqls": "v0.2.28",
-  "stylua": "v0.20.0",
-  "taplo": "0.9.3",
-  "yamlfmt": "v0.13.0"
+  "goimports": "v0.26.0",
+
 }

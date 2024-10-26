@@ -13,11 +13,17 @@ return {
 			local lsp = require("lspconfig")
 			local setup_lsp = require("atro.lsp.utils").setup_lsp
 
-			for _, cfg in pairs(GCONF.languages) do
+			LOGGER:info("Setting up LSPs")
+
+			for lang, cfg in pairs(GCONF.languages) do
 				if cfg.lsps then
+					LOGGER:debug("Setting up LSPs for language: " .. lang)
 					for server_name, lsp_config in pairs(cfg.lsps) do
+						LOGGER:debug("Setting up LSP: " .. server_name)
 						lsp = setup_lsp(server_name, lsp_config, lsp)
 					end
+				else
+					LOGGER:debug("No LSPs found for language: " .. lang)
 				end
 			end
 		end,

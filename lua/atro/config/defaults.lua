@@ -1,8 +1,12 @@
 require("atro.config.types")
-pcall(require, "dap")
 
 ---@type GlobalConfig
 return {
+	logging = {
+		consol_log_level = LogLevel.ERROR,
+		file_log_level = LogLevel.DEBUG,
+	},
+	log_level = "DEBUG",
 	talk_to_external = true,
 	global_linters = { "codespell" },
 	languages = {
@@ -79,10 +83,6 @@ return {
 		},
 		dockerfile = {
 			linters = { "hadolint" },
-
-			lsps = {
-				hadolint = {},
-			},
 		},
 		json = {
 			formatters = { "fixjson" },
