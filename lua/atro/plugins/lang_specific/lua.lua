@@ -1,4 +1,4 @@
-if require("atro.utils.config").IsLangSupported("lua") then
+if GCONF.languages["lua"] then
 	return {
 		{
 			"folke/lazydev.nvim",
@@ -16,10 +16,12 @@ if require("atro.utils.config").IsLangSupported("lua") then
 					"lazydev.nvim",
 					"rabbit.nvim",
 					"which-key.nvim",
+					"dap",
 				},
 				enabled = function()
 					return true
 				end,
+
 				integrations = {
 					cmp = true,
 					lspconfig = true,

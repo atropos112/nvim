@@ -10,7 +10,7 @@ local plugins = {
 		"tpope/vim-dadbod",
 		event = "VeryLazy",
 		dependencies = {
-			"tpope/vim-dadbod-ui",
+			"kristijanhusak/vim-dadbod-ui",
 			"kristijanhusak/vim-dadbod-completion",
 		},
 		config = function()

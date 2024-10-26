@@ -1,11 +1,9 @@
 local M = {}
-local lsp_configs = require("atro.lsp.configs").lsp_configs
-local install = require("atro.installer.installer").ensure_installed
 
 ---@param client table
 ---@param bufnr number
 ---@return nil
-M.on_attach = function(client, bufnr)
+local on_attach = function(client, bufnr)
 	require("inlay-hints").on_attach(client, bufnr)
 
 	-- WARN: Python is a very special case. I have two LSPs there and basedpyright's go to def doesn't always work.
@@ -66,69 +64,34 @@ M.on_attach = function(client, bufnr)
 end
 
 ---@return table
-M.get_capabilities = function()
+local get_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 	return capabilities
 end
 
---- This provides a way to streamline LSP loading.
---- The settings can contain the following:
---- skip_on_attach: boolean - if true, will not attach on_attach function
---- skip_capabilities: boolean - if true, will not attach capabilities
---- If not provided will attempt to install using the lsp name, this only installs if the binary is not found.
---- This is only used if skip_install is not true.
---- skip_install: boolean - if true, will not attempt to install the mason package (regardless if binary exists or not).
----
---- The keys above are removed in the process from the settings table and what is left is passed to the lsp setup function.
----
----@param server string
----@param settings table
----@param lsp table
----@return table
-M.setup_lsp = function(server, settings, lsp)
-	local modified_settings = settings or {}
+---@param server_name string
+---@param lsp_config LspConfig
+---@param lsp_module any -- The pre-loaded require("lspconfig")
+---@return any -- The pre-loaded require("lspconfig") with new server setup
+M.setup_lsp = function(server_name, lsp_config, lsp_module)
+	local final_cfg = {}
 
-	-- skip's
-	local skip_on_attach = modified_settings.skip_on_attach or false
-	modified_settings.skip_on_attach = nil -- remove the key
-
-	local skip_capabilities = modified_settings.skip_capabilities or false
-	modified_settings.skip_capabilities = nil
-
-	-- used for mason install
-	modified_settings.skip_install = nil
-
-	-- Alternative server name (optional)
-	local server_name = modified_settings.server_name or server
-	modified_settings.server_name = nil
-
-	-- create lsp settings
-	local lsp_settings = {
-		settings = {},
-	}
-
-	-- By now settings should only have the LSP specific settings not any special keys of mine.
-	lsp_settings.settings[server_name] = modified_settings or {}
-
-	if not skip_on_attach then
-		lsp_settings.on_attach = modified_settings.on_attach or M.on_attach
+	if not lsp_config.skip_on_attach then
+		final_cfg.on_attach = on_attach
 	end
 
-	if not skip_capabilities then
-		lsp_settings.capabilities = modified_settings.capabilities or M.get_capabilities()
+	if not lsp_config.skip_capabilities then
+		final_cfg.capabilities = get_capabilities()
 	end
 
-	lsp[server].setup(lsp_settings)
-
-	return lsp
-end
-
-M.setup_lsps = function()
-	local lsp = require("lspconfig")
-	for _, v in ipairs(require("atro.utils.config").UserSelectedLSPs()) do
-		lsp = M.setup_lsp(v, lsp_configs()[v] or {}, lsp)
+	if lsp_config.settings then
+		final_cfg.settings = lsp_config.settings
 	end
+
+	lsp_module[server_name].setup(final_cfg)
+
+	return lsp_module
 end
 
 return M

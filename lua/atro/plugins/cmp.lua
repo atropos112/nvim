@@ -17,13 +17,14 @@ return {
 			-- fmt.lua for formatting and cmp.lua for autocompletion.
 			-- Sometimes its not possible or comes with compromises.
 			-- In such cases use this plugin.
-			local is_lang_supported = require("atro.utils.config").IsLangSupported
 			local null_ls = require("null-ls")
 
 			local sources = {}
-			if is_lang_supported("nix") then
-				table.insert(sources, null_ls.builtins.diagnostics.statix)
-				table.insert(sources, null_ls.builtins.diagnostics.deadnix)
+			if GCONF.languages["nix"] then
+				vim.list_extend(sources, {
+					null_ls.builtins.diagnostics.statix,
+					null_ls.builtins.diagnostics.deadnix,
+				})
 			end
 
 			null_ls.setup({ sources = sources })

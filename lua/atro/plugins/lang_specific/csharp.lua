@@ -1,4 +1,4 @@
-if require("atro.utils.config").IsLangSupported("c_sharp") then
+if GCONF.languages["c_sharp"] then
 	return {
 		{
 			"iabdelkareem/csharp.nvim",

@@ -1,5 +1,5 @@
 M = {}
-local mapper = require("atro.installer.mappings")
+local mapper = require("atro.mason.mappings")
 
 ---@param ensure_installed string[] | string
 ---@return nil
@@ -14,7 +14,7 @@ M.ensure_installed = function(ensure_installed)
 	for _, name in ipairs(ensure_installed) do
 		local bin_name = mapper.to_bin(name)
 		local bin_installed = vim.fn.executable(bin_name) == 1
-		if not bin_installed then
+		if not bin_installed and not mapper.to_skip(name) then
 			table.insert(to_install, name)
 		end
 	end
@@ -40,25 +40,33 @@ M.ensure_installed = function(ensure_installed)
 end
 
 ---@return nil
-M.ensure_user_requested_are_installed = function()
-	local tableConcat = require("atro.utils.generic").TableConcat
+M.ensure_packages_are_installed = function()
 	local deduplicate = require("atro.utils.generic").Deduplicate
 
-	local lsps = require("atro.lsp.configs").lsp_packages()
-	local daps = require("atro.dap.configs").dap_packages()
-	local linters = require("atro.lint.configs").lint_packages()
-	local fmts = require("atro.fmt.configs").fmt_packages()
+	---@type string[]
+	local packages = {}
 
-	local all_packages = {}
+	for _, cfg in pairs(GCONF.languages) do
+		if cfg.lsps then
+			packages = vim.list_extend(packages, vim.tbl_keys(cfg.lsps))
+		end
 
-	all_packages = tableConcat(all_packages, lsps)
-	all_packages = tableConcat(all_packages, daps)
-	all_packages = tableConcat(all_packages, linters)
-	all_packages = tableConcat(all_packages, fmts)
+		if cfg.dap_package then
+			table.insert(packages, cfg.dap_package)
+		end
 
-	all_packages = deduplicate(all_packages)
+		if cfg.linters then
+			packages = vim.list_extend(packages, cfg.linters)
+		end
 
-	M.ensure_installed(all_packages)
+		if cfg.formatters then
+			packages = vim.list_extend(packages, cfg.formatters)
+		end
+	end
+
+	packages = deduplicate(packages)
+
+	M.ensure_installed(packages)
 end
 
 return M

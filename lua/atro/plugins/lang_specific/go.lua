@@ -1,4 +1,4 @@
-if require("atro.utils.config").IsLangSupported("go") then
+if GCONF.languages["go"] then
 	return {
 		-- Debugging functionality for go
 		{
@@ -53,7 +53,7 @@ if require("atro.utils.config").IsLangSupported("go") then
 			},
 			ft = "go",
 			config = function()
-				require("atro.installer.installer").ensure_installed("impl")
+				require("atro.mason").ensure_installed("impl")
 				require("telescope").load_extension("goimpl")
 				vim.api.nvim_set_keymap("n", "<leader>im", [[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]], { noremap = true, silent = true })
 			end,

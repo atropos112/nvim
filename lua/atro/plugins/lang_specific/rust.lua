@@ -1,4 +1,4 @@
-if require("atro.utils.config").IsLangSupported("rust") then
+if GCONF.languages["rust"] then
 	return {
 		{
 			"mrcjkb/rustaceanvim",

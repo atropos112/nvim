@@ -223,14 +223,8 @@ local plugins = {
 	},
 }
 
--- INFO: Add installer plugins
-local installer_plugins = require("atro.installer.plugins").installer_plugins()
-for _, plugin in ipairs(installer_plugins) do
-	table.insert(plugins, plugin)
-end
-
 -- INFO: If user wants to talk to external services
-if _G.user_conf.TalkToExternal == true then
+if GCONF.talk_to_external == true then
 	---@type LazySpec
 	local wakatime_plugin = {
 		"wakatime/vim-wakatime",

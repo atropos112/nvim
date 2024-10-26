@@ -305,4 +305,12 @@ M.to_bin = function(name)
 	return exceptions[name] or name
 end
 
+---@param name string
+---@return boolean
+M.to_skip = function(name)
+	return vim.tbl_contains({
+		"zig fmt",
+	}, name)
+end
+
 return M

@@ -1,14 +1,21 @@
-local util_config = require("atro.utils.config")
+local deps = {
+	"nvim-neotest/nvim-nio",
+	"nvim-lua/plenary.nvim",
+	"nvim-treesitter/nvim-treesitter",
+	"nvim-lua/plenary.nvim",
+}
+for _, cfg in pairs(GCONF.languages) do
+	if cfg.test_adapter then
+		table.insert(deps, cfg.test_adapter.author .. "/" .. cfg.test_adapter.name)
+	end
+end
+
+---@type LazySpec[]
 return {
 	{
 		"nvim-neotest/neotest",
 		event = "VeryLazy",
-		dependencies = util_config.WithTestingAdapterDeps({
-			"nvim-neotest/nvim-nio",
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-lua/plenary.nvim",
-		}),
+		dependencies = deps,
 		keys = {
 			{
 				"<leader>tr",
@@ -64,12 +71,19 @@ return {
 				},
 			}, neotest_ns)
 
+			local adapters = {}
+			for _, cfg in pairs(GCONF.languages) do
+				if cfg.test_adapter then
+					table.insert(adapters, require(cfg.test_adapter.name)(cfg.test_adapter.config or {}))
+				end
+			end
+
 			-- INFO: This can't be set in opts because the dependencies are not loaded yet at that time.
 			require("neotest").setup({
 
 				-- For all runners go to https://github.com/nvim-neotest/neotest#supported-runners
 				-- adapters = require("atro.utils.config").RequireAllTestingAdapters(),
-				adapters = util_config.RequireAllTestingAdapters(),
+				adapters = adapters,
 			})
 		end,
 	},
