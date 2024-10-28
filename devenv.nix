@@ -20,7 +20,6 @@
 
   pre-commit.hooks = {
     shellcheck.enable = true;
-    lua-ls.enable = true;
     markdownlint = {
       enable = true;
       settings.configuration = {

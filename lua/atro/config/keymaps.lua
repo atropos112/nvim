@@ -22,8 +22,7 @@ function M.load_defaults()
 	set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 	-- Save with Ctrl + s, in all modes
-	set({ "i", "v", "n" }, "<A-s>", "<cmd>w<CR>")
-	set({ "i", "v", "n" }, "ß", "<cmd>w<CR>") -- macbook compatible, A-s -> beta
+	set({ "i", "v", "n" }, "<C-s>", "<cmd>w<CR>")
 
 	set("n", "<leader>of", function()
 		vim.diagnostic.open_float()

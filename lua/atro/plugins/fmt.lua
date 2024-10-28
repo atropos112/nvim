@@ -16,6 +16,21 @@ return {
 					}
 				end,
 			}
+
+			conform.formatters.ruff_format = {
+				args = function(_, _)
+					return {
+						"format",
+						"--force-exclude",
+						"--line-length",
+						"120",
+						"--stdin-filename",
+						"$FILENAME",
+						"-",
+					}
+				end,
+			}
+
 			local log = LOGGER:with({ phase = "FMT" })
 			log:info("Starting FMT setup")
 
@@ -32,10 +47,16 @@ return {
 			-- https://github.com/stevearc/conform.nvim#formatters
 			conform.setup({ formatters_by_ft = formatters_by_ft })
 
-			require("atro.utils").keyset({ "n", "v", "i" }, "<C-s>", function()
-				require("conform").format()
-				vim.cmd("w")
-			end, { desc = "Format and save" })
+			---@param keymap string
+			local fmt_and_write_keymap = function(keymap)
+				require("atro.utils").keyset({ "n", "v", "i" }, keymap, function()
+					require("conform").format()
+					vim.cmd("w")
+				end, { desc = "Format and save" })
+			end
+
+			fmt_and_write_keymap("<A-s>")
+			fmt_and_write_keymap("ß")
 		end,
 	},
 }

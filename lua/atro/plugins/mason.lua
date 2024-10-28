@@ -4,6 +4,8 @@ return {
 		"williamboman/mason.nvim",
 		event = "VeryLazy",
 		config = function()
+			local custom_cfg = GCONF.mason_config or {}
+
 			require("mason").setup(
 				---@type MasonSettings
 				{
@@ -16,7 +18,7 @@ return {
 					},
 					pip = {
 						upgrade_pip = true,
-						install_args = GCONF.mason_config.pip_install_args or {},
+						install_args = custom_cfg["pip_install_args"] or {},
 					},
 				}
 			)

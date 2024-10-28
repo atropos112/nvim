@@ -19,7 +19,7 @@ return {
 			-- In such cases use this plugin.
 			local null_ls = require("null-ls")
 
-			null_ls.setup({ sources = GCONF.null_ls_sources })
+			null_ls.setup({ sources = GCONF.null_ls_sources or {}})
 		end,
 	},
 	-- Github Copilot

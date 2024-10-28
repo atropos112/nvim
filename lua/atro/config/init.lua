@@ -19,7 +19,17 @@ end
 ---@return nil
 function M:init_user(config_path)
 	LOGGER:info("Loading user configuration")
-	local _, _ = pcall(dofile, config_path)
+	if require("atro.utils").file_exists(config_path) == false then
+		LOGGER:info("User configuration file does not exist, skipping.")
+		return
+	end
+
+	local ok, err = pcall(dofile, config_path)
+	if not ok then
+		LOGGER:error("Found file for user configuration but couldn't load it: " .. err)
+		return
+	end
+
 	require("atro.utils.logs"):set_levels({ GCONF.logging.consol_log_level, GCONF.logging.file_log_level })
 	LOGGER:trace(GCONF)
 

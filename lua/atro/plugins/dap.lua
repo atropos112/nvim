@@ -104,7 +104,7 @@ return {
 		config = function()
 			local set_exception_breakpoints = require("nvim-dap-exception-breakpoints")
 
-			vim.api.nvim_set_keymap("n", "<leader>dy", "", { desc = "[D]ebug [C]ondition breakpoints", callback = set_exception_breakpoints })
+			vim.api.nvim_set_keymap("n", "<leader>dy", "", { desc = "Debug Condition breakpoints", callback = set_exception_breakpoints })
 		end,
 	},
 	{

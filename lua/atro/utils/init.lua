@@ -60,6 +60,7 @@ M.merge_tables_at_root = function(base, override)
 end
 
 --- @param path string
+--- @return boolean
 M.file_exists = function(path)
 	-- Expand ~ to the home directory
 	if path:sub(1, 1) == "~" then
@@ -110,5 +111,6 @@ M.Deduplicate = function(list)
 
 	return result
 end
+
 
 return M

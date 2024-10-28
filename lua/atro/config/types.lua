@@ -6,8 +6,8 @@ pcall(require, "dap")
 ---@field global_linters string[] List of global linters for all languages
 ---@field languages table<string, LanguageConfig> List of language specific configurations
 ---@field logging Logging Log level for the logger
----@field null_ls_sources any[] List of null-ls sources
----@field git_linker_callbacks table<string, function> | function List of git linker callbacks, if function it is evaluated at runtime and should return a table of string -> function
+---@field null_ls_sources any[] | nil List of null-ls sources
+---@field git_linker_callbacks table<string, function> | function | nil List of git linker callbacks, if function it is evaluated at runtime and should return a table of string -> function
 ---@field mason_config table<string, any> | nil Mason configuration
 
 ---@class LanguageConfig
@@ -31,7 +31,7 @@ pcall(require, "dap")
 ---@field author string Author of the test adapter
 ---@field config table<string, any> | nil Configuration for the test adapter
 
----@class LogLevel
+---@enum LogLevel
 LogLevel = {
 	TRACE = "TRACE",
 	DEBUG = "DEBUG",
@@ -41,5 +41,5 @@ LogLevel = {
 }
 
 ---@class Logging
----@field consol_log_level string Log level for the console
----@field file_log_level string Log level for the file
+---@field consol_log_level LogLevel Log level for the console
+---@field file_log_level LogLevel Log level for the file

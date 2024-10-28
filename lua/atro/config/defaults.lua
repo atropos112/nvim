@@ -2,26 +2,9 @@ require("atro.config.types")
 
 ---@type GlobalConfig
 return {
-	mason_config = {},
-	null_ls_sources = {},
-	git_linker_callbacks = function()
-		return {
-			["github.com"] = require("gitlinker.hosts").get_github_type_url,
-			["gitlab.com"] = require("gitlinker.hosts").get_gitlab_type_url,
-			["try.gitea.io"] = require("gitlinker.hosts").get_gitea_type_url,
-			["codeberg.org"] = require("gitlinker.hosts").get_gitea_type_url,
-			["bitbucket.org"] = require("gitlinker.hosts").get_bitbucket_type_url,
-			["try.gogs.io"] = require("gitlinker.hosts").get_gogs_type_url,
-			["git.sr.ht"] = require("gitlinker.hosts").get_srht_type_url,
-			["git.launchpad.net"] = require("gitlinker.hosts").get_launchpad_type_url,
-			["repo.or.cz"] = require("gitlinker.hosts").get_repoorcz_type_url,
-			["git.kernel.org"] = require("gitlinker.hosts").get_cgit_type_url,
-			["git.savannah.gnu.org"] = require("gitlinker.hosts").get_cgit_type_url,
-		}
-	end,
 	logging = {
-		consol_log_level = LogLevel.ERROR,
-		file_log_level = LogLevel.DEBUG,
+		consol_log_level = "ERROR",
+		file_log_level = "DEBUG",
 	},
 	log_level = "DEBUG",
 	talk_to_external = true,
@@ -151,6 +134,11 @@ return {
 								checkThirdParty = false,
 							},
 							diagnostics = {
+								global = {
+									"LOGGER",
+									"GCONF",
+									"vim",
+								},
 								disable = { "missing-fields" },
 							},
 						},
