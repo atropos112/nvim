@@ -300,6 +300,7 @@ M.to_bin = function(name)
 		["ruff_fix"] = "ruff",
 		["ruff_format"] = "ruff",
 		["golangcilint"] = "golangci-lint",
+		["nil_ls"] = "nil",
 	}
 
 	return exceptions[name] or name

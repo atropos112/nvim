@@ -3,7 +3,24 @@ return {
 	{
 		"williamboman/mason.nvim",
 		event = "VeryLazy",
-		opts = {},
+		config = function()
+			require("mason").setup(
+				---@type MasonSettings
+				{
+					ui = {
+						icons = {
+							package_installed = "✓",
+							package_pending = "➜",
+							package_uninstalled = "✗",
+						},
+					},
+					pip = {
+						upgrade_pip = true,
+						install_args = GCONF.mason_config.pip_install_args or {},
+					},
+				}
+			)
+		end,
 	},
 	{
 		"zapling/mason-lock.nvim",

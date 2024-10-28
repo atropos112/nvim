@@ -3,9 +3,12 @@ pcall(require, "dap")
 
 ---@class GlobalConfig
 ---@field talk_to_external boolean Should this nvim instance talk to external providers like Github Copilot
----@field global_linters string[] | nil List of global linters for all languages
+---@field global_linters string[] List of global linters for all languages
 ---@field languages table<string, LanguageConfig> List of language specific configurations
 ---@field logging Logging Log level for the logger
+---@field null_ls_sources any[] List of null-ls sources
+---@field git_linker_callbacks table<string, function> | function List of git linker callbacks, if function it is evaluated at runtime and should return a table of string -> function
+---@field mason_config table<string, any> | nil Mason configuration
 
 ---@class LanguageConfig
 ---@field linters string[] | nil List of linters for this language

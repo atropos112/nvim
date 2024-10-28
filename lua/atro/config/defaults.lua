@@ -2,6 +2,23 @@ require("atro.config.types")
 
 ---@type GlobalConfig
 return {
+	mason_config = {},
+	null_ls_sources = {},
+	git_linker_callbacks = function()
+		return {
+			["github.com"] = require("gitlinker.hosts").get_github_type_url,
+			["gitlab.com"] = require("gitlinker.hosts").get_gitlab_type_url,
+			["try.gitea.io"] = require("gitlinker.hosts").get_gitea_type_url,
+			["codeberg.org"] = require("gitlinker.hosts").get_gitea_type_url,
+			["bitbucket.org"] = require("gitlinker.hosts").get_bitbucket_type_url,
+			["try.gogs.io"] = require("gitlinker.hosts").get_gogs_type_url,
+			["git.sr.ht"] = require("gitlinker.hosts").get_srht_type_url,
+			["git.launchpad.net"] = require("gitlinker.hosts").get_launchpad_type_url,
+			["repo.or.cz"] = require("gitlinker.hosts").get_repoorcz_type_url,
+			["git.kernel.org"] = require("gitlinker.hosts").get_cgit_type_url,
+			["git.savannah.gnu.org"] = require("gitlinker.hosts").get_cgit_type_url,
+		}
+	end,
 	logging = {
 		consol_log_level = LogLevel.ERROR,
 		file_log_level = LogLevel.DEBUG,
@@ -190,8 +207,11 @@ return {
 		nix = {
 			formatters = { "alejandra" }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
 			lsps = {
+				-- INFO: Is worse than nixd but has very good go-to-definition.
+				nil_ls = {},
+
+				-- INFO: All around best nix lsp, except the go-to-definition is not working that well.
 				nixd = {
-					skip_install = true,
 					settings = {
 						nixd = {
 							diagnostic = {

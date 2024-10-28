@@ -19,15 +19,7 @@ return {
 			-- In such cases use this plugin.
 			local null_ls = require("null-ls")
 
-			local sources = {}
-			if GCONF.languages["nix"] then
-				vim.list_extend(sources, {
-					null_ls.builtins.diagnostics.statix,
-					null_ls.builtins.diagnostics.deadnix,
-				})
-			end
-
-			null_ls.setup({ sources = sources })
+			null_ls.setup({ sources = GCONF.null_ls_sources })
 		end,
 	},
 	-- Github Copilot
