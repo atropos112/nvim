@@ -8,7 +8,7 @@ pcall(require, "dap")
 ---@field logging Logging Log level for the logger
 ---@field null_ls_sources any[] | nil List of null-ls sources
 ---@field git_linker_callbacks table<string, function> | function | nil List of git linker callbacks, if function it is evaluated at runtime and should return a table of string -> function
----@field mason_config table<string, any> | nil Mason configuration
+---@field mason_config MasonConfig | nil Mason configuration
 
 ---@class LanguageConfig
 ---@field linters string[] | nil List of linters for this language
@@ -43,3 +43,6 @@ LogLevel = {
 ---@class Logging
 ---@field consol_log_level LogLevel Log level for the console
 ---@field file_log_level LogLevel Log level for the file
+
+---@class MasonConfig
+---@field pip_install_args string[] | nil Arguments to pass to pip install
