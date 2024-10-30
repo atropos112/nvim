@@ -18,16 +18,21 @@ end
 ---@param config_path string
 ---@return nil
 function M:init_user(config_path)
-	LOGGER:info("Loading user configuration")
+	LOGGER:info("Loading user configuration " .. config_path)
 	if require("atro.utils").file_exists(config_path) == false then
 		LOGGER:info("User configuration file does not exist, skipping.")
 		return
 	end
 
-	local ok, err = pcall(dofile, config_path)
-	if not ok then
-		LOGGER:error("Found file for user configuration but couldn't load it: " .. err)
-		return
+	-- Get all .lua files in the dir
+	local files = require("atro.utils").get_files(config_path, ".lua")
+
+	for _, file in ipairs(files) do
+		LOGGER:debug("Loading user configuration file: " .. file)
+		local ok, err = pcall(dofile, config_path .. "/" .. file)
+		if not ok then
+			LOGGER:error("Found file for user configuration but couldn't load it: " .. err)
+		end
 	end
 
 	require("atro.utils.logs"):set_levels({ GCONF.logging.consol_log_level, GCONF.logging.file_log_level })

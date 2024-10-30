@@ -167,6 +167,7 @@ end
 ---@param kvs table<string, any> | nil
 function Logger:error(msg, kvs)
 	self:add_entry(self.levels.ERROR, msg, kvs or {})
+	error(msg)
 end
 
 setmetatable({}, Logger)

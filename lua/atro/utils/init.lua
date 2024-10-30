@@ -1,5 +1,24 @@
 local M = {}
 
+--- @param path string path to directory
+--- @param ext string file extensino
+M.get_files = function(path, ext)
+	local files = {}
+	local handle = vim.loop.fs_scandir(path)
+	if handle then
+		while true do
+			local name, t = vim.loop.fs_scandir_next(handle)
+			if not name then
+				break
+			end
+			if t == "file" and name:match(ext) then
+				table.insert(files, name)
+			end
+		end
+	end
+	return files
+end
+
 --- @param lst string[]
 --- @return string
 M.lst_to_str = function(lst)
@@ -111,6 +130,5 @@ M.Deduplicate = function(list)
 
 	return result
 end
-
 
 return M

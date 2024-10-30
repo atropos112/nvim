@@ -3,6 +3,9 @@ local set = require("atro.utils").keyset
 ---@type LazySpec[]
 local plugins = {
 	{
+		"Tastyep/structlog.nvim",
+	},
+	{
 		"tzachar/highlight-undo.nvim",
 		event = "BufRead",
 		opts = {},
