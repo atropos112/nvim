@@ -51,12 +51,12 @@ return {
 			---@type table<string, function>
 			local extra_callbacks = {}
 
-			if GCONF.git_linker_callbacks and type(GCONF.git_linker_callbacks) == "function" then
-				extra_callbacks = GCONF.git_linker_callbacks()
-			elseif GCONF.git_linker_callbacks then
+			if GCONF.extra_git_linker_callbacks and type(GCONF.extra_git_linker_callbacks) == "function" then
+				extra_callbacks = GCONF.extra_git_linker_callbacks()
+			elseif GCONF.extra_git_linker_callbacks then
 				-- INFO: Its either a function or a table
 				---@diagnostic disable-next-line: cast-local-type
-				extra_callbacks = GCONF.git_linker_callbacks
+				extra_callbacks = GCONF.extra_git_linker_callbacks
 			end
 
 			---@diagnostic disable-next-line: param-type-mismatch
