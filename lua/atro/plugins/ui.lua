@@ -1,5 +1,10 @@
 return {
 	{
+		"RRethy/vim-illuminate",
+		event = "LspAttach",
+		opt = {},
+	},
+	{
 		"rachartier/tiny-inline-diagnostic.nvim",
 		event = "VeryLazy",
 		config = function()
