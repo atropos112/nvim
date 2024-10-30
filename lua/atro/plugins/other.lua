@@ -4,6 +4,7 @@ local set = require("atro.utils").keyset
 local plugins = {
 	{
 		"Tastyep/structlog.nvim",
+		lazy = true,
 	},
 	{
 		"tzachar/highlight-undo.nvim",

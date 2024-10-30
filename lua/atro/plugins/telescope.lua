@@ -10,10 +10,7 @@ return {
 		event = "VeryLazy",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-			},
+			"nvim-telescope/telescope-fzf-native.nvim",
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -62,10 +59,7 @@ return {
 		},
 		dependencies = {
 			"kkharji/sqlite.lua",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-			},
+			"nvim-telescope/telescope-fzf-native.nvim",
 		},
 	},
 }

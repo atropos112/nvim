@@ -5,7 +5,10 @@ return {
 		event = "BufRead",
 		build = "make install_jsregexp",
 	},
-
+	{
+		"hrsh7th/cmp-path",
+		event = "VeryLazy",
+	},
 	{
 		"nvimtools/none-ls.nvim",
 		event = "VeryLazy",
@@ -19,7 +22,7 @@ return {
 			-- In such cases use this plugin.
 			local null_ls = require("null-ls")
 
-			null_ls.setup({ sources = GCONF.null_ls_sources or {}})
+			null_ls.setup({ sources = GCONF.null_ls_sources or {} })
 		end,
 	},
 	-- Github Copilot
@@ -55,11 +58,16 @@ return {
 		"hrsh7th/nvim-cmp",
 		event = "VeryLazy",
 		dependencies = {
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lua",
+			"hrsh7th/cmp-calc",
+
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
-			"hrsh7th/cmp-emoji",
 			"rafamadriz/friendly-snippets",
-			"hrsh7th/cmp-nvim-lsp",
 			"onsails/lspkind.nvim",
 			"rcarriga/cmp-dap",
 		},
@@ -73,6 +81,30 @@ return {
 			require("luasnip.loaders.from_vscode").lazy_load()
 			luasnip.config.setup({})
 
+			-- `/` cmdline setup.
+			cmp.setup.cmdline("/", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
+				},
+			})
+
+			-- `:` cmdline setup.
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{
+						name = "cmdline",
+						option = {
+							ignore_cmds = { "Man", "!" },
+						},
+					},
+				}),
+			})
+
+			---@type cmp.Setup
 			cmp.setup({
 				view = {
 					entries = {
@@ -134,7 +166,7 @@ return {
 					{ name = "buffer" },
 					{ name = "calc" },
 					{ name = "tmux" },
-					{ name = "emoji" },
+					{ name = "nvim_lua" },
 				},
 			})
 
