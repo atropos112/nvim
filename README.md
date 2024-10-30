@@ -6,7 +6,9 @@
 
 ## Introduction
 
-This is my neovim config. It is a work in progress and I am constantly updating it. It uses lua exclusively, it has lsp's , linters, formatters (which format on save) and many other comforts of life. Its still somewhat messy an inconsistent however.
+This is my neovim config. It has the common functionalities like LSP support, completion, formatters, linters and so on. It was made to be easily extendible, adding an LSP or a formatter should be very easy.
+
+In addition user should be able to change some defaults and still being able to pull without nasty rebases. This nvim config accomplishes that.
 
 ## Instructions
 
@@ -22,25 +24,38 @@ Once you have done this you will also need to install neovim, figure this out yo
 
 ## How to extend/use
 
-This setup is composed of
+### Adding new plugin
 
-- `lua/atro/plugins`: Lazy plugins of all sorts, with their corresponding configs, usually lazy loaded.
-- `lua/atro/installer`: Is a utility directory that knows what needs to be installed.
-- `lua/atro/utils`: Utils for general usage.
-- `lua/atro/{lsp,dap,fmt,lint}`: Are setups for the corresponding matter, LSPs, DAPs, FMTs and linters get loaded and configured there and can all be overriden using override files in the corresponding dirs.
+In `lua/atro/plugins` find appropriate file and add a plugin in a typical LazyNvim way. If you need it to be dependent on global config, add/edit `lua/atro/config/defaults.lua` and possibly `lua/atro/config/types.lua` this will allow users to override those configs if they wish.
 
-## To do
+### Adding new lsp, formatter, linter
 
-This config was written with future expansion in mind as well as flexibility of overriding.
-Functionally it can do both pretty well, from usability standpoint it sucks. Currently I know how to do all of
-it, in few months unlikely to be the case. To address this I need to
+Simply edit `lua/atro/config/defaults.lua`, adding it for an appropriate language and it should be auto-installed (using mason) if a binary doesn't already exist.
 
-- Simplify and document overriding, LSPs, linters, FMTs and DAPs can be overriden and "main" configs can be set. It is confusing what is "main" config and what is LSP etc., need to unify or create obvious boundaries and document it.
+There are edge cases where binary name and name of {lsp,formatter,linter} do not match. This is unfortunate but there isn't really a way around it other than manually adding this mapping (name to binary name) in `lua/atro/mason/mappings.lua` in the `M.to_bin` function.
 
-- Expanding is actually built out, it used to be very complicated now its only a little bit complicated, would like to simplify further but not sure how or if its possible while keeping future expandability. I need to document how to add new LSPs, new FMTs etc.
+### Overriding config
 
-- There is quiet a lot of plugins on my radar, I would like investigate and potentially add more to my config.
+In a typical usage I don't expect a user to have to edit anything in the `nvim` dir, allowing user to pull in the future with ease as there is no conflicting changes with upstream.
+
+To make overrides the user is expected to have `$HOME/.config/nvim-custom` directory. In that directory any `.lua` file will be executed **after** the global config `GCONF` has been created from the defaults. The user can then edit `GCONF` at will, edditing globals and keymaps is also advised. The configs in `GCONF` will then be used to set everything up.
+
+If there are parts of the setup user wants to adjust and changing GCONF/globals alone is not sufficient, please make an issue/PR and this can be adjusted.
+
+I use this at work where my needs differ drastically and yet having a relatively simple `nvim-custom` is all I need. If you are using this, this is the workflow I expect you to be able to achieve also.
+
+## What is being worked on
+
+I do not intend to change the structure significantly from now.
+
+There are however plenty of plugins I added in the past, I didn't set up well enough and I certainly didn't comment/log well enough either, I need to fix this.
+
+In addition there are still some plugins on my radar that I am considering adding.
 
 ## Useful links
 
 [Events for auto-cmds](https://tech.saigonist.com/b/code/list-all-vim-script-events.html)
+
+## Acklowledgement
+
+I have gotten a lot of inspiration from [LunarVim](https://github.com/LunarVim/LunarVim), especially things like logging and the config concepts, thanks.
