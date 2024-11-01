@@ -59,8 +59,12 @@ return {
 				extra_callbacks = GCONF.extra_git_linker_callbacks
 			end
 
+			if #extra_callbacks > 0 then
+				LOGGER:debug("Extra callbacks for GitLinker found, extending the default callbacks list.")
+			end
+
 			---@diagnostic disable-next-line: param-type-mismatch
-			callbacks = vim.list_extend(callbacks, extra_callbacks)
+			callbacks = vim.tbl_extend("force", callbacks, extra_callbacks)
 
 			require("gitlinker").setup({
 				opts = {
