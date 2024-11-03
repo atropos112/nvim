@@ -68,11 +68,16 @@ return {
 			},
 		},
 		rust = {
+			dap_package = "codelldb",
 			test_adapter = {
 				author = "rouge8",
 				name = "neotest-rust",
 			},
 			formatters = { "rustfmt" },
+			-- INFO: rustaceanvim plugin takes care of this
+			-- lsps = {
+			-- 	rust_analyzer = {},
+			-- },
 		},
 		bash = {
 			linters = { "shellcheck" },
