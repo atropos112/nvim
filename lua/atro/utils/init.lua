@@ -131,4 +131,15 @@ M.Deduplicate = function(list)
 	return result
 end
 
+--- @return string | nil
+M.GetGitRoot = function()
+	local handle = io.popen("git rev-parse --show-toplevel")
+	if not handle then
+		return nil
+	end
+	local result = handle:read("*a")
+	handle:close()
+	return result:gsub("%s+", "") -- Trim whitespace
+end
+
 return M
