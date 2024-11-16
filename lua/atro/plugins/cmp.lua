@@ -28,7 +28,7 @@ return {
 	-- Github Copilot
 	{
 		"zbirenbaum/copilot.lua",
-		event = "LspAttach",
+		event = "VeryLazy",
 		config = function()
 			require("copilot").setup({
 				suggestion = {

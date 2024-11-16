@@ -27,8 +27,8 @@ pcall(require, "dap")
 ---@field skip_install boolean | nil Skip installing the lsp even if it is not installed
 
 ---@class TestAdapter
----@field name string Name of the test adapter
----@field author string Author of the test adapter
+---@field pkg_name string Name of the package to install as a dependency of neotest
+---@field adapter_name string Name of the adapter to use, its what is added to require("neotest").adapters
 ---@field config table<string, any> | nil Configuration for the test adapter
 
 ---@enum LogLevel

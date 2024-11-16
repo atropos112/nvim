@@ -13,7 +13,7 @@ local neotest_deps = function()
 	}
 	for _, cfg in pairs(GCONF.languages) do
 		if cfg.test_adapter then
-			table.insert(deps, cfg.test_adapter.author .. "/" .. cfg.test_adapter.name)
+			table.insert(deps, cfg.test_adapter.pkg_name)
 		end
 	end
 	log:debug("Constructing neotest dependencies: " .. require("atro.utils").lst_to_str(deps))
@@ -86,8 +86,8 @@ return {
 			local adapters = {}
 			for lang, cfg in pairs(GCONF.languages) do
 				if cfg.test_adapter then
-					log:with({ language = lang }):debug("Including test adapter " .. cfg.test_adapter.author .. "/" .. cfg.test_adapter.name)
-					table.insert(adapters, require(cfg.test_adapter.name)(cfg.test_adapter.config or {}))
+					log:with({ language = lang }):debug("Including test adapter " .. cfg.test_adapter.adapter_name)
+					table.insert(adapters, require(cfg.test_adapter.adapter_name)(cfg.test_adapter.config or {}))
 				end
 			end
 

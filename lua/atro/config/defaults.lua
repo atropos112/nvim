@@ -21,8 +21,8 @@ return {
 		},
 		python = {
 			test_adapter = {
-				author = "nvim-neotest",
-				name = "neotest-python",
+				pkg_name = "nvim-neotest/neotest-python",
+				adapter_name = "neotest-python",
 				config = {
 					justMyCode = false,
 				},
@@ -70,8 +70,8 @@ return {
 		rust = {
 			dap_package = "codelldb",
 			test_adapter = {
-				author = "rouge8",
-				name = "neotest-rust",
+				pkg_name = "mrkjkb/rustaceanvim",
+				adapter_name = "rustaceanvim.neotest",
 			},
 			formatters = { "rustfmt" },
 			-- INFO: rustaceanvim plugin takes care of this
@@ -108,8 +108,8 @@ return {
 		},
 		go = {
 			test_adapter = {
-				author = "nvim-neotest",
-				name = "neotest-go",
+				pkg_name = "nvim-neotest/neotest-go",
+				adapter_name = "neotest-go",
 			},
 			formatters = { "gofmt", "goimports" },
 			dap_package = "dlv",
@@ -153,8 +153,8 @@ return {
 		},
 		c_sharp = {
 			test_adapter = {
-				author = "Issafalcon",
-				name = "neotest-dotnet",
+				pkg_name = "nvim-neotest/neotest-dotnet",
+				adapter_name = "neotest-dotnet",
 			},
 			formatters = { "csharpier" },
 			dap_package = "netcoredbg",
