@@ -201,7 +201,8 @@ return {
 			formatters = { "alejandra" }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
 			lsps = {
 				-- INFO: Is worse than nixd but has very good go-to-definition.
-				nil_ls = {},
+				-- TODO: Re-enable this when nix_ls is fixed with pipe operators like here https://github.com/oxalica/nil/pull/152
+				-- nil_ls = {},
 
 				-- INFO: All around best nix lsp, except the go-to-definition is not working that well.
 				nixd = {
