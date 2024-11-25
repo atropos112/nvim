@@ -2,10 +2,6 @@ local set = require("atro.utils").keyset
 ---@type LazySpec[]
 local plugins = {
 	{
-		"tris203/precognition.nvim",
-		opts = {},
-	},
-	{
 		"Tastyep/structlog.nvim",
 		lazy = true,
 	},
@@ -68,10 +64,10 @@ local plugins = {
 
 			local keymap = {
 				["<C-u>"] = function()
-					neoscroll.ctrl_u({ duration = 150 })
+					neoscroll.ctrl_u({ duration = 170 })
 				end,
 				["<C-d>"] = function()
-					neoscroll.ctrl_d({ duration = 150 })
+					neoscroll.ctrl_d({ duration = 170 })
 				end,
 				["<C-b>"] = function()
 					neoscroll.ctrl_b({ duration = 250 })
