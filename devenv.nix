@@ -12,6 +12,7 @@
     ${lib.generators.toKeyValue {} (lib.mapAttrs (_: value: value.description) config.scripts)}
     EOF
     echo
+
   '';
 
   packages = with pkgs; [

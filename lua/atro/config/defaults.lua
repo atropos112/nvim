@@ -70,6 +70,8 @@ return {
 		rust = {
 			dap_package = "codelldb",
 			test_adapter = {
+				-- rustaceanvim is already loaded separately but it is a dep 
+				-- of neotesting so adding it here as a pkg_name.
 				pkg_name = "mrkjkb/rustaceanvim",
 				adapter_name = "rustaceanvim.neotest",
 			},
@@ -153,7 +155,7 @@ return {
 		},
 		c_sharp = {
 			test_adapter = {
-				pkg_name = "nvim-neotest/neotest-dotnet",
+				pkg_name = "Issafalcon/neotest-dotnet",
 				adapter_name = "neotest-dotnet",
 			},
 			formatters = { "csharpier" },
