@@ -6,17 +6,6 @@ local M = {}
 local on_attach = function(client, bufnr)
 	require("inlay-hints").on_attach(client, bufnr)
 
-	-- WARN: Python is a very special case. I have two LSPs there and basedpyright's go to def doesn't always work.
-	-- So turning it off, only relying on pylsp's go to definition.
-	-- Adjust capabilities based on the LSP client
-	if client.name == "basedpyright" then
-		-- Disable GoToDefinition for basedpyright
-		client.server_capabilities.definitionProvider = false
-	elseif client.name == "pylsp" then
-		-- Ensure GoToDefinition is enabled for pylsp
-		client.server_capabilities.definitionProvider = true
-	end
-
 	-- Only attach navic to one LSP client if it supports documentSymbolProvider
 	if client.server_capabilities.documentSymbolProvider and not (vim.b[bufnr].navic_client_id ~= nil and vim.b[bufnr].navic_client_name ~= client.name) then
 		require("nvim-navic").attach(client, bufnr)
@@ -32,6 +21,8 @@ local on_attach = function(client, bufnr)
 
 	opts.desc = "Go to declaration"
 	set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
+
+	set("n", "gy", vim.lsp.buf.rename, opts) -- rename
 
 	opts.desc = "Show LSP definitions"
 	set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions

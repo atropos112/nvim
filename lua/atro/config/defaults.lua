@@ -14,6 +14,7 @@ return {
 			lsps = {
 				sqls = {},
 			},
+			linters = { "sqlfluff" },
 		},
 		markdown = {
 			formatters = { "prettier" },
@@ -47,18 +48,18 @@ return {
 					},
 				},
 
-				pylsp = {
-					settings = {
-						pylsp = {
-							plugins = {
-								pycodestyle = {
-									ignore = {},
-									maxLineLength = 120,
-								},
-							},
-						},
-					},
-				},
+				-- pylsp = {
+				-- 	settings = {
+				-- 		pylsp = {
+				-- 			plugins = {
+				-- 				pycodestyle = {
+				-- 					ignore = {},
+				-- 					maxLineLength = 120,
+				-- 				},
+				-- 			},
+				-- 		},
+				-- 	},
+				-- },
 			},
 		},
 		zig = {
@@ -70,7 +71,7 @@ return {
 		rust = {
 			dap_package = "codelldb",
 			test_adapter = {
-				-- rustaceanvim is already loaded separately but it is a dep 
+				-- rustaceanvim is already loaded separately but it is a dep
 				-- of neotesting so adding it here as a pkg_name.
 				pkg_name = "mrkjkb/rustaceanvim",
 				adapter_name = "rustaceanvim.neotest",

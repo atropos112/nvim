@@ -15,6 +15,7 @@
   "shellcheck": "v0.10.0",
   "shellharden": "4.3.1",
   "shfmt": "v3.10.0",
+  "sqlfluff": "3.3.0",
   "sqls": "v0.2.28",
   "stylua": "v0.20.0",
   "taplo": "0.9.3",
