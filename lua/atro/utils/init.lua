@@ -61,6 +61,51 @@ M.keyset = function(mode, key, cmd, opts)
 	vim.keymap.set(mode, key, cmd, opts)
 end
 
+---@param inputList Keymap[] | table Keymaps
+---@return Keymap[]
+local parse_keymaps = function(inputList)
+	local keymaps = {}
+
+	for _, element in ipairs(inputList) do
+		if type(element) == "table" and #element == 3 and type(element[1]) == "string" and (type(element[2]) == "string" or type(element[2]) == "function") and type(element[3]) == "string" then
+			-- Convert the list of size 3 into a Keymap
+			local keymap = {
+				key = element[1],
+				cmd = element[2],
+				desc = element[3],
+			}
+			table.insert(keymaps, keymap)
+		elseif type(element) == "table" and element.key and element.cmd and element.desc then
+			-- It's already a Keymap, do nothing
+			table.insert(keymaps, element)
+		else
+			error("Invalid element: " .. tostring(element))
+		end
+	end
+
+	return keymaps
+end
+
+---@class Keymap
+---@field key string Key to map to
+---@field cmd string|function Command to run
+---@field desc string Description of the keymap
+
+---@param mode string|string[] Mode short-name, see |nvim_set_keymap()|.
+---@param keys Keymap[] | table Keymaps
+---@param opts vim.keymap.set.Opts Opts to attach to all keymaps
+---@return nil
+M.keysets = function(mode, opts, keys)
+	opts = opts or {}
+	keys = parse_keymaps(keys)
+	for _, keymap in ipairs(keys) do
+		local key_opts = opts
+		key_opts.desc = keymap.desc
+
+		vim.keymap.set(mode, keymap.key, keymap.cmd, key_opts)
+	end
+end
+
 --- @param base table The base table to be (potentially) overridden at root
 --- @param override table The table to override the base table at root
 --- @return table

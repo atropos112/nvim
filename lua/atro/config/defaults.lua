@@ -37,7 +37,6 @@ return {
 			lsps = {
 				basedpyright = {
 					settings = {
-
 						basedpyright = {
 							analysis = {
 								autoSearchPaths = true,

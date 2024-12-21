@@ -6,10 +6,6 @@ return {
 		build = "make install_jsregexp",
 	},
 	{
-		"hrsh7th/cmp-path",
-		event = "VeryLazy",
-	},
-	{
 		"nvimtools/none-ls.nvim",
 		event = "VeryLazy",
 		dependencies = {
@@ -64,6 +60,7 @@ return {
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lua",
 			"hrsh7th/cmp-calc",
+			"hrsh7th/cmp-path",
 
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
@@ -171,6 +168,13 @@ return {
 			})
 
 			--- INFO: For cmp for dap
+			---
+			cmp.setup({
+				enabled = function()
+					return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+				end,
+			})
+
 			cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
 				sources = {
 					{ name = "dap" },

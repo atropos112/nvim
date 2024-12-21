@@ -4,6 +4,8 @@ local M = {}
 ---@param bufnr number
 ---@return nil
 local on_attach = function(client, bufnr)
+	local telescope = require("telescope.builtin")
+
 	require("inlay-hints").on_attach(client, bufnr)
 
 	-- Only attach navic to one LSP client if it supports documentSymbolProvider
@@ -11,47 +13,24 @@ local on_attach = function(client, bufnr)
 		require("nvim-navic").attach(client, bufnr)
 	end
 
-	local opts = { noremap = true, silent = true }
-	opts.buffer = bufnr
-	local set = require("atro.utils").keyset
-
-	-- set keybinds
-	opts.desc = "Show LSP references"
-	set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
-
-	opts.desc = "Go to declaration"
-	set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
-
-	set("n", "gy", vim.lsp.buf.rename, opts) -- rename
-
-	opts.desc = "Show LSP definitions"
-	set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
-
-	opts.desc = "Show LSP implementations"
-	set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
-
-	opts.desc = "Show LSP type definitions"
-	set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
-
-	opts.desc = "See available code actions"
-	set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
-
-	opts.desc = "Show buffer diagnostics"
-	set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
-
-	opts.desc = "Show line diagnostics"
-	set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
-
-	opts.desc = "Go to previous diagnostic"
-	set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
-	opts.desc = "Go to next diagnostic"
-	set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
-	opts.desc = "Show documentation for what is under cursor"
-	set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
-
 	require("virtualtypes").on_attach()
+
+	local set_keys = require("atro.utils").keysets
+
+	set_keys({ "n", "v" }, { noremap = true, silent = true, buffer = bufnr }, {
+		{ "gR", telescope.lsp_references, "Show LSP references" },
+		{ "gD", vim.lsp.buf.declaration, "Go to declaration" },
+		{ "gy", vim.lsp.buf.rename, "Rename" },
+		{ "gd", telescope.lsp_definitions, "Show LSP definitions" },
+		{ "gi", telescope.lsp_implementations, "Show LSP implementations" },
+		{ "gt", telescope.lsp_type_definitions, "Show LSP type definitions" },
+		{ "<leader>ca", vim.lsp.buf.code_action, "See available code actions" },
+		{ "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics" },
+		{ "<leader>d", vim.diagnostic.open_float, "Show line diagnostics" },
+		{ "[d", vim.diagnostic.goto_prev, "Go to previous diagnostic" },
+		{ "]d", vim.diagnostic.goto_next, "Go to next diagnostic" },
+		{ "K", vim.lsp.buf.hover, "Show documentation for what is under cursor" },
+	})
 end
 
 ---@return table

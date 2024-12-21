@@ -1,9 +1,10 @@
 {
-  "basedpyright": "1.19.1",
+  "basedpyright": "1.23.1",
   "bash-language-server": "5.4.2",
   "codelldb": "v1.10.0",
   "csharpier": "0.29.2",
-  "debugpy": "1.8.7",
+  "debugpy": "1.8.11",
+  "delve": "v1.24.0",
   "fixjson": "1.1.2",
   "goimports": "v0.26.0",
   "jsonlint": "1.6.3",
