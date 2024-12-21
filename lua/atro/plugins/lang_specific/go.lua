@@ -1,61 +1,34 @@
 if GCONF.languages["go"] then
 	return {
-		-- Debugging functionality for go
+		-- INFO: Can use fatih/vim-go or ray-x/go.nvim but they both seem unecessarily bloated
+		-- This plugin has also (somehow) figured out how to run debug tests for ginkgo and go test
+		-- With basically zero setup. And get to use my own LSP configs so renames etc work.
 		{
-			"leoluz/nvim-dap-go",
+			"olexsmir/gopher.nvim",
 			ft = "go",
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				"nvim-treesitter/nvim-treesitter",
+				"mfussenegger/nvim-dap", -- (optional) only if you use `gopher.dap`
+			},
 			config = function()
-				-- NOTE: Debugger
-				require("dap-go").setup({
-					dap_configurations = {
-						{
-							type = "go",
-							name = "Attach remote",
-							mode = "remote",
-							request = "attach",
-						},
-					},
+				require("atro.mason").ensure_installed({
+					"gomodifytags",
+					"gotests",
+					"impl",
+					"iferr",
+					-- "dlv", -- INFO: as a dap package it already gets installed
 				})
-			end,
-		},
-		-- Golang plugin (all the lagnuage niceties in one plugin)
-		{
-			"fatih/vim-go",
-			ft = "go",
-			dependencies = {
-				"mfussenegger/nvim-lint",
-				"williamboman/mason.nvim",
-			},
-		},
 
-		-- {
-		-- 	"ray-x/go.nvim",
-		-- 	dependencies = { -- optional packages
-		-- 		"ray-x/guihua.lua",
-		-- 		"neovim/nvim-lspconfig",
-		-- 		"nvim-treesitter/nvim-treesitter",
-		-- 	},
-		-- 	config = function()
-		-- 		require("go").setup()
-		-- 	end,
-		-- 	event = { "CmdlineEnter" },
-		-- 	ft = { "go", "gomod" },
-		-- 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-		-- },
-		-- Allows implementing interfaces
-		{
-			"edolphin-ydf/goimpl.nvim",
-			dependencies = {
-				{ "nvim-lua/plenary.nvim" },
-				{ "nvim-lua/popup.nvim" },
-				{ "nvim-telescope/telescope.nvim" },
-				{ "nvim-treesitter/nvim-treesitter" },
-			},
-			ft = "go",
-			config = function()
-				require("atro.mason").ensure_installed("impl")
-				require("telescope").load_extension("goimpl")
-				vim.api.nvim_set_keymap("n", "<leader>im", [[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]], { noremap = true, silent = true })
+				-- TODO: Add bunch of keymaps for go-specific commands look at
+				-- https://github.com/olexsmir/gopher.nvim to see what commands are available
+				-- from the plugin itself.
+
+				require("gopher").setup(
+					---@type gopher.Config
+					{}
+				)
+				require("gopher.dap").setup()
 			end,
 		},
 	}

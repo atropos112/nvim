@@ -109,6 +109,8 @@ return {
 			},
 		},
 		go = {
+			-- INFO: The plugin olexsmir/gopher.nvim provides another test adapter for ginkgo
+			-- So here we only need to provide the adapter for go test.
 			test_adapter = {
 				pkg_name = "nvim-neotest/neotest-go",
 				adapter_name = "neotest-go",
@@ -118,8 +120,6 @@ return {
 			linters = { "golangcilint" },
 			lsps = {
 				gopls = {
-					-- NOTE: go plugin take over here so should not pass on_attach.
-					skip_on_attach = true,
 					settings = {
 						gopls = {
 							gofumpt = true,
