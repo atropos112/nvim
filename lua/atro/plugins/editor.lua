@@ -1,5 +1,62 @@
 return {
 	{
+		"danymat/neogen",
+		opts = true,
+		keys = {
+			{
+				"<leader>a",
+				function()
+					require("neogen").generate()
+				end,
+				desc = "Add Docstring",
+			},
+		},
+	},
+	{
+		"chrisgrieser/nvim-rulebook",
+		keys = {
+			{
+				"<leader>Ri",
+				function()
+					require("rulebook").ignoreRule()
+				end,
+			},
+			{
+				"<leader>Rl",
+				function()
+					require("rulebook").lookupRule()
+				end,
+			},
+			{
+				"<leader>Ry",
+				function()
+					require("rulebook").yankDiagnosticCode()
+				end,
+			},
+			{
+				"<leader>sf",
+				function()
+					require("rulebook").suppressFormatter()
+				end,
+				mode = { "n", "x" },
+			},
+		},
+		opts = {},
+	},
+	{
+		"smjonas/inc-rename.nvim",
+		config = function()
+			require("inc_rename").setup({})
+			require("atro.utils").keyset("n", "gy", function()
+				return ":IncRename " .. vim.fn.expand("<cword>")
+			end, { desc = "Incremental Rename", expr = true })
+		end,
+	},
+	{
+		"chrisgrieser/nvim-puppeteer",
+		event = "BufRead",
+	},
+	{
 		"numToStr/Comment.nvim",
 		event = "BufRead",
 		opts = {
@@ -86,7 +143,45 @@ return {
 				desc = "Close all previews",
 			},
 		},
-		opts = {},
+		opts = {
+			post_close_hook = function()
+				GOTO_PREVIEW_ALREADY_SHIFTED = false
+			end,
+			post_open_hook = function(_, win_id)
+				if GOTO_PREVIEW_ALREADY_SHIFTED then
+					return
+				end
+
+				-- Get the current window dimensions
+				local width = vim.api.nvim_win_get_width(win_id)
+				local height = vim.api.nvim_win_get_height(win_id)
+
+				-- Get the dimensions of the Neovim editor
+				local editor_width = vim.o.columns
+				local editor_height = vim.o.lines
+
+				-- Calculate the new position for the upper right corner
+				local new_row = 0 -- Top of the screen
+				local new_col = editor_width - width -- Right side of the screen
+
+				-- -- Move the floating window
+				-- vim.api.nvim_win_set_config(win_id, {
+				-- 	relative = "editor",
+				-- 	row = new_row,
+				-- 	col = new_col,
+				-- })
+				-- Move the floating window
+				GOTO_PREVIEW_ALREADY_SHIFTED = true
+
+				vim.api.nvim_win_set_config(win_id, {
+					relative = "editor",
+					row = new_row,
+					col = new_col,
+					width = width, -- Maintain the current width
+					height = height, -- Maintain the current height
+				})
+			end, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+		},
 	},
 	{
 		-- INFO: with :<n> you can peek at n-th line

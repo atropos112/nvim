@@ -31,6 +31,11 @@ if GCONF.languages["go"] then
 				require("gopher.dap").setup()
 			end,
 		},
+		{
+			"maxandron/goplements.nvim",
+			ft = "go",
+			opts = {},
+		},
 	}
 else
 	return {}

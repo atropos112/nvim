@@ -1,3 +1,37 @@
+local log = LOGGER:with({ phase = "CMP" })
+
+local cmp_deps = function()
+	if _G.cmp_deps then
+		return _G.cmp_deps
+	end
+
+	local deps = {
+
+		"hrsh7th/cmp-path",
+		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-cmdline",
+		"hrsh7th/cmp-nvim-lua",
+		"hrsh7th/cmp-calc",
+		"hrsh7th/cmp-path",
+
+		"L3MON4D3/LuaSnip",
+		"saadparwaiz1/cmp_luasnip",
+		"rafamadriz/friendly-snippets",
+		"onsails/lspkind.nvim",
+		"rcarriga/cmp-dap",
+	}
+
+	if GCONF.languages["go"] then
+		table.insert(deps, "Snikimonkd/cmp-go-pkgs")
+	end
+
+	log:debug("Constructing cmp dependencies: " .. require("atro.utils").lst_to_str(deps))
+
+	_G.cmp_deps = deps
+	return deps
+end
+
 return {
 	-- Snippets control
 	{
@@ -53,21 +87,7 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		event = "VeryLazy",
-		dependencies = {
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-nvim-lua",
-			"hrsh7th/cmp-calc",
-			"hrsh7th/cmp-path",
-
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			"onsails/lspkind.nvim",
-			"rcarriga/cmp-dap",
-		},
+		dependencies = cmp_deps(),
 		config = function()
 			--- cmp is responsible for autocomplete
 			--- also load here luasnip snippets using snippets from vs-code
@@ -100,6 +120,21 @@ return {
 					},
 				}),
 			})
+
+			local sources = {
+				{ name = "lazydev" },
+				{ name = "nvim_lsp" },
+				{ name = "luasnip" },
+				{ name = "path" },
+				{ name = "buffer" },
+				{ name = "calc" },
+				{ name = "tmux" },
+				{ name = "nvim_lua" },
+			}
+
+			if GCONF.languages["go"] then
+				table.insert(sources, { name = "go_pkgs" })
+			end
 
 			---@type cmp.Setup
 			cmp.setup({
@@ -155,16 +190,7 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
-				sources = {
-					{ name = "lazydev" },
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "path" },
-					{ name = "buffer" },
-					{ name = "calc" },
-					{ name = "tmux" },
-					{ name = "nvim_lua" },
-				},
+				sources = sources,
 			})
 
 			--- INFO: For cmp for dap

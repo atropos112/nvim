@@ -2,6 +2,11 @@ local set = require("atro.utils").keyset
 ---@type LazySpec[]
 local plugins = {
 	{
+		"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+	},
+	{
+		-- INFO: This will be installed even before lazy is inited if it has to.
+		-- look in utils/logs.lua for more info
 		"Tastyep/structlog.nvim",
 		lazy = true,
 	},

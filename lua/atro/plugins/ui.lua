@@ -1,5 +1,12 @@
 return {
 	{
+		"kosayoda/nvim-lightbulb",
+		event = "LspAttach",
+		opts = {
+			autocmd = { enabled = true },
+		},
+	},
+	{
 		"RRethy/vim-illuminate",
 		event = "LspAttach",
 		opt = {},

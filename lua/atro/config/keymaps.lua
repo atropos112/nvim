@@ -7,8 +7,7 @@ function M.load_defaults()
 	set("n", "<leader>pv", vim.cmd.Ex)
 
 	-- move selected line / block of text in visual mode
-	-- :m here is the move command
-	set("v", "J", ":m '>+1<CR>gv=gv")
+	-- :m here is the move command set("v", "J", ":m '>+1<CR>gv=gv")
 	set("v", "K", ":m '<-2<CR>gv=gv")
 
 	-- half page jumping and keeping in the same position on the screen
@@ -31,6 +30,10 @@ function M.load_defaults()
 	-- move lines up and down by 5 lines up and down
 	set({ "n", "v" }, "<C-j>", "7jzz")
 	set({ "n", "v" }, "<C-k>", "7kzz")
+
+	-- :tnoremap <Esc> <C-\><C-n>
+	-- Allowing escaping in terminal mode
+	set("t", "<Esc>", "<C-\\><C-n>")
 end
 
 return M

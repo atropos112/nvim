@@ -4,8 +4,6 @@ local M = {}
 ---@param bufnr number
 ---@return nil
 local on_attach = function(client, bufnr)
-	local telescope = require("telescope.builtin")
-
 	require("inlay-hints").on_attach(client, bufnr)
 
 	-- Only attach navic to one LSP client if it supports documentSymbolProvider
@@ -15,12 +13,17 @@ local on_attach = function(client, bufnr)
 
 	require("virtualtypes").on_attach()
 
+	M.set_lsp_keymaps(bufnr)
+end
+
+M.set_lsp_keymaps = function(bufnr)
+	local telescope = require("telescope.builtin")
 	local set_keys = require("atro.utils").keysets
 
 	set_keys({ "n", "v" }, { noremap = true, silent = true, buffer = bufnr }, {
 		{ "gR", telescope.lsp_references, "Show LSP references" },
 		{ "gD", vim.lsp.buf.declaration, "Go to declaration" },
-		{ "gy", vim.lsp.buf.rename, "Rename" },
+		-- { "gy", vim.lsp.buf.rename, "Rename" },
 		{ "gd", telescope.lsp_definitions, "Show LSP definitions" },
 		{ "gi", telescope.lsp_implementations, "Show LSP implementations" },
 		{ "gt", telescope.lsp_type_definitions, "Show LSP type definitions" },
