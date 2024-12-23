@@ -335,6 +335,7 @@ return {
 		},
 		opts = {
 			enable_persistent_history = true,
+			default_register = "+",
 		},
 	},
 	{

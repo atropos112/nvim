@@ -22,10 +22,6 @@ local cmp_deps = function()
 		"rcarriga/cmp-dap",
 	}
 
-	if GCONF.languages["go"] then
-		table.insert(deps, "Snikimonkd/cmp-go-pkgs")
-	end
-
 	log:debug("Constructing cmp dependencies: " .. require("atro.utils").lst_to_str(deps))
 
 	_G.cmp_deps = deps
@@ -131,10 +127,6 @@ return {
 				{ name = "tmux" },
 				{ name = "nvim_lua" },
 			}
-
-			if GCONF.languages["go"] then
-				table.insert(sources, { name = "go_pkgs" })
-			end
 
 			---@type cmp.Setup
 			cmp.setup({
