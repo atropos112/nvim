@@ -57,6 +57,8 @@ function Logger:init()
 	end
 
 	local structlog = require("structlog")
+	local home_dir = os.getenv("HOME") -- Get the home directory
+	local log_file_path = home_dir .. "/.local/share/nvim/atro.log" -- Construct the full path
 
 	structlog.configure({
 		atro = {
@@ -78,7 +80,8 @@ function Logger:init()
 						structlog.processors.Timestamper("%F %H:%M:%S"),
 					},
 					formatter = structlog.formatters.Format("%s [%-5s]: %-30s", { "timestamp", "level", "msg", "logger_name" }),
-					sink = structlog.sinks.File(vim.fn.stdpath("config") .. "/atro.log"),
+
+					sink = structlog.sinks.File(log_file_path),
 				},
 			},
 		},
