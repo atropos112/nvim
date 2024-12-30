@@ -8,6 +8,7 @@ pcall(require, "dap")
 ---@field logging Logging Log level for the logger
 ---@field null_ls_sources any[] | nil List of null-ls sources
 ---@field extra_git_linker_callbacks table<string, function> | function | nil List of git linker callbacks, if function it is evaluated at runtime and should return a table of string -> function
+---@field extra_overseerr_tasks overseer.TemplateDefinition[] | nil List of extra overseer tasks
 ---@field mason_config MasonConfig | nil Mason configuration
 
 ---@class LanguageConfig

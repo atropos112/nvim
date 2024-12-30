@@ -43,14 +43,24 @@ return {
 	{
 		"stevearc/overseer.nvim",
 		event = "VeryLazy",
-		opts = {
-			task_list = {
-				direction = "bottom",
-				min_height = 25,
-				max_height = 25,
-				default_detail = 1,
-			},
-		},
+		config = function()
+			local overseer = require("overseer")
+			overseer.setup({
+				task_list = {
+					direction = "bottom",
+					min_height = 25,
+					max_height = 25,
+					default_detail = 1,
+				},
+			})
+
+			local extra_tasks = GCONF.extra_overseerr_tasks
+			if extra_tasks then
+				for _, task in ipairs(extra_tasks) do
+					overseer.register_template(task)
+				end
+			end
+		end,
 	},
 
 	{

@@ -18,6 +18,7 @@ if GCONF.languages["lua"] then
 					"which-key.nvim",
 					"dap",
 					"gopher.nvim",
+					"overseer.nvim",
 				},
 				enabled = function()
 					return true
