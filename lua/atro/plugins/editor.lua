@@ -1,3 +1,5 @@
+local key = require("atro.utils").keyset
+
 return {
 	{
 		"danymat/neogen",
@@ -44,12 +46,13 @@ return {
 		opts = {},
 	},
 	{
-		"smjonas/inc-rename.nvim",
+		"saecki/live-rename.nvim",
+		event = "BufRead",
 		config = function()
-			require("inc_rename").setup({})
-			require("atro.utils").keyset("n", "gy", function()
-				return ":IncRename " .. vim.fn.expand("<cword>")
-			end, { desc = "Incremental Rename", expr = true })
+			local live_rename = require("live-rename")
+
+			live_rename.setup({})
+			key("n", "gy", live_rename.map({ insert = true }), { desc = "LSP rename" })
 		end,
 	},
 	{

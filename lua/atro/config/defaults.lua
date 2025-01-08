@@ -31,7 +31,7 @@ return {
 			formatters = { "ruff_fix", "ruff_format" },
 			dap_package = "debugpy",
 			other = {
-				debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
+				-- debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
 			},
 			linters = { "ruff" },
 			lsps = {
@@ -42,6 +42,7 @@ return {
 								autoSearchPaths = true,
 								typeCheckingMode = "standard",
 								useLibraryCodeForTypes = true,
+								autoImportCompletions = true,
 							},
 						},
 					},
