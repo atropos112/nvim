@@ -5,6 +5,7 @@ return {
 			"nvim-tree/nvim-web-devicons",
 			"linrongbin16/lsp-progress.nvim",
 			"folke/noice.nvim",
+			"AndreM222/copilot-lualine",
 		},
 		event = "VeryLazy",
 		config = function()
@@ -25,8 +26,10 @@ return {
 							color = { fg = "#ff9e64" },
 						},
 					},
-					lualine_y = { "progress" },
-					lualine_z = { "location" },
+					lualine_y = { "progress", "location" },
+
+					lualine_z = { "copilot" },
+					-- lualine_z = { "location" },
 				},
 			})
 

@@ -2,6 +2,10 @@ local set = require("atro.utils").keyset
 ---@type LazySpec[]
 local plugins = {
 	{
+		"meznaric/key-analyzer.nvim",
+		opts = {},
+	},
+	{
 		"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	},
 	{

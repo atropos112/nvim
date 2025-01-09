@@ -10,6 +10,7 @@ return {
 	talk_to_external = true,
 	global_linters = { "codespell" },
 	languages = {
+		csv = {},
 		sql = {
 			lsps = {
 				sqls = {},

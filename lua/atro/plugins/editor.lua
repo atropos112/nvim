@@ -47,7 +47,7 @@ return {
 	},
 	{
 		"saecki/live-rename.nvim",
-		event = "BufRead",
+		event = "LspAttach",
 		config = function()
 			local live_rename = require("live-rename")
 
@@ -58,6 +58,12 @@ return {
 	{
 		"chrisgrieser/nvim-puppeteer",
 		event = "BufRead",
+	},
+	{
+		-- TODO: Analyze all keys
+		"folke/ts-comments.nvim",
+		event = "VeryLazy",
+		opts = {},
 	},
 	{
 		"numToStr/Comment.nvim",
