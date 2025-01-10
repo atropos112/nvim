@@ -1,5 +1,6 @@
 local key = require("atro.utils").keyset
 
+---@type LazyPlugin[]
 return {
 	{
 		"danymat/neogen",
@@ -104,7 +105,22 @@ return {
 		"folke/todo-comments.nvim",
 		event = "BufRead",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {},
+		opts = {
+			keywords = {
+				FIX = {
+					icon = " ", -- icon used for the sign, and in search results
+					color = "error", -- can be a hex color, or a named color (see below)
+					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+					-- signs = false, -- configure signs for some keywords individually
+				},
+				TODO = { icon = " ", color = "info" },
+				HACK = { icon = " ", color = "warning" },
+				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+				SECTION = { icon = " ", alt = { "SEC", "Section" } },
+				NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+			},
+		},
 	},
 	{
 		"kevinhwang91/nvim-ufo",
@@ -327,64 +343,62 @@ return {
 			line_opacity = 0.30,
 		},
 	},
+	-- Section: Plugin to persist clipboard history between sessions
+	-- Shows the history in a telescope window when <CR> is pressed the selected
+	-- item is stored into buffer ready to be pasted.
+	-- Alternatively can press <c-p> to paste the selected item directly.
 	{
 		"AckslD/nvim-neoclip.lua",
-		-- lazy = true,
-		event = "BufEnter",
+		event = { "BufEnter" },
 		dependencies = {
-			"kkharji/sqlite.lua",
+			"kkharji/sqlite.lua", -- Needs to persist paste history between sessions
 			"nvim-telescope/telescope.nvim",
 		},
-		keys = {
-			{
-				"<leader>pp",
-				"<cmd>Telescope neoclip<cr>",
-				desc = "Open neoclip",
-			},
-		},
-		opts = {
-			enable_persistent_history = true,
-			default_register = "+",
-		},
+		config = function()
+			local keys = KEYMAPS.buffer
+
+			-- No type available for the setup config (checked).
+			require("neoclip").setup({
+				enable_persistent_history = true,
+				default_register = "+",
+				db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3", -- Default, set for clarity
+				keys = {
+					telescope = {
+						i = {
+							select = keys.select_from_paste_history.key,
+							paste = keys.insert_from_paste_history.key,
+						},
+						n = {
+							select = keys.select_from_paste_history.key,
+							paste = keys.insert_from_paste_history.key,
+						},
+					},
+				},
+			})
+
+			KEYMAPS:set(keys.show_paste_history, "<cmd>Telescope neoclip<cr>")
+		end,
 	},
+	-- Section: Plugin to jump around the file quicker.
+	-- Improves t/T, f/F keys by highlighting the jump target.
+	-- Also adds two more keys which highlight next jump places of occurence of char
+	-- or treesitter focal points.
 	{
 		"folke/flash.nvim",
-		event = "VeryLazy",
-		---@type Flash.Config
-		opts = {},
-		keys = {
-			{
-				"s",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").jump()
-				end,
-				desc = "Flash",
-			},
-			{
-				"S",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").treesitter()
-				end,
-				desc = "Flash Treesitter",
-			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			{
-				"R",
-				mode = { "o", "x" },
-				function()
-					require("flash").treesitter_search()
-				end,
-				desc = "Treesitter Search",
-			},
-		},
+		event = { "VeryLazy" },
+		config = function()
+			local keys = KEYMAPS.position
+			local flash = require("flash")
+
+			flash.setup(
+				---@type Flash.Config
+				{}
+			)
+
+			KEYMAPS:set_many({
+				{ keys.flash_jump, require("flash").jump },
+				{ keys.flash_treesitter, require("flash").treesitter },
+			})
+		end,
 	},
 }

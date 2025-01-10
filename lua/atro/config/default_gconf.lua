@@ -1,5 +1,3 @@
-require("atro.config.types")
-
 ---@type GlobalConfig
 return {
 	logging = {

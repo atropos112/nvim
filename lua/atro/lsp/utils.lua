@@ -5,6 +5,7 @@ local M = {}
 ---@return nil
 local on_attach = function(client, bufnr)
 	require("inlay-hints").on_attach(client, bufnr)
+	local telescope = require("telescope.builtin")
 
 	-- Only attach navic to one LSP client if it supports documentSymbolProvider
 	if client.server_capabilities.documentSymbolProvider and not (vim.b[bufnr].navic_client_id ~= nil and vim.b[bufnr].navic_client_name ~= client.name) then
@@ -13,27 +14,21 @@ local on_attach = function(client, bufnr)
 
 	require("virtualtypes").on_attach()
 
-	M.set_lsp_keymaps(bufnr)
-end
+	local keys = KEYMAPS.lsp_on_attach
 
-M.set_lsp_keymaps = function(bufnr)
-	local telescope = require("telescope.builtin")
-	local set_keys = require("atro.utils").keysets
-
-	set_keys({ "n", "v" }, { noremap = true, silent = true, buffer = bufnr }, {
-		{ "gR", telescope.lsp_references, "Show LSP references" },
-		{ "gD", vim.lsp.buf.declaration, "Go to declaration" },
-		-- { "gy", vim.lsp.buf.rename, "Rename" },
-		{ "gd", telescope.lsp_definitions, "Show LSP definitions" },
-		{ "gi", telescope.lsp_implementations, "Show LSP implementations" },
-		{ "gt", telescope.lsp_type_definitions, "Show LSP type definitions" },
-		{ "<leader>ca", vim.lsp.buf.code_action, "See available code actions" },
-		{ "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics" },
-		{ "<leader>d", vim.diagnostic.open_float, "Show line diagnostics" },
-		{ "[d", vim.diagnostic.goto_prev, "Go to previous diagnostic" },
-		{ "]d", vim.diagnostic.goto_next, "Go to next diagnostic" },
-		{ "K", vim.lsp.buf.hover, "Show documentation for what is under cursor" },
-	})
+	KEYMAPS:set_many({
+		{ keys.lsp_references, telescope.lsp_references },
+		{ keys.lsp_declaration, vim.lsp.buf.declaration },
+		{ keys.lsp_definitions, telescope.lsp_definitions },
+		{ keys.lsp_implementations, telescope.lsp_implementations },
+		{ keys.lsp_type_definitions, telescope.lsp_type_definitions },
+		{ keys.lsp_code_actions, vim.lsp.buf.code_action },
+		{ keys.lsp_buffer_diagnostics, "<cmd>Telescope diagnostics bufnr=0<CR>" },
+		{ keys.lsp_line_diagnostics, vim.diagnostic.open_float },
+		{ keys.lsp_prev_diagnostic, vim.diagnostic.goto_prev },
+		{ keys.lsp_next_diagnostic, vim.diagnostic.goto_next },
+		{ keys.lsp_hover, vim.lsp.buf.hover },
+	}, { noremap = true, silent = true, buffer = bufnr })
 end
 
 ---@return table

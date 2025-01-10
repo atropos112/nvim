@@ -1,5 +1,3 @@
----@meta
-pcall(require, "dap")
 
 ---@class GlobalConfig
 ---@field talk_to_external boolean Should this nvim instance talk to external providers like Github Copilot
@@ -31,19 +29,3 @@ pcall(require, "dap")
 ---@field pkg_name string Name of the package to install as a dependency of neotest
 ---@field adapter_name string Name of the adapter to use, its what is added to require("neotest").adapters
 ---@field config table<string, any> | nil Configuration for the test adapter
-
----@enum LogLevel
-LogLevel = {
-	TRACE = "TRACE",
-	DEBUG = "DEBUG",
-	INFO = "INFO",
-	WARN = "WARN",
-	ERROR = "ERROR",
-}
-
----@class Logging
----@field consol_log_level LogLevel Log level for the console
----@field file_log_level LogLevel Log level for the file
-
----@class MasonConfig
----@field pip_install_args string[] | nil Arguments to pass to pip install

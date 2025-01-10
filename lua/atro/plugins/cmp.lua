@@ -56,11 +56,13 @@ return {
 		"zbirenbaum/copilot.lua",
 		event = "VeryLazy",
 		config = function()
+			local keys = KEYMAPS.copilot
+
 			require("copilot").setup({
 				suggestion = {
 					auto_trigger = true,
 					keymap = {
-						accept = "<A-g>", -- default
+						accept = keys.accept.key, -- default
 					},
 				},
 				filetypes = {
@@ -72,11 +74,7 @@ return {
 				},
 			})
 
-			local set = require("atro.utils").keyset
-
-			set("i", "©", function() -- macbook compatibility
-				require("copilot.suggestion").accept()
-			end, { desc = "Accept Copilot suggestion" })
+			KEYMAPS:set(keys.accept_mac, require("copilot.suggestion").accept)
 		end,
 	},
 	--- Main autocomplete plugin
