@@ -46,7 +46,14 @@ local plugins = {
 			vim.o.timeoutlen = 300
 		end,
 		---@type wk.Opts
-		opts = {},
+		opts = {
+			triggers = {
+				-- Workaround to allow modes.nvim to work
+				{ "d", mode = "" },
+				{ "y", mode = "" },
+				{ "R", mode = "" },
+			},
+		},
 	},
 
 	-- Search for keybindings
@@ -236,7 +243,7 @@ local plugins = {
 }
 
 -- INFO: If user wants to talk to external services
-if GCONF.talk_to_external == true then
+if CONFIG.talk_to_external == true then
 	---@type LazySpec
 	local wakatime_plugin = {
 		"wakatime/vim-wakatime",

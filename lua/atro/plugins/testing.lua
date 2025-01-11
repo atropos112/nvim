@@ -11,7 +11,7 @@ local neotest_deps = function()
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-lua/plenary.nvim",
 	}
-	for _, cfg in pairs(GCONF.languages) do
+	for _, cfg in pairs(CONFIG.languages) do
 		if cfg.test_adapter then
 			table.insert(deps, cfg.test_adapter.pkg_name)
 		end
@@ -84,7 +84,7 @@ return {
 			}, neotest_ns)
 
 			local adapters = {}
-			for lang, cfg in pairs(GCONF.languages) do
+			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.test_adapter then
 					log:with({ language = lang }):debug("Including test adapter " .. cfg.test_adapter.adapter_name)
 					table.insert(adapters, require(cfg.test_adapter.adapter_name)(cfg.test_adapter.config or {}))

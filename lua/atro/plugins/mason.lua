@@ -5,7 +5,7 @@ return {
 		event = "VeryLazy",
 		config = function()
 			---@type MasonConfig
-			local custom_cfg = GCONF.mason_config or {}
+			local custom_cfg = CONFIG.mason_config or {}
 
 			require("mason").setup(
 				---@type MasonSettings

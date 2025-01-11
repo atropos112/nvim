@@ -1,4 +1,4 @@
-if GCONF.languages["rust"] then
+if CONFIG.languages["rust"] then
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "rust", -- filetype for which to run the autocmd
 		callback = function()

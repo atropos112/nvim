@@ -54,7 +54,7 @@ return {
 			local log = LOGGER:with({ phase = "DAP" })
 
 			log:info("Starting DAP setup")
-			for lang, cfg in pairs(GCONF.languages) do
+			for lang, cfg in pairs(CONFIG.languages) do
 				log = log:with({ language = lang })
 
 				if cfg.dap_adapters then

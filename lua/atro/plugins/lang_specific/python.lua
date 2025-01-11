@@ -1,6 +1,6 @@
 -- INFO: Took a lot of inspiration from https://github.com/chrisgrieser/nvim-kickstart-python/blob/main/kickstart-python.lua , thanks to the author.
 
-if GCONF.languages["python"] then
+if CONFIG.languages["python"] then
 	--------------------------------------------------------------------------------
 	-- SETUP BASIC PYTHON-RELATED OPTIONS
 
@@ -50,7 +50,7 @@ if GCONF.languages["python"] then
 			},
 			config = function()
 				local dappy = require("dap-python")
-				local dap_path = GCONF.languages["python"].other.debugpy_python_path
+				local dap_path = CONFIG.languages["python"].other.debugpy_python_path
 
 				if dap_path then
 					dappy.setup(dap_path)

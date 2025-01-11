@@ -1,4 +1,4 @@
----@type GlobalConfig
+---@type Config
 return {
 	logging = {
 		consol_log_level = "ERROR",

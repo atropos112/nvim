@@ -1,4 +1,4 @@
-if GCONF.languages["go"] then
+if CONFIG.languages["go"] then
 	return {
 		-- INFO: Can use fatih/vim-go or ray-x/go.nvim but they both seem unecessarily bloated
 		-- This plugin has also (somehow) figured out how to run debug tests for ginkgo and go test

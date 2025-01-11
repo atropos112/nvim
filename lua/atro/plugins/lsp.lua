@@ -8,6 +8,9 @@ return {
 			"jubnzv/virtual-types.nvim",
 			"SmiteshP/nvim-navic",
 			"b0o/schemastore.nvim",
+			"aznhe21/actions-preview.nvim",
+			"nvim-telescope/telescope.nvim",
+			"MysticalDevil/inlay-hints.nvim",
 		},
 		config = function()
 			local lsp = require("lspconfig")
@@ -15,7 +18,7 @@ return {
 
 			local log = LOGGER:with({ phase = "LSP" })
 			log:info("Starting LSP setup")
-			for lang, cfg in pairs(GCONF.languages) do
+			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.lsps then
 					for server_name, lsp_config in pairs(cfg.lsps) do
 						log = log:with({ language = lang })

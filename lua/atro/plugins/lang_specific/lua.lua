@@ -1,4 +1,4 @@
-if GCONF.languages["lua"] then
+if CONFIG.languages["lua"] then
 	return {
 		{
 			"folke/lazydev.nvim",

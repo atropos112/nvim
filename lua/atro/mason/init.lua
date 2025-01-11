@@ -46,7 +46,7 @@ M.ensure_packages_are_installed = function()
 	---@type string[]
 	local packages = {}
 
-	for _, cfg in pairs(GCONF.languages) do
+	for _, cfg in pairs(CONFIG.languages) do
 		if cfg.lsps then
 			packages = vim.list_extend(packages, vim.tbl_keys(cfg.lsps))
 		end

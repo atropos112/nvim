@@ -1,4 +1,4 @@
-if GCONF.languages["markdown"] then
+if CONFIG.languages["markdown"] then
 	return {
 		{
 			-- INFO: Markdown preview functionality

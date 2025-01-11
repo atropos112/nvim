@@ -5,14 +5,14 @@ function M:init_default()
 	LOGGER:info("Loading default configuration")
 	require("atro.types")
 
-	---@type GlobalConfig
-	GCONF = require("atro.config.default_gconf")
+	---@type Config
+	CONFIG = require("atro.config.default_config")
 
 	---@type Keymaps
 	KEYMAPS = require("atro.config.default_keymaps")
 
-	require("atro.utils.logs"):set_levels({ GCONF.logging.consol_log_level, GCONF.logging.file_log_level })
-	LOGGER:trace(GCONF)
+	require("atro.utils.logs"):set_levels({ CONFIG.logging.consol_log_level, CONFIG.logging.file_log_level })
+	LOGGER:trace(CONFIG)
 	LOGGER:trace(KEYMAPS)
 
 	require("atro.config.globals").load_defaults()
@@ -41,11 +41,11 @@ function M:init_user(config_path)
 		end
 	end
 
-	require("atro.utils.logs"):set_levels({ GCONF.logging.consol_log_level, GCONF.logging.file_log_level })
-	LOGGER:trace(GCONF)
+	require("atro.utils.logs"):set_levels({ CONFIG.logging.consol_log_level, CONFIG.logging.file_log_level })
+	LOGGER:trace(CONFIG)
 
 	-- INFO: This is a good place to check if GCONF has been modified during execution. Same for keymaps.
-	local GCONF_initial = vim.deepcopy(GCONF)
+	local GCONF_initial = vim.deepcopy(CONFIG)
 	local KEYMAPS_initial = vim.deepcopy(KEYMAPS)
 	local validate_gconf_didnt_change = function()
 		LOGGER:info("Checking if GCONF or KEYMAPS have been modified during execution")
@@ -54,7 +54,7 @@ function M:init_user(config_path)
 			LOGGER:error("KEYMAPS or KEYMAPS_initial is nil.")
 		end
 
-		if not GCONF or not GCONF_initial then
+		if not CONFIG or not GCONF_initial then
 			LOGGER:error("GCONF or GCONF_initial is nil.")
 		end
 
@@ -64,7 +64,7 @@ function M:init_user(config_path)
 			LOGGER:debug("KEYMAPS remains unchanged during execution, as expected.")
 		end
 
-		if not vim.deep_equal(GCONF, GCONF_initial) then
+		if not vim.deep_equal(CONFIG, GCONF_initial) then
 			LOGGER:error("GCONF has been modified during execution.")
 		else
 			LOGGER:debug("GCONF remains unchanged during execution, as expected.")

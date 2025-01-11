@@ -40,7 +40,7 @@ return {
 			end
 
 			local linters_by_ft = {}
-			for lang, cfg in pairs(GCONF.languages) do
+			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.linters then
 					log:debug("Including linters(s): " .. utils.lst_to_str(cfg.linters))
 					linters_by_ft[lang] = cfg.linters

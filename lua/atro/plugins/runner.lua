@@ -54,7 +54,7 @@ return {
 				},
 			})
 
-			local extra_tasks = GCONF.extra_overseerr_tasks
+			local extra_tasks = CONFIG.extra_overseerr_tasks
 			if extra_tasks then
 				for _, task in ipairs(extra_tasks) do
 					overseer.register_template(task)

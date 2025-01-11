@@ -1,4 +1,4 @@
-if GCONF.languages["c_sharp"] then
+if CONFIG.languages["c_sharp"] then
 	return {
 		{
 			"iabdelkareem/csharp.nvim",

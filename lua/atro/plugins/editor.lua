@@ -324,21 +324,14 @@ return {
 			attach_navic = false,
 		},
 	},
-	{
-		"aznhe21/actions-preview.nvim",
-		event = "LspAttach",
-		config = function()
-			vim.keymap.set({ "v", "n" }, "ga", require("actions-preview").code_actions)
-		end,
-	},
-	{
-		"0xAdk/full_visual_line.nvim",
-		keys = "V",
-		opts = {},
-	},
+	-- Section: Plugin to highlight the line initiating yank, delete or replace operations
+	-- For example first 'y' will highlight the line, while second 'y' will actually yank the line.
+	-- The second 'y' yanking is normal behaviour but the highlighting is done by this plugin.
+	-- Similar for 'dd' and 'R' operations.
 	{
 		"mvllow/modes.nvim",
-		event = "BufRead",
+		event = { "BufRead" },
+		-- No type available for the setup config (checked).
 		opts = {
 			line_opacity = 0.30,
 		},

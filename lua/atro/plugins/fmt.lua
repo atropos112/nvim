@@ -35,7 +35,7 @@ return {
 			log:info("Starting FMT setup")
 
 			local formatters_by_ft = {}
-			for lang, cfg in pairs(GCONF.languages) do
+			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.formatters then
 					log:with({ language = lang }):debug("Including formatter(s): " .. require("atro.utils").lst_to_str(cfg.formatters))
 					formatters_by_ft[lang] = cfg.formatters

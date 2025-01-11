@@ -1,4 +1,4 @@
-if GCONF.languages["csv"] then
+if CONFIG.languages["csv"] then
 	return {
 		{
 			"hat0uma/csvview.nvim",

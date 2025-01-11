@@ -8,7 +8,7 @@ return {
 				auto_install = true,
 				ignore_install = {},
 				modules = {},
-				ensure_installed = vim.tbl_keys(GCONF.languages),
+				ensure_installed = vim.tbl_keys(CONFIG.languages),
 				sync_install = false,
 				highlight = { enable = true },
 				indent = { enable = true },

@@ -22,7 +22,7 @@ local on_attach = function(client, bufnr)
 		{ keys.lsp_definitions, telescope.lsp_definitions },
 		{ keys.lsp_implementations, telescope.lsp_implementations },
 		{ keys.lsp_type_definitions, telescope.lsp_type_definitions },
-		{ keys.lsp_code_actions, vim.lsp.buf.code_action },
+		{ keys.lsp_code_actions, require("actions-preview").code_actions },
 		{ keys.lsp_buffer_diagnostics, "<cmd>Telescope diagnostics bufnr=0<CR>" },
 		{ keys.lsp_line_diagnostics, vim.diagnostic.open_float },
 		{ keys.lsp_prev_diagnostic, vim.diagnostic.goto_prev },
