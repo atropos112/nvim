@@ -5,15 +5,28 @@ local cmp_deps = function()
 		return _G.cmp_deps
 	end
 
+	-- Using https://github.com/iguanacucumber/magazine.nvim a soft fork of nvim-cmp with perf improvements etc.
 	local deps = {
+		{
+			"iguanacucumber/mag-nvim-lsp",
+			name = "cmp-nvim-lsp",
+			opts = {},
+		},
+		{
+			"iguanacucumber/mag-nvim-lua",
+			name = "cmp-nvim-lua",
+		},
+		{
+			"iguanacucumber/mag-buffer",
+			name = "cmp-buffer",
+		},
+		{
+			"iguanacucumber/mag-cmdline",
+			name = "cmp-cmdline",
+		},
 
 		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-cmdline",
-		"hrsh7th/cmp-nvim-lua",
 		"hrsh7th/cmp-calc",
-		"hrsh7th/cmp-path",
 
 		"L3MON4D3/LuaSnip",
 		"saadparwaiz1/cmp_luasnip",
@@ -22,13 +35,17 @@ local cmp_deps = function()
 		"rcarriga/cmp-dap",
 	}
 
-	log:debug("Constructing cmp dependencies: " .. require("atro.utils").lst_to_str(deps))
+	log:debug("Constructing cmp dependencies: " .. vim.inspect(deps))
 
 	_G.cmp_deps = deps
 	return deps
 end
 
 return {
+	{
+		"https://codeberg.org/FelipeLema/cmp-async-path",
+		event = "VeryLazy",
+	},
 	-- Snippets control
 	{
 		"L3MON4D3/LuaSnip",
@@ -79,7 +96,8 @@ return {
 	},
 	--- Main autocomplete plugin
 	{
-		"hrsh7th/nvim-cmp",
+		"iguanacucumber/magazine.nvim",
+		name = "nvim-cmp", -- Otherwise highlighting gets messed up
 		event = "VeryLazy",
 		dependencies = cmp_deps(),
 		config = function()
