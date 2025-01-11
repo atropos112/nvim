@@ -76,23 +76,23 @@ return {
 			},
 		},
 	},
-	{
-		"smoka7/multicursors.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"smoka7/hydra.nvim",
-		},
-		opts = {},
-		cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-		keys = {
-			{
-				mode = { "v", "n" },
-				"<Leader>n",
-				"<cmd>MCstart<cr>",
-				desc = "Create a selection for selected text or word under the cursor",
-			},
-		},
-	},
+	-- {
+	-- 	"smoka7/multicursors.nvim",
+	-- 	event = "VeryLazy",
+	-- 	dependencies = {
+	-- 		"smoka7/hydra.nvim",
+	-- 	},
+	-- 	opts = {},
+	-- 	cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+	-- 	keys = {
+	-- 		{
+	-- 			mode = { "v", "n" },
+	-- 			"<Leader>n",
+	-- 			"<cmd>MCstart<cr>",
+	-- 			desc = "Create a selection for selected text or word under the cursor",
+	-- 		},
+	-- 	},
+	-- },
 	-- Adds matching pairs of brackets, quotes, etc.
 	{
 		-- INFO: Autopairs plugin, adds matching pairs of brackets, quotes, etc.

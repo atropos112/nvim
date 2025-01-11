@@ -2,6 +2,14 @@ local set = require("atro.utils").keyset
 ---@type LazySpec[]
 local plugins = {
 	{
+		"tummetott/unimpaired.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add options here if you wish to override the default settings
+		},
+	},
+
+	{
 		"meznaric/key-analyzer.nvim",
 		opts = {},
 	},
@@ -48,6 +56,8 @@ local plugins = {
 		---@type wk.Opts
 		opts = {
 			triggers = {
+				{ "<auto>", mode = "nixsotc" },
+				-- For all trigger by default
 				-- Workaround to allow modes.nvim to work
 				{ "d", mode = "" },
 				{ "y", mode = "" },
