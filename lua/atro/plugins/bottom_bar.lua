@@ -77,7 +77,7 @@ return {
 						end)
 						local builder = {}
 						for _, cli in ipairs(lsp_clients) do
-							if type(cli) == "table" and type(cli.name) == "string" and string.len(cli.name) > 0 then
+							if type(cli) == "table" and type(cli.name) == "string" and string.len(cli.name) > 0 and cli.name ~= "copilot" then
 								if messages_map[cli.name] then
 									table.insert(builder, stringify(cli.name, messages_map[cli.name]))
 								else
