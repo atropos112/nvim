@@ -287,27 +287,29 @@ return {
 			})
 		end,
 	},
+	-- Section: Plugin to show outline of the file in a window.
+	-- Showing a side window (on the right) with functions, classes, variables etc.
 	{
 		"hedyhli/outline.nvim",
 		lazy = true,
 		cmd = { "Outline", "OutlineOpen" },
-		keys = { -- Example mapping to toggle outline
-			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-		},
-		opts = {
-			-- Your setup opts here
-		},
+		config = function()
+			local outline = require("outline")
+			outline.setup({})
+			KEYMAPS:set(KEYMAPS.other.show_file_outline, outline.toggle)
+		end,
 	},
+	-- Section: Plugin to show number of references, implementations etc. on top of a class or function.
 	{
 		"VidocqH/lsp-lens.nvim",
-		event = "LspAttach",
+		event = { "LspAttach" },
 		opts = {
 			include_declaration = false, -- Reference include declaration
 			sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
-				definition = false,
+				definition = true, -- Most of the time just prints "Definitions: 1" which is unecessary clutter.
 				references = true,
 				implements = true,
-				git_authors = false,
+				git_authors = false, -- Unecessary clutter.
 			},
 		},
 	},

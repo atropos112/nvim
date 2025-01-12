@@ -73,4 +73,7 @@ return require("atro.types.keymaps"):new({
 		insert_from_paste_history = { "<c-p>", "Insert from paste history", "" },
 		select_from_paste_history = { "<cr>", "Select from paste history", "" },
 	},
+	other = {
+		show_file_outline = { "<leader>o", "Show file outline (functions, classes, variables etc)", "n" },
+	},
 })

@@ -6,7 +6,10 @@
 ---@class KeyMapWithCmd : Keymap
 ---@field cmd string|function
 
----@class LspOnAttachKeyMaps
+---@class OtherKeymaps
+---@field show_file_outline Keymap
+
+---@class LspOnAttachKeymaps
 ---@field lsp_references Keymap
 ---@field lsp_declaration Keymap
 ---@field lsp_definitions Keymap
@@ -42,7 +45,8 @@
 ---@class BufferKeymaps : NeoClipKeymaps
 
 ---@class Keymaps
----@field lsp_on_attach LspOnAttachKeyMaps
+---@field other OtherKeymaps
+---@field lsp_on_attach LspOnAttachKeymaps
 ---@field copilot CopilotKeymaps
 ---@field debug DebugKeymaps
 ---@field position PositionKeymaps
