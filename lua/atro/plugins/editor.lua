@@ -311,17 +311,22 @@ return {
 			},
 		},
 	},
+	-- Section: Plugin to show window bar with current function, class, etc.
+	-- The plugin is deprecated and I haven't found a replacement yet.
 	{
 		"utilyre/barbecue.nvim",
 		name = "barbecue",
 		version = "*",
-		event = "BufRead",
+		event = { "BufRead" },
 		dependencies = {
 			"SmiteshP/nvim-navic",
 			"nvim-tree/nvim-web-devicons", -- optional dependency
 		},
+		-- No type available for the setup config (checked).
 		opts = {
-			attach_navic = false,
+			-- INFO: Attaching navic here for simplicity.
+			attach_navic = true,
+			show_modified = true,
 		},
 	},
 	-- Section: Plugin to highlight the line initiating yank, delete or replace operations

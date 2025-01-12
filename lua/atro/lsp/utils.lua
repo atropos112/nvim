@@ -4,17 +4,11 @@ local M = {}
 ---@param bufnr number
 ---@return nil
 local on_attach = function(client, bufnr)
-	require("inlay-hints").on_attach(client, bufnr)
 	local telescope = require("telescope.builtin")
-
-	-- Only attach navic to one LSP client if it supports documentSymbolProvider
-	if client.server_capabilities.documentSymbolProvider and not (vim.b[bufnr].navic_client_id ~= nil and vim.b[bufnr].navic_client_name ~= client.name) then
-		require("nvim-navic").attach(client, bufnr)
-	end
-
-	require("virtualtypes").on_attach()
-
 	local keys = KEYMAPS.lsp_on_attach
+
+	require("inlay-hints").on_attach(client, bufnr)
+	require("virtualtypes").on_attach()
 
 	KEYMAPS:set_many({
 		{ keys.lsp_references, telescope.lsp_references },

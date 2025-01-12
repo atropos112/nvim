@@ -6,7 +6,6 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
-			"SmiteshP/nvim-navic",
 			"b0o/schemastore.nvim",
 			"aznhe21/actions-preview.nvim",
 			"nvim-telescope/telescope.nvim",
