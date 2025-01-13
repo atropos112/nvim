@@ -8,7 +8,28 @@ return {
 	talk_to_external = true,
 	global_linters = { "codespell" },
 	global_lsps = {
-		harper_ls = {},
+		-- INFO: Not sure how to use the dict yet.
+		-- harper_ls = {
+		-- 	userDictPath = vim.fn.stdpath("config") .. "/dict.txt",
+		-- 	linters = {
+		-- 		spell_check = true,
+		-- 		spelled_numbers = false,
+		-- 		an_a = true,
+		-- 		sentence_capitalization = true,
+		-- 		unclosed_quotes = true,
+		-- 		wrong_quotes = false,
+		-- 		long_sentences = true,
+		-- 		repeated_words = true,
+		-- 		spaces = true,
+		-- 		matcher = true,
+		-- 		correct_number_suffix = true,
+		-- 		number_suffix_capitalization = true,
+		-- 		multiple_sequential_pronouns = true,
+		-- 		linking_verbs = false,
+		-- 		avoid_curses = true,
+		-- 		terminating_conjunctions = true,
+		-- 	},
+		-- },
 	},
 	languages = {
 		csv = {},
@@ -33,7 +54,7 @@ return {
 			formatters = { "ruff_fix", "ruff_format" },
 			dap_package = "debugpy",
 			other = {
-				-- debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
+				-- The debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
 			},
 			linters = { "ruff" },
 			lsps = {
@@ -49,19 +70,6 @@ return {
 						},
 					},
 				},
-
-				-- pylsp = {
-				-- 	settings = {
-				-- 		pylsp = {
-				-- 			plugins = {
-				-- 				pycodestyle = {
-				-- 					ignore = {},
-				-- 					maxLineLength = 120,
-				-- 				},
-				-- 			},
-				-- 		},
-				-- 	},
-				-- },
 			},
 		},
 		zig = {
