@@ -7,6 +7,9 @@ return {
 	log_level = "DEBUG",
 	talk_to_external = true,
 	global_linters = { "codespell" },
+	global_lsps = {
+		harper_ls = {},
+	},
 	languages = {
 		csv = {},
 		sql = {

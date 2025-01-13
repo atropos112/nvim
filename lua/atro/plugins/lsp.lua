@@ -30,6 +30,14 @@ return {
 					log:with({ language = lang }):debug("No lsps found for language")
 				end
 			end
+
+			log:info("Setting up global lsps")
+			for server_name, lsp_config in pairs(CONFIG.global_lsps) do
+				log:debug("Setting up LSP: " .. server_name)
+				log:trace(lsp_config)
+
+				lsp = setup_lsp(server_name, lsp_config, lsp)
+			end
 		end,
 	},
 

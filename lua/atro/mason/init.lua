@@ -64,6 +64,14 @@ M.ensure_packages_are_installed = function()
 		end
 	end
 
+	if CONFIG.global_lsps then
+		packages = vim.list_extend(packages, vim.tbl_keys(CONFIG.global_lsps))
+	end
+
+	if CONFIG.global_linters then
+		packages = vim.list_extend(packages, CONFIG.global_linters)
+	end
+
 	packages = deduplicate(packages)
 
 	M.ensure_installed(packages)

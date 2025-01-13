@@ -2,6 +2,7 @@
 ---@class Config
 ---@field talk_to_external boolean Should this nvim instance talk to external providers like Github Copilot
 ---@field global_linters string[] List of global linters for all languages
+---@field global_lsps table  List of global lsps for all languages
 ---@field languages table<string, LanguageConfig> List of language specific configurations
 ---@field logging Logging Log level for the logger
 ---@field null_ls_sources any[] | nil List of null-ls sources
