@@ -1,4 +1,4 @@
-require("atro.utils.logs"):init()
+require("atro.globals")
 LOGGER:info("Loading configuration")
 require("atro.config"):init_default()
 require("atro.config"):init_user(os.getenv("HOME") .. "/.config/nvim-custom")

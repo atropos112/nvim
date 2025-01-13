@@ -87,11 +87,9 @@ function Logger:init()
 		},
 	})
 
-	LOGGER = self
+	self:info("----------------------------------------")
 
-	LOGGER:info("----------------------------------------")
-
-	return structlog.get_logger("atro")
+	return self
 end
 
 --- Adds a log entry using Plenary.log

@@ -5,16 +5,11 @@ function M:init_default()
 	LOGGER:info("Loading default configuration")
 	require("atro.types")
 
-	---@type Config
-	CONFIG = require("atro.config.default_config")
-
-	---@type Keymaps
-	KEYMAPS = require("atro.config.default_keymaps")
-
 	require("atro.utils.logs"):set_levels({ CONFIG.logging.consol_log_level, CONFIG.logging.file_log_level })
 	LOGGER:trace(CONFIG)
 	LOGGER:trace(KEYMAPS)
 
+	require("atro.config.deprecated_keymaps").load_defaults()
 	require("atro.config.globals").load_defaults()
 	require("atro.config.options").load_defaults()
 	require("atro.config.autocmds").load_defaults()
