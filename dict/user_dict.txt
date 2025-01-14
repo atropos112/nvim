@@ -3,11 +3,13 @@ lsp
 venv
 nvim
 nixfmt
+csharp
 debugpy
 nixpkgs
 olexsmir
 TypeError
 alejendra
+omnisharp
 neotesting
 schemastore
 rustaceanvim

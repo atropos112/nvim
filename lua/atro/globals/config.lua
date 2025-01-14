@@ -178,17 +178,6 @@ return {
 			},
 			formatters = { "csharpier" },
 			dap_package = "netcoredbg",
-			dap_configs = {
-				{
-					type = "netcoredbg",
-					name = "launch - netcoredbg",
-					request = "launch",
-					program = function()
-						---@diagnostic disable-next-line
-						return vim.fn.input("Path to dll", vim.fn.getcwd() .. "/bin/Debug/", "file")
-					end,
-				},
-			},
 			lsps = {
 				omnisharp = {
 					skip_capabilities = true,

@@ -14,6 +14,11 @@ if CONFIG.languages["c_sharp"] then
 				require("csharp").setup()
 			end,
 		},
+		{
+			"nicholasmata/nvim-dap-cs",
+			ft = "cs",
+			opts = {},
+		},
 	}
 else
 	return {}
