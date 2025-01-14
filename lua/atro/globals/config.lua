@@ -9,27 +9,34 @@ return {
 	global_linters = { "codespell" },
 	global_lsps = {
 		-- INFO: Not sure how to use the dict yet.
-		-- harper_ls = {
-		-- 	userDictPath = vim.fn.stdpath("config") .. "/dict.txt",
-		-- 	linters = {
-		-- 		spell_check = true,
-		-- 		spelled_numbers = false,
-		-- 		an_a = true,
-		-- 		sentence_capitalization = true,
-		-- 		unclosed_quotes = true,
-		-- 		wrong_quotes = false,
-		-- 		long_sentences = true,
-		-- 		repeated_words = true,
-		-- 		spaces = true,
-		-- 		matcher = true,
-		-- 		correct_number_suffix = true,
-		-- 		number_suffix_capitalization = true,
-		-- 		multiple_sequential_pronouns = true,
-		-- 		linking_verbs = false,
-		-- 		avoid_curses = true,
-		-- 		terminating_conjunctions = true,
-		-- 	},
-		-- },
+		harper_ls = {
+			settings = {
+				["harper-ls"] = {
+					codeActions = {
+						forceStable = true,
+					},
+					userDictPath = vim.fn.stdpath("config") .. "/dict/user_dict.txt",
+					linters = {
+						spell_check = true,
+						spelled_numbers = false,
+						an_a = true,
+						sentence_capitalization = false, -- otherwise makes ~/.local -> ~/.Local suggestions.
+						unclosed_quotes = true,
+						wrong_quotes = false,
+						long_sentences = true,
+						repeated_words = true,
+						spaces = true,
+						matcher = true,
+						correct_number_suffix = true,
+						number_suffix_capitalization = true,
+						multiple_sequential_pronouns = true,
+						linking_verbs = false,
+						avoid_curses = true,
+						terminating_conjunctions = true,
+					},
+				},
+			},
+		},
 	},
 	languages = {
 		csv = {},
@@ -81,7 +88,7 @@ return {
 		rust = {
 			dap_package = "codelldb",
 			test_adapter = {
-				-- rustaceanvim is already loaded separately but it is a dep
+				-- rustaceanvim is already loaded separately but it is a dependency
 				-- of neotesting so adding it here as a pkg_name.
 				pkg_name = "mrkjkb/rustaceanvim",
 				adapter_name = "rustaceanvim.neotest",
@@ -190,7 +197,7 @@ return {
 		},
 		yaml = {
 			formatters = { "yamlfmt" },
-			-- Tred yamllint but it stopped using it as its buggy.
+			-- Tried yaml lint but it stopped using it as its buggy.
 			lsps = {
 				yamlls = {
 					-- INFO: Wrapping it as we can't guarantee that the plugin is installed at this point.

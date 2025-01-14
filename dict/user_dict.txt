@@ -1,0 +1,13 @@
+fmt
+lsp
+venv
+nvim
+nixfmt
+debugpy
+nixpkgs
+olexsmir
+TypeError
+alejendra
+neotesting
+schemastore
+rustaceanvim
