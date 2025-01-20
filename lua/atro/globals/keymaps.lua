@@ -36,4 +36,7 @@ return require("atro.types.keymaps"):new({
 	other = {
 		show_file_outline = { "<leader>oo", "Show file outline (functions, classes, variables etc)", "n" },
 	},
+	diagnostic = {
+		open_float = { "<leader>of", "Open diagnostic float", "nv" },
+	},
 })

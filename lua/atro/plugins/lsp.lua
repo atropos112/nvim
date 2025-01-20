@@ -14,6 +14,7 @@ return {
 		config = function()
 			local lsp = require("lspconfig")
 			local setup_lsp = require("atro.lsp.utils").setup_lsp
+			local setup_lsp_with_python_special_handlers = require("atro.lsp.utils").setup_lsp_with_python_special_handlers
 
 			local log = LOGGER:with({ phase = "LSP" })
 			log:info("Starting LSP setup")
@@ -69,16 +70,6 @@ return {
 		end,
 	},
 
-	-- Show LSP explorer of functions and classes etc.
-	{
-		"hedyhli/outline.nvim",
-		event = "LspAttach",
-		cmd = { "Outline", "OutlineOpen" },
-		keys = { -- Example mapping to toggle outline
-			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-		},
-		opts = {},
-	},
 	{
 		"MysticalDevil/inlay-hints.nvim",
 		event = "LspAttach",

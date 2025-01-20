@@ -77,6 +77,39 @@ return {
 						},
 					},
 				},
+				pylsp = {
+					settings = {
+						pylsp = {
+							plugins = {
+								pycodestyle = {
+									ignore = {},
+									maxLineLength = 120,
+								},
+								autopep8 = {
+									enabled = false,
+								},
+								flake8 = {
+									enabled = false,
+								},
+								mccabe = {
+									enabled = false,
+								},
+								pyflakes = {
+									enabled = false,
+								},
+								pylint = {
+									enabled = false,
+								},
+								rope_autoimport = {
+									enabled = false,
+								},
+								yapf = {
+									enabled = false,
+								},
+							},
+						},
+					},
+				},
 			},
 		},
 		zig = {

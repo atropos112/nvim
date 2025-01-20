@@ -44,6 +44,9 @@
 
 ---@class BufferKeymaps : NeoClipKeymaps
 
+---@class DiagnosticKeymaps
+---@field open_float Keymap
+
 ---@class Keymaps
 ---@field other OtherKeymaps
 ---@field lsp_on_attach LspOnAttachKeymaps
@@ -51,6 +54,7 @@
 ---@field debug DebugKeymaps
 ---@field position PositionKeymaps
 ---@field buffer BufferKeymaps
+---@field diagnostic DiagnosticKeymaps
 local Keymaps = {}
 Keymaps.__index = Keymaps
 

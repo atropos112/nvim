@@ -1,11 +1,38 @@
 local M = {}
 
+-- Necessity for this function makes me very sad.
+local function set_python_special_capabilities(client)
+	-- Got all the capabilities by calling :lua =vim.lsp.get_active_clients()[1].server_capabilities
+	-- with only one lsp on and then copying that. Make sure to turn off copilot as well.
+	if client.name == "basedpyright" then
+		-- Basedpyright does not support these capabilities
+		client.server_capabilities.definitionProvider = false
+		client.server_capabilities.typeDefinitionProvider = false
+		client.server_capabilities.implementationProvider = false
+		client.server_capabilities.referencesProvider = false
+	elseif client.name == "pylsp" then
+		-- Basedpyright has better code actions than pylsp. And pylsp somehow blocks basedpyright
+		client.server_capabilities.codeActionProvider = false
+	end
+end
+
 ---@param client table
 ---@param bufnr number
 ---@return nil
 local on_attach = function(client, bufnr)
 	local telescope = require("telescope.builtin")
 	local keys = KEYMAPS.lsp_on_attach
+
+	-- Very sad to have such special logic, but not sure what else one can do.
+	if client.name == "basedpyright" or client.name == "pylsp" then
+		set_python_special_capabilities(client)
+	end
+
+	-- Attaching navic here with special logic to not get "already attached" errors when using multiple LSPs
+	-- Only attach navic to one LSP client if it supports documentSymbolProvider
+	if client.server_capabilities.documentSymbolProvider and not (vim.b[bufnr].navic_client_id ~= nil and vim.b[bufnr].navic_client_name ~= client.name) then
+		require("nvim-navic").attach(client, bufnr)
+	end
 
 	require("inlay-hints").on_attach(client, bufnr)
 	require("virtualtypes").on_attach()

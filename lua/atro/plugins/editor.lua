@@ -326,8 +326,8 @@ return {
 		},
 		-- No type available for the setup config (checked).
 		opts = {
-			-- INFO: Attaching navic here for simplicity.
-			attach_navic = true,
+			-- INFO: Not attaching navic here as it would cause already attached errors when using multiple LSPs (see on_attach where it is attached with special logic)
+			attach_navic = false,
 			show_modified = true,
 		},
 	},

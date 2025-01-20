@@ -9,11 +9,12 @@ function M:init_default()
 	LOGGER:trace(CONFIG)
 	LOGGER:trace(KEYMAPS)
 
-	require("atro.config.deprecated_keymaps").load_defaults()
 	require("atro.config.globals").load_defaults()
 	require("atro.config.options").load_defaults()
 	require("atro.config.autocmds").load_defaults()
+	require("atro.config.generic_keymaps")
 	-- require("atro.config.default_keymaps").load_defaults()
+
 end
 
 ---@param config_path string
