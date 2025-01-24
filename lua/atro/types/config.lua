@@ -12,11 +12,11 @@
 
 ---@class LanguageConfig
 ---@field linters string[] | nil List of linters for this language
----@field formatters string[] | nil List of formatters for this language
+---@field formatters nil | table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride> List of formatters for this language
 ---@field lsps table<string,LspConfig> | nil List of lsps for this language
 ---@field test_adapter TestAdapter | nil Test adapter configuration for this language
 ---@field dap_package string | nil Dap package for this language
----@field dap_adapters table<string, dap.Adapter|Dap.AdapterFactory> | nil Dap adapters for this language
+---@field dap_adapters table<string, dap.Adapter> | nil Dap adapters for this language
 ---@field dap_configs dap.Configuration[] | nil Dap configuration for this language
 ---@field other table<string, any> | nil Other configuration options
 

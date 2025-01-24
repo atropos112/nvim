@@ -47,8 +47,14 @@ return {
 			linters = { "sqlfluff" },
 		},
 		markdown = {
-			formatters = { "prettier" },
+			formatters = {
+				markdownlint = {},
+				prettier = {},
+			},
 			linters = { "markdownlint" },
+			lsps = {
+				marksman = {},
+			},
 		},
 		python = {
 			test_adapter = {
@@ -58,7 +64,23 @@ return {
 					justMyCode = false,
 				},
 			},
-			formatters = { "ruff_fix", "ruff_format" },
+			formatters = {
+				ruff_fix = {},
+				ruff_format = {
+
+					args = function(_, _)
+						return {
+							"format",
+							"--force-exclude",
+							"--line-length",
+							"120",
+							"--stdin-filename",
+							"$FILENAME",
+							"-",
+						}
+					end,
+				},
+			},
 			dap_package = "debugpy",
 			other = {
 				-- The debugpy_python_path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python",
@@ -113,7 +135,7 @@ return {
 			},
 		},
 		zig = {
-			formatters = { "zig fmt" },
+			formatters = { zigfmt = {} },
 			lsps = {
 				zls = {},
 			},
@@ -126,7 +148,7 @@ return {
 				pkg_name = "mrkjkb/rustaceanvim",
 				adapter_name = "rustaceanvim.neotest",
 			},
-			formatters = { "rustfmt" },
+			formatters = { rustfmt = {} },
 			-- INFO: rustaceanvim plugin takes care of this
 			-- lsps = {
 			-- 	rust_analyzer = {},
@@ -137,13 +159,13 @@ return {
 			lsps = {
 				bashls = {},
 			},
-			formatters = { "shfmt", "shellharden" },
+			formatters = { shfmt = {}, shellharden = {} },
 		},
 		dockerfile = {
 			linters = { "hadolint" },
 		},
 		json = {
-			formatters = { "fixjson" },
+			formatters = { fixjson = {} },
 			linters = { "jsonlint" },
 			lsps = {
 				jsonls = {
@@ -166,7 +188,7 @@ return {
 				pkg_name = "nvim-neotest/neotest-go",
 				adapter_name = "neotest-go",
 			},
-			formatters = { "gofmt", "goimports" },
+			formatters = { gofmt = {}, goimports = {} },
 			dap_package = "dlv",
 			linters = { "golangcilint" },
 			lsps = {
@@ -180,7 +202,9 @@ return {
 			},
 		},
 		lua = {
-			formatters = { "stylua" },
+			formatters = {
+				stylua = {},
+			},
 			lsps = {
 				lua_ls = {
 					settings = {
@@ -209,7 +233,7 @@ return {
 				pkg_name = "Issafalcon/neotest-dotnet",
 				adapter_name = "neotest-dotnet",
 			},
-			formatters = { "csharpier" },
+			formatters = { csharpier = {} },
 			dap_package = "netcoredbg",
 			lsps = {
 				omnisharp = {
@@ -218,7 +242,17 @@ return {
 			},
 		},
 		yaml = {
-			formatters = { "yamlfmt" },
+			formatters = {
+				yamlfmt = {
+					prepend_args = function(_, _)
+						return {
+							"-formatter",
+							-- WARN: This is a custom configuration for yamlfmt. Main concern was it mushing multiline strings into one line. It doesn't do that AS long as there is at MOST one comment line in the multi string. A compromise for sure.
+							"scan_folded_as_literal=true,retain_line_breaks=true,include_document_start=true",
+						}
+					end,
+				},
+			},
 			-- Tried yaml lint but it stopped using it as its buggy.
 			lsps = {
 				yamlls = {
@@ -240,7 +274,7 @@ return {
 			},
 		},
 		nix = {
-			formatters = { "alejandra" }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
+			formatters = { alejandra = {} }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
 			lsps = {
 				-- INFO: Is worse than nixd but has very good go-to-definition.
 				-- TODO: Re-enable this when nix_ls is fixed with pipe operators like here https://github.com/oxalica/nil/pull/152
@@ -259,7 +293,7 @@ return {
 			},
 		},
 		toml = {
-			formatters = { "taplo" },
+			formatters = { taplo = {} },
 			lsps = {
 				taplo = {},
 			},

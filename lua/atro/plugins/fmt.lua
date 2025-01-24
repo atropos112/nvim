@@ -6,42 +6,24 @@ return {
 		config = function()
 			local conform = require("conform")
 
-			-- custom settings
-			conform.formatters.yamlfmt = {
-				prepend_args = function(_, _)
-					return {
-						"-formatter",
-						-- WARN: This is a custom configuration for yamlfmt. Main concern was it mushing multiline strings into one line. It doesn't do that AS long as there is at MOST one comment line in the multi string. A compromise for sure.
-						"scan_folded_as_literal=true,retain_line_breaks=true,include_document_start=true",
-					}
-				end,
-			}
-
-			conform.formatters.ruff_format = {
-				args = function(_, _)
-					return {
-						"format",
-						"--force-exclude",
-						"--line-length",
-						"120",
-						"--stdin-filename",
-						"$FILENAME",
-						"-",
-					}
-				end,
-			}
-
 			local log = LOGGER:with({ phase = "FMT" })
 			log:info("Starting FMT setup")
 
 			local formatters_by_ft = {}
 			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.formatters then
-					log:with({ language = lang }):debug("Including formatter(s): " .. require("atro.utils").lst_to_str(cfg.formatters))
-					formatters_by_ft[lang] = cfg.formatters
+					log:with({ language = lang }):debug("Including formatter(s): " .. vim.inspect(cfg.formatters))
+					local formatters = {}
+					for fmt_name, fmt_cfg in pairs(cfg.formatters) do
+						if fmt_cfg ~= {} then
+							conform.formatters[fmt_name] = fmt_cfg
+						end
+						formatters[#formatters + 1] = fmt_name
+					end
+
+					formatters_by_ft[lang] = formatters
 				end
 			end
-			-- GCONF.talk_to_external = false
 
 			-- INFO: List of available linters can be found here
 			-- https://github.com/stevearc/conform.nvim#formatters

@@ -19,6 +19,9 @@ if CONFIG.languages["lua"] then
 					"dap",
 					"gopher.nvim",
 					"overseer.nvim",
+					"dap",
+					"conform.nvim",
+					"nvim-dap",
 				},
 				enabled = function()
 					return true

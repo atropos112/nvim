@@ -310,7 +310,7 @@ end
 ---@return boolean
 M.to_skip = function(name)
 	return vim.tbl_contains({
-		"zig fmt",
+		"zigfmt",
 	}, name)
 end
 

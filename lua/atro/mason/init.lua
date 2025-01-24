@@ -60,7 +60,7 @@ M.ensure_packages_are_installed = function()
 		end
 
 		if cfg.formatters then
-			packages = vim.list_extend(packages, cfg.formatters)
+			packages = vim.list_extend(packages, vim.tbl_keys(cfg.formatters))
 		end
 	end
 
