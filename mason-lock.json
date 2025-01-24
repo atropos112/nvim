@@ -1,4 +1,5 @@
 {
+  "bacon-ls": "0.12.0",
   "basedpyright": "1.23.2",
   "bash-language-server": "5.4.2",
   "codelldb": "v1.10.0",
@@ -6,6 +7,8 @@
   "csharpier": "0.29.2",
   "debugpy": "1.8.11",
   "delve": "v1.24.0",
+  "docker-compose-language-service": "0.3.0",
+  "dockerfile-language-server": "0.13.0",
   "fixjson": "1.1.2",
   "goimports": "v0.26.0",
   "gomodifytags": "v1.17.0",
@@ -29,5 +32,6 @@
   "sqls": "v0.2.28",
   "stylua": "v0.20.0",
   "taplo": "0.9.3",
+  "yamlfix": "1.17.0",
   "yamlfmt": "v0.13.0"
 }

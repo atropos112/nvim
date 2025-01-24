@@ -3,7 +3,7 @@ local M = {}
 ---@param client table
 ---@param bufnr number
 ---@return nil
-local on_attach = function(client, bufnr)
+M.on_attach = function(client, bufnr)
 	local telescope = require("telescope.builtin")
 	local keys = KEYMAPS.lsp_on_attach
 
@@ -52,11 +52,11 @@ M.setup_lsp = function(server_name, lsp_config, lsp_module)
 	if not lsp_config.skip_on_attach then
 		if lsp_config.on_attach then
 			final_cfg.on_attach = function(client, bufnr)
-				on_attach(client, bufnr)
+				M.on_attach(client, bufnr)
 				lsp_config.on_attach(client, bufnr)
 			end
 		else
-			final_cfg.on_attach = on_attach
+			final_cfg.on_attach = M.on_attach
 		end
 	end
 

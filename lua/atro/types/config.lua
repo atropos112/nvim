@@ -10,6 +10,7 @@
 ---@field mason_config MasonConfig | nil Mason configuration
 
 ---@class LanguageConfig
+---@field treesitters string[] | nil List of treesitters for this language
 ---@field linters string[] | nil List of linters for this language
 ---@field formatters nil | table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride> List of formatters for this language
 ---@field lsps table<string,LspConfig> | nil List of lsps for this language
@@ -25,6 +26,7 @@
 ---@field on_attach function | nil On attach function to add to the client on top of the default
 ---@field skip_capabilities boolean | nil Skip adding the capabilities to the client
 ---@field skip_install boolean | nil Skip installing the lsp even if it is not installed
+---@field on_new_config function | nil Mutation of config after the root dir has been detected
 
 ---@class TestAdapter
 ---@field pkg_name string Name of the package to install as a dependency of neotest

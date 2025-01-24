@@ -2,6 +2,7 @@ local M = {}
 
 -- INFO: Got this list from https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/mappings/server.lua
 local lsp_mason_mappings = {
+	["bacon_ls"] = "bacon-ls",
 	["als"] = "ada-language-server",
 	["angularls"] = "angular-language-server",
 	["ansiblels"] = "ansible-language-server",
@@ -294,6 +295,7 @@ end
 ---@return string
 M.to_bin = function(name)
 	local exceptions = {
+		["docker_compose_language_service"] = "docker-compose-langserver",
 		["lua_ls"] = "lua-language-server",
 		["jsonls"] = "vscode-json-language-server",
 		["yamlls"] = "yaml-language-server",

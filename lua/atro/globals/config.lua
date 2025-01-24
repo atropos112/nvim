@@ -14,6 +14,7 @@ return {
 				sqls = {},
 			},
 			linters = { "sqlfluff" },
+			formatters = { sqlfluff = {} },
 		},
 		markdown = {
 			formatters = {
@@ -141,10 +142,17 @@ return {
 			},
 			formatters = { shfmt = {}, shellharden = {} },
 		},
-		dockerfile = {
+		docker = {
+			treesitters = { "dockerfile" },
 			linters = { "hadolint" },
+			lsps = {
+				dockerls = {},
+				-- docker_compose_language_service would require setting filetype to yaml.docker-compose which
+				-- is a bit annoying to do and it doesn't seem to bring much.
+			},
 		},
 		json = {
+			treesitters = { "json", "json5" },
 			formatters = { fixjson = {} },
 			linters = { "jsonlint" },
 			lsps = {
@@ -154,6 +162,9 @@ return {
 						return {
 							json = {
 								schemas = require("schemastore").json.schemas(),
+								format = {
+									enable = true,
+								},
 								validate = { enable = true },
 							},
 						}
@@ -162,13 +173,14 @@ return {
 			},
 		},
 		go = {
+			treesitters = { "go", "gomod", "gowork", "gosum" },
 			-- INFO: The plugin olexsmir/gopher.nvim provides another test adapter for ginkgo
 			-- So here we only need to provide the adapter for go test.
 			test_adapter = {
 				pkg_name = "nvim-neotest/neotest-go",
 				adapter_name = "neotest-go",
 			},
-			formatters = { gofmt = {}, goimports = {} },
+			formatters = { gofumpt = {}, goimports = {} },
 			dap_package = "dlv",
 			linters = { "golangcilint" },
 			lsps = {
@@ -223,6 +235,7 @@ return {
 		},
 		yaml = {
 			formatters = {
+				yamlfix = {},
 				yamlfmt = {
 					prepend_args = function(_, _)
 						return {
@@ -269,14 +282,21 @@ return {
 					-- INFO: Wrapping it as we can't guarantee that the plugin is installed at this point.
 					settings = function()
 						return {
+							redhat = { telemetry = { enabled = false } },
 							yaml = {
-								schemaStore = {
-									enable = false, -- using schemastore plugin instead (more functionalities)
-									url = "", -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+								schemas = require("schemastore").yaml.schemas({ extra = require("atro.lsp.yaml_schemas") }),
+								keyOrdering = false,
+								format = {
+									enable = true,
 								},
-								schemas = require("schemastore").yaml.schemas({
-									extra = require("atro.lsp.yaml_schemas"),
-								}),
+								validate = true,
+								schemaStore = {
+									-- Must disable built-in schemaStore support to use
+									-- schemas from SchemaStore.nvim plugin
+									enable = false,
+									-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+									url = "",
+								},
 							},
 						}
 					end,
@@ -287,11 +307,17 @@ return {
 			formatters = { alejandra = {} }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
 			lsps = {
 				-- INFO: Is worse than nixd but has very good go-to-definition.
-				-- TODO: Re-enable this when nix_ls is fixed with pipe operators like here https://github.com/oxalica/nil/pull/152
-				-- nil_ls = {},
+				nil_ls = {},
 
 				-- INFO: All around best nix lsp, except the go-to-definition is not working that well.
 				nixd = {
+					on_attach = function(client, _)
+						-- Disabling in favour of nix_ls's better go-to-definition.
+						client.server_capabilities.definitionProvider = false
+						client.server_capabilities.typeDefinitionProvider = false
+						client.server_capabilities.implementationProvider = false
+						client.server_capabilities.referencesProvider = false
+					end,
 					settings = {
 						nixd = {
 							diagnostic = {

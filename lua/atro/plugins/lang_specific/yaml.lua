@@ -1,4 +1,4 @@
-if CONFIG.languages["rust"] then
+if CONFIG.languages["yaml"] then
 	return {
 		{
 			"towolf/vim-helm",
