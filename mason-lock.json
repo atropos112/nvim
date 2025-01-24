@@ -11,6 +11,7 @@
   "gomodifytags": "v1.17.0",
   "gotests": "v1.6.0",
   "harper-ls": "v0.15.0",
+  "helm-ls": "v0.2.0",
   "iferr": "v0.0.0-20240122035601-9c3e2fbe4bd1",
   "jsonlint": "1.6.3",
   "markdown-toc": "1.2.0",

@@ -2,7 +2,6 @@
 ---@class Config
 ---@field talk_to_external boolean Should this nvim instance talk to external providers like Github Copilot
 ---@field global_linters string[] List of global linters for all languages
----@field global_lsps table  List of global lsps for all languages
 ---@field languages table<string, LanguageConfig> List of language specific configurations
 ---@field logging Logging Log level for the logger
 ---@field null_ls_sources any[] | nil List of null-ls sources
@@ -23,6 +22,7 @@
 ---@class LspConfig
 ---@field settings table<string, any> | function | nil Lsp settings
 ---@field skip_on_attach boolean | nil Skip adding the on_attach function to the client
+---@field on_attach function | nil On attach function to add to the client on top of the default
 ---@field skip_capabilities boolean | nil Skip adding the capabilities to the client
 ---@field skip_install boolean | nil Skip installing the lsp even if it is not installed
 

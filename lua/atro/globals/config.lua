@@ -7,37 +7,6 @@ return {
 	log_level = "DEBUG",
 	talk_to_external = true,
 	global_linters = { "codespell" },
-	global_lsps = {
-		-- INFO: Not sure how to use the dict yet.
-		-- harper_ls = {
-		-- 	settings = {
-		-- 		["harper-ls"] = {
-		-- 			codeActions = {
-		-- 				forceStable = true,
-		-- 			},
-		-- 			userDictPath = vim.fn.stdpath("config") .. "/dict/user_dict.txt",
-		-- 			linters = {
-		-- 				spell_check = true,
-		-- 				spelled_numbers = false,
-		-- 				an_a = true,
-		-- 				sentence_capitalization = false, -- otherwise makes ~/.local -> ~/.Local suggestions.
-		-- 				unclosed_quotes = true,
-		-- 				wrong_quotes = false,
-		-- 				long_sentences = true,
-		-- 				repeated_words = true,
-		-- 				spaces = true,
-		-- 				matcher = true,
-		-- 				correct_number_suffix = true,
-		-- 				number_suffix_capitalization = true,
-		-- 				multiple_sequential_pronouns = true,
-		-- 				linking_verbs = false,
-		-- 				avoid_curses = true,
-		-- 				terminating_conjunctions = true,
-		-- 			},
-		-- 		},
-		-- 	},
-		-- },
-	},
 	languages = {
 		csv = {},
 		sql = {
@@ -88,6 +57,13 @@ return {
 			linters = { "ruff" },
 			lsps = {
 				basedpyright = {
+					on_attach = function(client, _)
+						-- Basedpyright does not support these capabilities well.
+						client.server_capabilities.definitionProvider = false
+						client.server_capabilities.typeDefinitionProvider = false
+						client.server_capabilities.implementationProvider = false
+						client.server_capabilities.referencesProvider = false
+					end,
 					settings = {
 						basedpyright = {
 							analysis = {
@@ -100,6 +76,10 @@ return {
 					},
 				},
 				pylsp = {
+					on_attach = function(client, _)
+						-- Basedpyright has better code actions than pylsp. And pylsp somehow blocks basedpyright
+						client.server_capabilities.codeActionProvider = false
+					end,
 					settings = {
 						pylsp = {
 							plugins = {
@@ -255,6 +235,36 @@ return {
 			},
 			-- Tried yaml lint but it stopped using it as its buggy.
 			lsps = {
+				helm_ls = {
+					-- INFO: Wrapping it as we can't guarantee that the plugin is installed at this point.
+					settings = function()
+						local schemas = require("schemastore").yaml.schemas({
+							extra = require("atro.lsp.yaml_schemas"),
+						})
+						schemas["kubernetes"] = {
+							"deployment.yaml",
+							"service.yaml",
+							"*.k8s.yaml",
+							"*.k8s.yml",
+						}
+
+						return {
+							["helm-ls"] = {
+								yamlls = {
+									enabled = true,
+									showDiagnosticsDirectly = false,
+									path = "yaml-language-server",
+									config = {
+										schemas = schemas,
+										completion = true,
+										hover = true,
+										-- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
+									},
+								},
+							},
+						}
+					end,
+				},
 				yamlls = {
 					-- INFO: Wrapping it as we can't guarantee that the plugin is installed at this point.
 					settings = function()

@@ -14,7 +14,6 @@ return {
 		config = function()
 			local lsp = require("lspconfig")
 			local setup_lsp = require("atro.lsp.utils").setup_lsp
-			local setup_lsp_with_python_special_handlers = require("atro.lsp.utils").setup_lsp_with_python_special_handlers
 
 			local log = LOGGER:with({ phase = "LSP" })
 			log:info("Starting LSP setup")
@@ -30,14 +29,6 @@ return {
 				else
 					log:with({ language = lang }):debug("No lsps found for language")
 				end
-			end
-
-			log:info("Setting up global lsps")
-			for server_name, lsp_config in pairs(CONFIG.global_lsps) do
-				log:debug("Setting up LSP: " .. server_name)
-				log:trace(lsp_config)
-
-				lsp = setup_lsp(server_name, lsp_config, lsp)
 			end
 		end,
 	},
