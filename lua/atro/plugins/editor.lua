@@ -101,133 +101,6 @@ return {
 		opts = {},
 	},
 	{
-		-- INFO: Commenting plugin, allows commenting out lines and blocks of code
-		"folke/todo-comments.nvim",
-		event = "BufRead",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {
-			keywords = {
-				FIX = {
-					icon = " ", -- icon used for the sign, and in search results
-					color = "error", -- can be a hex color, or a named color (see below)
-					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-					-- signs = false, -- configure signs for some keywords individually
-				},
-				TODO = { icon = " ", color = "info" },
-				HACK = { icon = " ", color = "warning" },
-				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-				SECTION = { icon = " ", alt = { "SEC", "Section" } },
-				NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-			},
-		},
-	},
-	{
-		"kevinhwang91/nvim-ufo",
-		dependencies = "kevinhwang91/promise-async",
-		event = "LspAttach",
-		-- INFO: zc folds, zo unfolds, below are extras
-		keys = {
-			{
-				"zR",
-				function()
-					require("ufo").openAllFolds()
-				end,
-				{ desc = "Open all folds" },
-			},
-			{
-				"zM",
-				function()
-					require("ufo").closeAllFolds()
-				end,
-				{ desc = "Close all folds" },
-			},
-		},
-		opts = {
-			provider_selector = function(_, _, _)
-				return { "treesitter", "indent" }
-			end,
-		},
-	},
-	{
-		"rmagatti/goto-preview",
-		event = "BufRead",
-		keys = {
-			{
-				"gp",
-				function()
-					require("goto-preview").goto_preview_definition()
-				end,
-				desc = "Goto Preview",
-			},
-			{
-				"gP",
-				function()
-					require("goto-preview").close_all_win()
-				end,
-				desc = "Close all previews",
-			},
-		},
-		opts = {
-			post_close_hook = function()
-				GOTO_PREVIEW_ALREADY_SHIFTED = false
-			end,
-			post_open_hook = function(_, win_id)
-				if GOTO_PREVIEW_ALREADY_SHIFTED then
-					return
-				end
-
-				-- Get the current window dimensions
-				local width = vim.api.nvim_win_get_width(win_id)
-				local height = vim.api.nvim_win_get_height(win_id)
-
-				-- Get the dimensions of the Neovim editor
-				local editor_width = vim.o.columns
-				local editor_height = vim.o.lines
-
-				-- Calculate the new position for the upper right corner
-				local new_row = 0 -- Top of the screen
-				local new_col = editor_width - width -- Right side of the screen
-
-				-- -- Move the floating window
-				-- vim.api.nvim_win_set_config(win_id, {
-				-- 	relative = "editor",
-				-- 	row = new_row,
-				-- 	col = new_col,
-				-- })
-				-- Move the floating window
-				GOTO_PREVIEW_ALREADY_SHIFTED = true
-
-				vim.api.nvim_win_set_config(win_id, {
-					relative = "editor",
-					row = new_row,
-					col = new_col,
-					width = width, -- Maintain the current width
-					height = height, -- Maintain the current height
-				})
-			end, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-		},
-	},
-	{
-		-- INFO: with :<n> you can peek at n-th line
-		"nacro90/numb.nvim",
-		event = "BufRead",
-		opts = {},
-	},
-	{
-		"danymat/neogen",
-		keys = {
-			{
-				"<leader>cc",
-				function()
-					require("neogen").generate({})
-				end,
-				desc = "Neogen Comment",
-			},
-		},
-		opts = { snippet_engine = "luasnip" },
-	},
-	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		lazy = true,
 		config = function()
@@ -287,6 +160,146 @@ return {
 			})
 		end,
 	},
+	{
+		-- INFO: Commenting plugin, allows commenting out lines and blocks of code
+		"folke/todo-comments.nvim",
+		event = "BufRead",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			keywords = {
+				FIX = {
+					icon = " ", -- icon used for the sign, and in search results
+					color = "error", -- can be a hex color, or a named color (see below)
+					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+					-- signs = false, -- configure signs for some keywords individually
+				},
+				TODO = { icon = " ", color = "info" },
+				HACK = { icon = " ", color = "warning" },
+				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+				SECTION = { icon = " ", alt = { "SEC", "Section" } },
+				NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+			},
+		},
+	},
+	{
+		"rmagatti/goto-preview",
+		event = { "BufRead" },
+		config = function()
+			local gtp = require("goto-preview")
+			local keys = KEYMAPS.position
+
+			gtp.setup({
+				post_close_hook = function()
+					GOTO_PREVIEW_ALREADY_SHIFTED = false
+				end,
+				post_open_hook = function(_, win_id)
+					if GOTO_PREVIEW_ALREADY_SHIFTED then
+						return
+					end
+
+					-- Get the current window dimensions
+					local width = vim.api.nvim_win_get_width(win_id)
+					local height = vim.api.nvim_win_get_height(win_id)
+
+					-- Get the dimensions of the Neovim editor
+					local editor_width = vim.o.columns
+					local editor_height = vim.o.lines
+
+					-- Calculate the new position for the upper right corner
+					local new_row = 0 -- Top of the screen
+					local new_col = editor_width - width -- Right side of the screen
+
+					-- -- Move the floating window
+					-- vim.api.nvim_win_set_config(win_id, {
+					-- 	relative = "editor",
+					-- 	row = new_row,
+					-- 	col = new_col,
+					-- })
+					-- Move the floating window
+					GOTO_PREVIEW_ALREADY_SHIFTED = true
+
+					vim.api.nvim_win_set_config(win_id, {
+						relative = "editor",
+						row = new_row,
+						col = new_col,
+						width = width, -- Maintain the current width
+						height = height, -- Maintain the current height
+					})
+				end, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+			})
+
+			KEYMAPS:set_many({
+				{ keys.open_goto_preview, gtp.goto_preview_definition },
+				{ keys.close_all_goto_previews, gtp.close_all_win },
+			})
+		end,
+	},
+	{
+		"chrisgrieser/nvim-origami",
+		event = { "VeryLazy" },
+		opts = {}, -- needed even when using default config
+	},
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = {
+			"kevinhwang91/promise-async",
+		},
+		event = { "LspAttach" },
+		-- INFO: zc folds, zo unfolds, below are extras
+		keys = {
+			{
+				"zR",
+				function()
+					require("ufo").openAllFolds()
+				end,
+				{ desc = "Open all folds" },
+			},
+			{
+				"zM",
+				function()
+					require("ufo").closeAllFolds()
+				end,
+				{ desc = "Close all folds" },
+			},
+		},
+		opts = {
+			provider_selector = function(_, _, _)
+				return { "treesitter", "indent" }
+			end,
+		},
+	},
+	-- Section: Plugin to peek at the line number we are jumping to when using :<n> inside of a file.
+	{
+		"nacro90/numb.nvim",
+		event = { "BufRead" },
+		opts = {},
+	},
+
+	-- Section: Plugin to create docstrings and annotations for functions, classes, etc.
+	{
+		"danymat/neogen",
+		event = { "LspAttach" }, -- For some reason, the plugin doesn't work without this event
+		config = function()
+			local neogen = require("neogen")
+			local keymap = KEYMAPS.comments.generate_annotation
+			KEYMAPS:set(keymap, neogen.generate)
+			neogen.setup({
+
+				{
+					snippet_engine = "luasnip",
+					languages = {
+						python = {
+							template = {
+								annotation_convention = "google_docstrings",
+							},
+						},
+					},
+				},
+			})
+		end,
+	},
+
 	-- Section: Plugin to show outline of the file in a window.
 	-- Showing a side window (on the right) with functions, classes, variables etc.
 	{

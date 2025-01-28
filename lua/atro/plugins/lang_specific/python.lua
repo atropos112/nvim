@@ -37,7 +37,6 @@ if CONFIG.languages["python"] then
 			iabbrev("null", "None")
 			iabbrev("none", "None")
 			iabbrev("nil", "None")
-			iabbrev("function", "def")
 		end,
 	})
 

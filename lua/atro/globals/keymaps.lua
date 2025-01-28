@@ -1,5 +1,8 @@
 ---@type Keymaps
 return require("atro.types.keymaps"):new({
+	comments = {
+		generate_annotation = { "<leader>co", "Generate annotation", "nv" },
+	},
 	lsp_on_attach = {
 		lsp_references = { "gR", "Show LSP references", "nv" },
 		lsp_declaration = { "gD", "Go to declaration", "nv" },
@@ -25,6 +28,8 @@ return require("atro.types.keymaps"):new({
 	position = {
 		flash_jump = { "s", "Flash jump to next char iteration.", "nxo" },
 		flash_treesitter = { "S", "Flash jump to treesitter points", "nxo" },
+		close_all_goto_previews = { "gP", "Close all goto previews", "nv" },
+		open_goto_preview = { "gp", "Open goto preview", "nv" },
 	},
 
 	buffer = {

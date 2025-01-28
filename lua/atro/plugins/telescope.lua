@@ -1,16 +1,11 @@
 local set = require("atro.utils").keyset
 return {
 	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		lazy = true,
-		build = "make",
-	},
-	{
 		"nvim-telescope/telescope.nvim",
 		event = "VeryLazy",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope-fzf-native.nvim",
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -24,10 +19,6 @@ return {
 						override_file_sorter = true, -- override the file sorter
 						case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 						-- the default case_mode is "smart_case"
-					},
-					smart_open = {
-						match_algorithm = "fzf",
-						show_scores = true,
 					},
 				},
 			})
@@ -44,22 +35,5 @@ return {
 			set("n", ";b", builtin.buffers, {})
 			set("n", ";f", builtin.find_files, {})
 		end,
-	},
-
-	-- Finds files not just inside the dir but outside and it uses fzf for it as well.
-	{
-		"danielfalk/smart-open.nvim",
-		branch = "0.2.x",
-		lazy = true,
-		config = function()
-			require("telescope").load_extension("smart_open")
-		end,
-		keys = {
-			{ ";p", "<cmd>Telescope smart_open<CR>", desc = "Telescope file search" },
-		},
-		dependencies = {
-			"kkharji/sqlite.lua",
-			"nvim-telescope/telescope-fzf-native.nvim",
-		},
 	},
 }
