@@ -182,6 +182,9 @@ return {
 			},
 		},
 	},
+	-- Section: Plugin to pop-up a window with the definition of a function or variable.
+	-- The below implementation has window size set to 30% of the editor size and appaers in top right corner.
+	-- Every next window will be 15px below the previous one (size of the window is 15px, so no overlap).
 	{
 		"rmagatti/goto-preview",
 		event = { "BufRead" },
@@ -190,43 +193,43 @@ return {
 			local keys = KEYMAPS.position
 
 			gtp.setup({
-				post_close_hook = function()
-					GOTO_PREVIEW_ALREADY_SHIFTED = false
-				end,
-				post_open_hook = function(_, win_id)
-					if GOTO_PREVIEW_ALREADY_SHIFTED then
+				width = 120,
+				height = 15,
+				post_close_hook = function(_, _)
+					-- It will be called many times over (I've seen -6 without this check...)
+					if GOTO_PREVIEW_WIN_COUNT == 0 then
 						return
 					end
 
-					-- Get the current window dimensions
-					local width = vim.api.nvim_win_get_width(win_id)
-					local height = vim.api.nvim_win_get_height(win_id)
-
+					GOTO_PREVIEW_WIN_COUNT = GOTO_PREVIEW_WIN_COUNT - 1
+				end,
+				post_open_hook = function(_, win_id)
+					if GOTO_PREVIEW_WIN_COUNT == nil then
+						-- Initialize the count
+						GOTO_PREVIEW_WIN_COUNT = 0
+					end
 					-- Get the dimensions of the Neovim editor
 					local editor_width = vim.o.columns
 					local editor_height = vim.o.lines
 
-					-- Calculate the new position for the upper right corner
-					local new_row = 0 -- Top of the screen
-					local new_col = editor_width - width -- Right side of the screen
+					-- 30% of the editor size in both dimensions
+					local new_height = math.floor(editor_height * 0.3)
+					local new_width = math.floor(editor_width * 0.3)
 
-					-- -- Move the floating window
-					-- vim.api.nvim_win_set_config(win_id, {
-					-- 	relative = "editor",
-					-- 	row = new_row,
-					-- 	col = new_col,
-					-- })
-					-- Move the floating window
-					GOTO_PREVIEW_ALREADY_SHIFTED = true
+					-- Position the window in the top right corner and 15px below the previous window (via counter)
+					local new_col = editor_width - new_width
+					local new_row = GOTO_PREVIEW_WIN_COUNT * 15
 
 					vim.api.nvim_win_set_config(win_id, {
 						relative = "editor",
 						row = new_row,
 						col = new_col,
-						width = width, -- Maintain the current width
-						height = height, -- Maintain the current height
+						width = new_width,
+						height = new_height,
 					})
-				end, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+
+					GOTO_PREVIEW_WIN_COUNT = GOTO_PREVIEW_WIN_COUNT + 1
+				end,
 			})
 
 			KEYMAPS:set_many({
@@ -235,39 +238,37 @@ return {
 			})
 		end,
 	},
+	-- Section: Plugin overloads h and l to fold/unfold if the cursor is at the start of the line, otherwise it moves the cursor
+	-- as usual. Very natural, and small plugin.
 	{
 		"chrisgrieser/nvim-origami",
 		event = { "VeryLazy" },
 		opts = {}, -- needed even when using default config
 	},
+	-- Section: Adds some nicer folding capabilities, like folding based on treesitter or indent.
+	-- Also offers fold all and unfold all commands.
 	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
 		event = { "LspAttach" },
-		-- INFO: zc folds, zo unfolds, below are extras
-		keys = {
-			{
-				"zR",
-				function()
-					require("ufo").openAllFolds()
+		config = function()
+			local ufo = require("ufo")
+			local keys = KEYMAPS.fold
+
+			ufo.setup({
+				provider_selector = function(_, _, _)
+					return { "treesitter", "indent" }
 				end,
-				{ desc = "Open all folds" },
-			},
-			{
-				"zM",
-				function()
-					require("ufo").closeAllFolds()
-				end,
-				{ desc = "Close all folds" },
-			},
-		},
-		opts = {
-			provider_selector = function(_, _, _)
-				return { "treesitter", "indent" }
-			end,
-		},
+			})
+			KEYMAPS:set_many({
+				{ keys.open_fold, "zo" }, -- "zo" is default we are "mapping" to
+				{ keys.close_fold, "zc" }, -- "zc" is default we are "mapping" to
+				{ keys.open_all_folds, ufo.openAllFolds },
+				{ keys.close_all_folds, ufo.closeAllFolds },
+			})
+		end,
 	},
 	-- Section: Plugin to peek at the line number we are jumping to when using :<n> inside of a file.
 	{
@@ -283,9 +284,8 @@ return {
 		config = function()
 			local neogen = require("neogen")
 			local keymap = KEYMAPS.comments.generate_annotation
-			KEYMAPS:set(keymap, neogen.generate)
-			neogen.setup({
 
+			neogen.setup({
 				{
 					snippet_engine = "luasnip",
 					languages = {
@@ -297,6 +297,8 @@ return {
 					},
 				},
 			})
+
+			KEYMAPS:set(keymap, neogen.generate)
 		end,
 	},
 

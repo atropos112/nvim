@@ -44,4 +44,10 @@ return require("atro.types.keymaps"):new({
 	diagnostic = {
 		open_float = { "<leader>of", "Open diagnostic float", "nv" },
 	},
+	fold = {
+		open_fold = { "zo", "Open fold", "nv" },
+		close_fold = { "zc", "Close fold", "nv" },
+		open_all_folds = { "zR", "Open all folds", "nv" },
+		close_all_folds = { "zM", "Close all folds", "nv" },
+	},
 })

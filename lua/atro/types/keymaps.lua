@@ -36,8 +36,8 @@
 ---@field flash_treesitter Keymap
 
 ---@class GoToPreviewsKeymaps
----@field open_goto_preview Keymap Opens a goto preview window
----@field close_all_goto_previews Keymap Closes all goto preview windows
+---@field open_goto_preview Keymap
+---@field close_all_goto_previews Keymap
 
 ---@class PositionKeymaps : FlashKeymaps, GoToPreviewsKeymaps
 
@@ -54,6 +54,12 @@
 ---@class CommentKeymaps
 ---@field generate_annotation Keymap
 
+---@class FoldKeymaps
+---@field open_fold Keymap
+---@field close_fold Keymap
+---@field open_all_folds Keymap
+---@field close_all_folds Keymap
+
 ---@class Keymaps
 ---@field other OtherKeymaps
 ---@field lsp_on_attach LspOnAttachKeymaps
@@ -63,6 +69,7 @@
 ---@field buffer BufferKeymaps
 ---@field diagnostic DiagnosticKeymaps
 ---@field comments CommentKeymaps
+---@field fold FoldKeymaps
 local Keymaps = {}
 Keymaps.__index = Keymaps
 

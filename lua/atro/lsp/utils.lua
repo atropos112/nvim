@@ -35,6 +35,12 @@ end
 local get_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+
+	-- nvim-ufo adds these capabilities
+	capabilities.textDocument.foldingRange = {
+		dynamicRegistration = false,
+		lineFoldingOnly = true,
+	}
 	return capabilities
 end
 
