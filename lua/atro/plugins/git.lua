@@ -19,7 +19,7 @@ return {
 	},
 	{
 		"dinhhuy258/git.nvim",
-		event = "BufReadPre",
+		event = {"VeryLazy"},
 		opts = {
 			keymaps = {
 				-- Open blame window
@@ -31,7 +31,7 @@ return {
 	},
 	{
 		"ruifm/gitlinker.nvim",
-		event = "BufRead",
+		event = { "VeryLazy" },
 		config = function()
 			---@type table<string, function>
 			local callbacks = {

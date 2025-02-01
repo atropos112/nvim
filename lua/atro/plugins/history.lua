@@ -10,6 +10,7 @@ return {
 	},
 	{
 		"jedrzejboczar/possession.nvim",
+		-- Can't make this lazy because it's a plugin that needs to be loaded before
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},

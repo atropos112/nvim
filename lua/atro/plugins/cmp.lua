@@ -79,7 +79,7 @@ return {
 	-- Snippets control
 	{
 		"L3MON4D3/LuaSnip",
-		event = "BufRead",
+		event = { "VeryLazy" },
 		version = "v2.*",
 		build = "make install_jsregexp",
 	},

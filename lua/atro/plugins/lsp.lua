@@ -2,7 +2,7 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufRead" }, -- Can't be VeryLazy (doesn't work for some reason)
+		event = { "BufReadPost", "BufNewFile" }, -- Can't be VeryLazy (doesn't work for some reason)
 		dependencies = {
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",

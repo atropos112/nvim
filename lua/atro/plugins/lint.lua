@@ -2,7 +2,7 @@
 return {
 	{
 		"mfussenegger/nvim-lint",
-		event = { "BufRead", "BufNewFile" },
+		event = { "VeryLazy" },
 		config = function()
 			local lint = require("lint")
 			local utils = require("atro.utils")

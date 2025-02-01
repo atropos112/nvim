@@ -3,7 +3,7 @@ return {
 	-- Section: Plugin to create docstrings and annotations for functions, classes, etc.
 	{
 		"danymat/neogen",
-		event = { "LspAttach" }, -- For some reason, the plugin doesn't work without this event
+		event = { "VeryLazy" }, -- For some reason, the plugin doesn't work without this event
 		config = function()
 			local neogen = require("neogen")
 			local keymap = KEYMAPS.comments.generate_annotation
@@ -28,7 +28,7 @@ return {
 	-- Section: Highlights comments when starting with correct keywards (like `TODO`, `FIXME`, etc.)
 	{
 		"folke/todo-comments.nvim",
-		event = { "BufRead" },
+		event = { "VeryLazy" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {
 			keywords = {
@@ -50,7 +50,7 @@ return {
 	-- Section: Comment plugin, support for treesitter, dot-repeats, left-right-up-down motions and hooks.
 	{
 		"numToStr/Comment.nvim",
-		event = { "BufRead" },
+		event = { "VeryLazy" },
 		config = function()
 			local keys = KEYMAPS.comments
 

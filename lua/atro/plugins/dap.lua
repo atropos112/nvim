@@ -71,7 +71,7 @@ return {
 	},
 	{
 		"Weissle/persistent-breakpoints.nvim",
-		event = "BufRead",
+		event = { "VeryLazy" },
 		dependencies = {
 			"mfussenegger/nvim-dap",
 		},

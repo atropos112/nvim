@@ -129,14 +129,14 @@ return {
 	},
 	{
 		"chrisgrieser/nvim-puppeteer",
-		event = { "BufRead" },
+		event = { "VeryLazy" },
 	},
 	-- Section: Plugin to pop-up a window with the definition of a function or variable.
 	-- The below implementation has window size set to 30% of the editor size and appaers in top right corner.
 	-- Every next window will be 15px below the previous one (size of the window is 15px, so no overlap).
 	{
 		"rmagatti/goto-preview",
-		event = { "BufRead" },
+		event = { "VeryLazy" },
 		config = function()
 			local gtp = require("goto-preview")
 			local keys = KEYMAPS.position
@@ -190,7 +190,7 @@ return {
 	-- Section: Plugin to peek at the line number we are jumping to when using :<n> inside of a file.
 	{
 		"nacro90/numb.nvim",
-		event = { "BufRead" },
+		event = { "VeryLazy" },
 		opts = {},
 	},
 
@@ -226,7 +226,7 @@ return {
 		"utilyre/barbecue.nvim",
 		name = "barbecue",
 		version = "*",
-		event = { "BufRead" },
+		event = { "VeryLazy" },
 		dependencies = {
 			"SmiteshP/nvim-navic",
 			"nvim-tree/nvim-web-devicons", -- optional dependency
@@ -244,7 +244,7 @@ return {
 	-- Similar for 'dd' and 'R' operations.
 	{
 		"mvllow/modes.nvim",
-		event = { "BufRead" },
+		event = { "VeryLazy" },
 		-- No type available for the setup config (checked).
 		opts = {
 			line_opacity = 0.30,
@@ -256,7 +256,7 @@ return {
 	-- Alternatively can press <c-p> to paste the selected item directly.
 	{
 		"AckslD/nvim-neoclip.lua",
-		event = { "BufEnter" },
+		event = { "VeryLazy" },
 		dependencies = {
 			"kkharji/sqlite.lua", -- Needs to persist paste history between sessions
 			"nvim-telescope/telescope.nvim",

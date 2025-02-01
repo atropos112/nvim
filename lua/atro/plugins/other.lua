@@ -11,6 +11,7 @@ local plugins = {
 
 	{
 		"meznaric/key-analyzer.nvim",
+		event = { "VeryLazy" },
 		opts = {},
 	},
 	{
@@ -24,13 +25,13 @@ local plugins = {
 	},
 	{
 		"tzachar/highlight-undo.nvim",
-		event = "BufRead",
+		event = { "VeryLazy" },
 		opts = {},
 	},
 
 	{
 		"voxelprismatic/rabbit.nvim",
-		event = "BufRead",
+		event = { "VeryLazy" },
 		version = "*", -- newest bleeding edge for them types.
 		opts = {
 			---@type Rabbit.Keymap
@@ -48,7 +49,7 @@ local plugins = {
 	-- Tells you what keybindings are available
 	{
 		"folke/which-key.nvim",
-		event = "VeryLazy",
+		event = { "VeryLazy" },
 		init = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
@@ -83,7 +84,7 @@ local plugins = {
 	-- Smooth scrolling
 	{
 		"karb94/neoscroll.nvim",
-		event = "BufRead",
+		event = { "VeryLazy" },
 		config = function()
 			local neoscroll = require("neoscroll")
 			neoscroll.setup({})
@@ -257,7 +258,7 @@ if CONFIG.talk_to_external == true then
 	---@type LazySpec
 	local wakatime_plugin = {
 		"wakatime/vim-wakatime",
-		event = "BufRead",
+		event = "VeryLazy",
 	}
 
 	table.insert(plugins, wakatime_plugin)

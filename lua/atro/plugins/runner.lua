@@ -65,7 +65,7 @@ return {
 
 	{
 		"michaelb/sniprun",
-		event = "BufRead",
+		event = { "VeryLazy" },
 		branch = "master",
 
 		build = "sh install.sh",
