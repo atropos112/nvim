@@ -1,9 +1,11 @@
 if CONFIG.languages["rust"] then
+	---@type LazyPlugin[]
 	return {
 		{
 			"mrcjkb/rustaceanvim",
 			version = "^5",
-			lazy = false,
+			event = { "VeryLazy" }, -- This is when it will really kick-in
+			lazy = true, -- Github page says its already lazy loaded and can set lazy to false, but its lazy loaded at startup not for BufRead which is what I wanted
 			ft = { "rust" },
 			config = function()
 				require("atro.mason").ensure_installed("rust_analyzer")
@@ -61,7 +63,7 @@ if CONFIG.languages["rust"] then
 		{
 			"saecki/crates.nvim",
 			tag = "stable",
-			event = "BufRead",
+			event = { "VeryLazy" },
 			ft = { "toml" },
 			opts = {
 				completion = {

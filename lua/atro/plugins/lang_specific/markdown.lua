@@ -1,9 +1,11 @@
 if CONFIG.languages["markdown"] then
+	---@type LazyPlugin[]
 	return {
 		{
 			-- INFO: Markdown preview functionality
 			"iamcco/markdown-preview.nvim",
 			cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+			lazy = true,
 			build = "cd app && yarn install",
 			init = function()
 				vim.g.mkdp_filetypes = { "markdown" }
@@ -15,7 +17,7 @@ if CONFIG.languages["markdown"] then
 			-- INFO: Allows pasting images into markdown files
 			"HakonHarnes/img-clip.nvim",
 			ft = { "markdown" },
-			event = "BufEnter",
+			event = { "VeryLazy" },
 			opts = {},
 			keys = {
 				{ "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
@@ -24,6 +26,7 @@ if CONFIG.languages["markdown"] then
 		{
 			"OXY2DEV/markview.nvim",
 			ft = { "markdown" },
+			event = { "VeryLazy" },
 			dependencies = {
 				"nvim-treesitter/nvim-treesitter",
 				"nvim-tree/nvim-web-devicons",
