@@ -53,6 +53,13 @@
 
 ---@class CommentKeymaps
 ---@field generate_annotation Keymap
+---@field toggle_comment_line Keymap
+---@field toggle_comment_block Keymap
+---@field comment_above Keymap
+---@field comment_below Keymap
+---@field comment_end_of_line Keymap
+---@field operator_pending_line Keymap
+---@field operator_pending_block Keymap
 
 ---@class FoldKeymaps
 ---@field open_fold Keymap
@@ -168,6 +175,29 @@ local parse_keymap = function(keymap)
 		description = keymap[2],
 		mode = parse_mode(keymap[3]),
 	}
+end
+
+---@param key Keymap | table
+---@param error_on_missing? boolean
+---@return string
+function Keymaps:key_without_leader(key, error_on_missing)
+	if error_on_missing == nil then
+		error_on_missing = true
+	end
+
+	key = parse_keymap(key)
+	-- Fetch first <leader> part of the key and see if equal to <leader>
+	local maybe_leader = key.key:sub(1, 8)
+
+	if maybe_leader == "<leader>" then
+		return key.key:sub(9)
+	end
+
+	if error_on_missing then
+		error("Keymap does not start with <leader>: " .. key.key)
+	end
+
+	return key.key
 end
 
 ---@param key Keymap | table

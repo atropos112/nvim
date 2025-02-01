@@ -46,36 +46,6 @@ return {
 		},
 		opts = {},
 	},
-	{
-		"saecki/live-rename.nvim",
-		event = "LspAttach",
-		config = function()
-			local live_rename = require("live-rename")
-
-			live_rename.setup({})
-			key("n", "gy", live_rename.map({ insert = true }), { desc = "LSP rename" })
-		end,
-	},
-	{
-		"chrisgrieser/nvim-puppeteer",
-		event = "BufRead",
-	},
-	{
-		-- TODO: Analyze all keys
-		"folke/ts-comments.nvim",
-		event = "VeryLazy",
-		opts = {},
-	},
-	{
-		"numToStr/Comment.nvim",
-		event = "BufRead",
-		opts = {
-			mappings = {
-				basic = true,
-				extra = true,
-			},
-		},
-	},
 	-- {
 	-- 	"smoka7/multicursors.nvim",
 	-- 	event = "VeryLazy",
@@ -161,26 +131,18 @@ return {
 		end,
 	},
 	{
-		-- INFO: Commenting plugin, allows commenting out lines and blocks of code
-		"folke/todo-comments.nvim",
-		event = "BufRead",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {
-			keywords = {
-				FIX = {
-					icon = " ", -- icon used for the sign, and in search results
-					color = "error", -- can be a hex color, or a named color (see below)
-					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-					-- signs = false, -- configure signs for some keywords individually
-				},
-				TODO = { icon = " ", color = "info" },
-				HACK = { icon = " ", color = "warning" },
-				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-				SECTION = { icon = " ", alt = { "SEC", "Section" } },
-				NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-			},
-		},
+		"saecki/live-rename.nvim",
+		event = { "LspAttach" },
+		config = function()
+			local live_rename = require("live-rename")
+
+			live_rename.setup({})
+			key("n", "gy", live_rename.map({ insert = true }), { desc = "LSP rename" })
+		end,
+	},
+	{
+		"chrisgrieser/nvim-puppeteer",
+		event = { "BufRead" },
 	},
 	-- Section: Plugin to pop-up a window with the definition of a function or variable.
 	-- The below implementation has window size set to 30% of the editor size and appaers in top right corner.
@@ -238,68 +200,11 @@ return {
 			})
 		end,
 	},
-	-- Section: Plugin overloads h and l to fold/unfold if the cursor is at the start of the line, otherwise it moves the cursor
-	-- as usual. Very natural, and small plugin.
-	{
-		"chrisgrieser/nvim-origami",
-		event = { "VeryLazy" },
-		opts = {}, -- needed even when using default config
-	},
-	-- Section: Adds some nicer folding capabilities, like folding based on treesitter or indent.
-	-- Also offers fold all and unfold all commands.
-	{
-		"kevinhwang91/nvim-ufo",
-		dependencies = {
-			"kevinhwang91/promise-async",
-		},
-		event = { "LspAttach" },
-		config = function()
-			local ufo = require("ufo")
-			local keys = KEYMAPS.fold
-
-			ufo.setup({
-				provider_selector = function(_, _, _)
-					return { "treesitter", "indent" }
-				end,
-			})
-			KEYMAPS:set_many({
-				{ keys.open_fold, "zo" }, -- "zo" is default we are "mapping" to
-				{ keys.close_fold, "zc" }, -- "zc" is default we are "mapping" to
-				{ keys.open_all_folds, ufo.openAllFolds },
-				{ keys.close_all_folds, ufo.closeAllFolds },
-			})
-		end,
-	},
 	-- Section: Plugin to peek at the line number we are jumping to when using :<n> inside of a file.
 	{
 		"nacro90/numb.nvim",
 		event = { "BufRead" },
 		opts = {},
-	},
-
-	-- Section: Plugin to create docstrings and annotations for functions, classes, etc.
-	{
-		"danymat/neogen",
-		event = { "LspAttach" }, -- For some reason, the plugin doesn't work without this event
-		config = function()
-			local neogen = require("neogen")
-			local keymap = KEYMAPS.comments.generate_annotation
-
-			neogen.setup({
-				{
-					snippet_engine = "luasnip",
-					languages = {
-						python = {
-							template = {
-								annotation_convention = "google_docstrings",
-							},
-						},
-					},
-				},
-			})
-
-			KEYMAPS:set(keymap, neogen.generate)
-		end,
 	},
 
 	-- Section: Plugin to show outline of the file in a window.

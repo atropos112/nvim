@@ -2,6 +2,14 @@
 return require("atro.types.keymaps"):new({
 	comments = {
 		generate_annotation = { "<leader>co", "Generate annotation", "nv" },
+		-- Below keymaps are a bit "limited" in selection due to how "numToStr/Comment.nvim" works.
+		toggle_comment_line = { "gcc", "Toggle comment line", "n" }, -- Only works in normal mode, mode here is ignored
+		toggle_comment_block = { "gbc", "Toggle comment block", "n" }, -- Only works in normal mode, mode here is ignored
+		operator_pending_line = { "<leader>gc", "Toggle comment line", "v" }, -- Only works in visual mode, mode here is ignored. Keymap must start with <leader>.
+		operator_pending_block = { "<leader>gb", "Toggle comment block", "v" }, -- Only works in visual mode, mode here is ignored. Keymap must start with <leader>.
+		comment_above = { "gcO", "Comment line above", "n" },
+		comment_below = { "gco", "Comment line below", "n" },
+		comment_end_of_line = { "gC", "Comment to end of line", "n" },
 	},
 	lsp_on_attach = {
 		lsp_references = { "gR", "Show LSP references", "nv" },

@@ -22,6 +22,7 @@ if CONFIG.languages["lua"] then
 					"dap",
 					"conform.nvim",
 					"nvim-dap",
+					"Comment.nvim",
 				},
 				enabled = function()
 					return true
