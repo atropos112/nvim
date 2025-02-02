@@ -34,8 +34,8 @@ return require("atro.types.keymaps"):new({
 		set_conditional_breakpoint = { "<leader>bc", "Set conditional breakpoint", "n" },
 	},
 	motion = {
-		flash_jump = { "s", "Flash jump to next char iteration.", "nxo" },
-		flash_treesitter = { "S", "Flash jump to treesitter points", "nxo" },
+		flash_jump = { "s", "Flash jump to next char iteration.", "n" },
+		flash_treesitter = { "S", "Flash jump to treesitter points", "n" },
 		close_all_goto_previews = { "gP", "Close all goto previews", "nv" },
 		open_goto_preview = { "gp", "Open goto preview", "nv" },
 		go_to_beginning_of_word = { "w", "Move to beginning of word", "nox" },

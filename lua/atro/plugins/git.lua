@@ -1,5 +1,26 @@
 return {
 	{
+		-- TODO: Make keymap to open this (require('gitgraph').draw({}, { all = true, max_count = 5000 }))
+		-- TODO: Figure out how to conviniently close diffview after selecting (currently its via :tabc)
+		"isakbm/gitgraph.nvim",
+		dependencies = { "sindrets/diffview.nvim" },
+		---@type I.GGConfig
+		opts = {
+			hooks = {
+				-- Check diff of a commit
+				on_select_commit = function(commit)
+					vim.notify("DiffviewOpen " .. commit.hash .. "^!")
+					vim.cmd(":DiffviewOpen " .. commit.hash .. "^!")
+				end,
+				-- Check diff from commit a -> commit b
+				on_select_range_commit = function(from, to)
+					vim.notify("DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+					vim.cmd(":DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
+				end,
+			},
+		},
+	},
+	{
 		"tpope/vim-fugitive",
 		event = "VeryLazy",
 	},
@@ -19,7 +40,7 @@ return {
 	},
 	{
 		"dinhhuy258/git.nvim",
-		event = {"VeryLazy"},
+		event = { "VeryLazy" },
 		opts = {
 			keymaps = {
 				-- Open blame window

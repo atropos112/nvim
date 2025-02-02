@@ -3,6 +3,16 @@ local key = require("atro.utils").keyset
 ---@type LazyPlugin[]
 return {
 	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = { "VeryLazy" },
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
+	{
 		"chrisgrieser/nvim-rulebook",
 		keys = {
 			{
@@ -210,7 +220,7 @@ return {
 							max_depth = 0,
 						},
 						lsp = {
-							max_depth = 3, -- 3 is already a lot 
+							max_depth = 3, -- 3 is already a lot
 							valid_symbols = {
 								"File",
 								"Module",
