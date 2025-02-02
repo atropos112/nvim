@@ -10,6 +10,7 @@ return {
 			"aznhe21/actions-preview.nvim",
 			"nvim-telescope/telescope.nvim",
 			"MysticalDevil/inlay-hints.nvim",
+			"antosha417/nvim-lsp-file-operations",
 		},
 		config = function()
 			local lsp = require("lspconfig")
@@ -30,6 +31,30 @@ return {
 					log:with({ language = lang }):debug("No lsps found for language")
 				end
 			end
+		end,
+	},
+	{
+		"antosha417/nvim-lsp-file-operations",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-neo-tree/neo-tree.nvim",
+		},
+		config = function()
+			require("lsp-file-operations").setup({
+				-- used to see debug logs in file `vim.fn.stdpath("cache") .. lsp-file-operations.log`
+				debug = false,
+				-- select which file operations to enable
+				operations = {
+					willRenameFiles = true,
+					didRenameFiles = true,
+					willCreateFiles = true,
+					didCreateFiles = true,
+					willDeleteFiles = true,
+					didDeleteFiles = true,
+				},
+				-- how long to wait (in milliseconds) for file rename information before cancelling
+				timeout_ms = 10000,
+			})
 		end,
 	},
 

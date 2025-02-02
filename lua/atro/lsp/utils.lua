@@ -35,6 +35,10 @@ local get_capabilities = function()
 		dynamicRegistration = false,
 		lineFoldingOnly = true,
 	}
+
+	-- Adding file operations capabilities
+	capabilities = vim.tbl_deep_extend("force", capabilities, require("lsp-file-operations").default_capabilities())
+
 	return capabilities
 end
 
