@@ -3,6 +3,7 @@ return {
 		-- TODO: Make keymap to open this (require('gitgraph').draw({}, { all = true, max_count = 5000 }))
 		-- TODO: Figure out how to conviniently close diffview after selecting (currently its via :tabc)
 		"isakbm/gitgraph.nvim",
+		event = "VeryLazy",
 		dependencies = { "sindrets/diffview.nvim" },
 		---@type I.GGConfig
 		opts = {
