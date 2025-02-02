@@ -23,6 +23,8 @@ if CONFIG.languages["lua"] then
 					"conform.nvim",
 					"nvim-dap",
 					"Comment.nvim",
+					"dropbar.nvim",
+					"rainbow-delimiters.nvim",
 				},
 				enabled = function()
 					return true

@@ -39,7 +39,12 @@
 ---@field open_goto_preview Keymap
 ---@field close_all_goto_previews Keymap
 
----@class PositionKeymaps : FlashKeymaps, GoToPreviewsKeymaps
+---@class WebMotionKeymaps
+---@field go_to_beginning_of_word Keymap
+---@field go_to_end_of_word Keymap
+---@field go_back_to_previous_word Keymap
+
+---@class MotionKeymaps : FlashKeymaps, GoToPreviewsKeymaps, WebMotionKeymaps
 
 ---@class NeoClipKeymaps
 ---@field show_paste_history Keymap
@@ -72,7 +77,7 @@
 ---@field lsp_on_attach LspOnAttachKeymaps
 ---@field copilot CopilotKeymaps
 ---@field debug DebugKeymaps
----@field position PositionKeymaps
+---@field motion MotionKeymaps
 ---@field buffer BufferKeymaps
 ---@field diagnostic DiagnosticKeymaps
 ---@field comments CommentKeymaps

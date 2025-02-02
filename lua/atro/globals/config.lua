@@ -17,9 +17,10 @@ return {
 			formatters = { sqlfluff = {} },
 		},
 		markdown = {
+			treesitters = { "markdown", "markdown_inline" },
 			formatters = {
 				markdownlint = {},
-				prettier = {},
+				prettierd = {}, -- Is prettier with daemon mode for speed.
 			},
 			linters = { "markdownlint" },
 			lsps = {
@@ -36,6 +37,7 @@ return {
 			},
 			formatters = {
 				ruff_fix = {},
+				ruff_organize_imports = {},
 				ruff_format = {
 
 					args = function(_, _)
@@ -57,6 +59,7 @@ return {
 			},
 			linters = { "ruff" },
 			lsps = {
+				ruff = {},
 				basedpyright = {
 					on_attach = function(client, _)
 						-- Basedpyright does not support these capabilities well.
@@ -135,12 +138,37 @@ return {
 			-- 	rust_analyzer = {},
 			-- },
 		},
-		bash = {
+		sh = { -- Has to be sh (not bash) for dap config match.
+			treesitters = { "bash" },
 			linters = { "shellcheck" },
 			lsps = {
 				bashls = {},
 			},
 			formatters = { shfmt = {}, shellharden = {} },
+			dap_package = "bash-debug-adapter",
+			dap_adapters = {
+				bashdb = {
+					type = "executable",
+					command = "bash-debug-adapter",
+				},
+			},
+			dap_configs = {
+				{
+					type = "bashdb",
+					request = "launch",
+					name = "Bash: Launch file",
+					program = "${file}",
+					cwd = "${fileDirname}",
+					pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
+					pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
+					pathBash = "bash",
+					pathCat = "cat",
+					pathMkfifo = "mkfifo",
+					pathPkill = "pkill",
+					env = {},
+					args = {},
+				},
+			},
 		},
 		docker = {
 			treesitters = { "dockerfile" },
@@ -187,10 +215,54 @@ return {
 				gopls = {
 					settings = {
 						gopls = {
+							analyses = {
+								ST1003 = true,
+								fieldalignment = false,
+								fillreturns = true,
+								nilness = true,
+								nonewvars = true,
+								shadow = true,
+								undeclaredname = true,
+								unreachable = true,
+								unusedparams = true,
+								unusedwrite = true,
+								useany = true,
+							},
+							codelenses = {
+								gc_details = true, -- Show a code lens toggling the display of gc's choices.
+								generate = true, -- show the `go generate` lens.
+								regenerate_cgo = true,
+								test = true,
+								tidy = true,
+								upgrade_dependency = true,
+								vendor = true,
+							},
+							hints = {
+								assignVariableTypes = true,
+								compositeLiteralFields = true,
+								compositeLiteralTypes = true,
+								constantValues = true,
+								functionTypeParameters = true,
+								parameterNames = true,
+								rangeVariableTypes = true,
+							},
+							buildFlags = { "-tags", "integration" },
+							completeUnimported = true,
+							diagnosticsDelay = "500ms",
 							gofumpt = true,
+							matcher = "Fuzzy",
+							semanticTokens = true,
+							staticcheck = true,
+							symbolMatcher = "fuzzy",
+							usePlaceholders = true,
 						},
 					},
 				},
+			},
+		},
+		templ = {
+			lsps = {
+				templ = {},
 			},
 		},
 		lua = {
@@ -234,6 +306,7 @@ return {
 			},
 		},
 		yaml = {
+			treesitters = { "yaml", "helm" },
 			formatters = {
 				yamlfix = {},
 				yamlfmt = {
@@ -302,6 +375,12 @@ return {
 					end,
 				},
 			},
+		},
+		proto = {
+			lsps = {
+				buf_ls = {},
+			},
+			formatters = { buf = {} },
 		},
 		nix = {
 			formatters = { alejandra = {} }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.

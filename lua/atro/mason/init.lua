@@ -8,7 +8,6 @@ M.ensure_installed = function(ensure_installed)
 	if type(ensure_installed) == "string" then
 		ensure_installed = { ensure_installed }
 	end
-
 	-- INFO: Iterate over the ensure_installed packages and check if they are installed
 	local to_install = {}
 	for _, name in ipairs(ensure_installed) do

@@ -187,13 +187,6 @@ local plugins = {
 		opts = {},
 	},
 	{
-		"OXY2DEV/helpview.nvim",
-		ft = "help",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-	},
-	{
 		"mistweaverco/kulala.nvim",
 		lazy = true,
 		opts = {},

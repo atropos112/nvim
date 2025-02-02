@@ -139,7 +139,7 @@ return {
 		event = { "VeryLazy" },
 		config = function()
 			local gtp = require("goto-preview")
-			local keys = KEYMAPS.position
+			local keys = KEYMAPS.motion
 
 			gtp.setup({
 				width = 120,
@@ -187,6 +187,90 @@ return {
 			})
 		end,
 	},
+	{
+		"Bekaboo/dropbar.nvim",
+		-- optional, but required for fuzzy finder support
+		dependencies = {
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+		},
+		config = function()
+			local dropbar_api = require("dropbar.api")
+			local dropbar = require("dropbar")
+
+			dropbar.setup(
+				---@class dropbar_configs_t
+				{
+					sources = {
+						path = {
+							max_depth = 8,
+						},
+						treesitter = {
+							-- treesitter is a bit too much for me.
+							max_depth = 0,
+						},
+						lsp = {
+							max_depth = 3, -- 3 is already a lot 
+							valid_symbols = {
+								"File",
+								"Module",
+								"Namespace",
+								"Package",
+								"Class",
+								"Method",
+								"Property",
+								"Field",
+								"Constructor",
+								"Enum",
+								"Interface",
+								"Function",
+								"Variable",
+								"Constant",
+								"String",
+								"Number",
+								"Boolean",
+								"Array",
+								"Object",
+								"Keyword",
+								"Null",
+								"EnumMember",
+								"Struct",
+								"Event",
+								"Operator",
+								"TypeParameter",
+							},
+							request = {
+								-- Times to retry a request before giving up
+								ttl_init = 60,
+								interval = 1000, -- in ms
+							},
+						},
+						markdown = {
+							max_depth = 6,
+							parse = {
+								-- Number of lines to update when cursor moves out of the parsed range
+								look_ahead = 200,
+							},
+						},
+						terminal = {
+							---@type string|fun(buf: integer): string
+							icon = function(_)
+								return M.opts.icons.kinds.symbols.Terminal or " "
+							end,
+							---@type string|fun(buf: integer): string
+							name = vim.api.nvim_buf_get_name,
+							---@type boolean
+							---Show the current terminal buffer in the menu
+							show_current = true,
+						},
+					},
+				}
+			)
+
+			vim.keymap.set("n", "<Leader>e", dropbar_api.pick, { desc = "Pick symbols in winbar" })
+			vim.ui.select = require("dropbar.utils.menu").select
+		end,
+	},
 	-- Section: Plugin to peek at the line number we are jumping to when using :<n> inside of a file.
 	{
 		"nacro90/numb.nvim",
@@ -218,24 +302,6 @@ return {
 				implements = true,
 				git_authors = false, -- Unecessary clutter.
 			},
-		},
-	},
-	-- Section: Plugin to show window bar with current function, class, etc.
-	-- The plugin is deprecated and I haven't found a replacement yet.
-	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		version = "*",
-		event = { "VeryLazy" },
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		-- No type available for the setup config (checked).
-		opts = {
-			-- INFO: Not attaching navic here as it would cause already attached errors when using multiple LSPs (see on_attach where it is attached with special logic)
-			attach_navic = false,
-			show_modified = true,
 		},
 	},
 	-- Section: Plugin to highlight the line initiating yank, delete or replace operations
@@ -294,7 +360,7 @@ return {
 		"folke/flash.nvim",
 		event = { "VeryLazy" },
 		config = function()
-			local keys = KEYMAPS.position
+			local keys = KEYMAPS.motion
 			local flash = require("flash")
 
 			flash.setup(

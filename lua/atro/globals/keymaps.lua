@@ -7,9 +7,9 @@ return require("atro.types.keymaps"):new({
 		toggle_comment_block = { "gbc", "Toggle comment block", "n" }, -- Only works in normal mode, mode here is ignored
 		operator_pending_line = { "<leader>gc", "Toggle comment line", "v" }, -- Only works in visual mode, mode here is ignored. Keymap must start with <leader>.
 		operator_pending_block = { "<leader>gb", "Toggle comment block", "v" }, -- Only works in visual mode, mode here is ignored. Keymap must start with <leader>.
-		comment_above = { "gcO", "Comment line above", "n" },
-		comment_below = { "gco", "Comment line below", "n" },
-		comment_end_of_line = { "gC", "Comment to end of line", "n" },
+		comment_above = { "gO", "Comment line above", "n" },
+		comment_below = { "go", "Comment line below", "n" },
+		comment_end_of_line = { "gl", "Comment to end of line", "n" },
 	},
 	lsp_on_attach = {
 		lsp_references = { "gR", "Show LSP references", "nv" },
@@ -33,11 +33,14 @@ return require("atro.types.keymaps"):new({
 		toggle_breakpoint = { "<leader>bb", "Toggle breakpoint", "n" },
 		set_conditional_breakpoint = { "<leader>bc", "Set conditional breakpoint", "n" },
 	},
-	position = {
+	motion = {
 		flash_jump = { "s", "Flash jump to next char iteration.", "nxo" },
 		flash_treesitter = { "S", "Flash jump to treesitter points", "nxo" },
 		close_all_goto_previews = { "gP", "Close all goto previews", "nv" },
 		open_goto_preview = { "gp", "Open goto preview", "nv" },
+		go_to_beginning_of_word = { "w", "Move to beginning of word", "nox" },
+		go_to_end_of_word = { "e", "Move to end of word", "nox" },
+		go_back_to_previous_word = { "b", "Move back to previous word", "nox" },
 	},
 
 	buffer = {

@@ -2,6 +2,9 @@ local M = {}
 
 -- INFO: Got this list from https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/mappings/server.lua
 local lsp_mason_mappings = {
+	["buf_ls"] = "buf",
+	["ginko_ls"] = "ginko_ls",
+	["kcl"] = "kcl",
 	["bacon_ls"] = "bacon-ls",
 	["als"] = "ada-language-server",
 	["angularls"] = "angular-language-server",
@@ -227,6 +230,8 @@ local lsp_mason_mappings = {
 
 -- INFO: Got this list from https://github.com/rshkarin/mason-nvim-lint/blob/main/lua/mason-nvim-lint/mapping.lua
 local lint_mason_mappings = {
+	["oxlint"] = "oxlint",
+	["psalm"] = "psalm",
 	["actionlint"] = "actionlint",
 	["ansible_lint"] = "ansible-lint",
 	["buf_lint"] = "buf",
@@ -301,6 +306,7 @@ M.to_bin = function(name)
 		["yamlls"] = "yaml-language-server",
 		["ruff_fix"] = "ruff",
 		["ruff_format"] = "ruff",
+		["ruff_organize_imports"] = "ruff",
 		["golangcilint"] = "golangci-lint",
 		["nil_ls"] = "nil",
 	}

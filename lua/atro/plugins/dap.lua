@@ -52,14 +52,14 @@ return {
 			local dap = require("dap")
 			dap.set_log_level("ERROR")
 			local log = LOGGER:with({ phase = "DAP" })
+			local custom_adapters = {}
 
 			log:info("Starting DAP setup")
 			for lang, cfg in pairs(CONFIG.languages) do
 				log = log:with({ language = lang })
 
 				if cfg.dap_adapters then
-					log:debug("Setting up DAP adapters", cfg.dap_adapters)
-					vim.tbl_extend("error", dap.adapters, cfg.dap_adapters)
+					custom_adapters = vim.tbl_deep_extend("error", custom_adapters, cfg.dap_adapters)
 				end
 
 				if cfg.dap_configs then
@@ -67,6 +67,10 @@ return {
 					dap.configurations[lang] = cfg.dap_configs
 				end
 			end
+
+			log:info("Setting up DAP adapters " .. vim.inspect(custom_adapters))
+
+			dap.adapters = vim.tbl_deep_extend("error", dap.adapters, custom_adapters)
 		end,
 	},
 	{

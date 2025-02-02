@@ -7,12 +7,6 @@ M.on_attach = function(client, bufnr)
 	local telescope = require("telescope.builtin")
 	local keys = KEYMAPS.lsp_on_attach
 
-	-- Attaching navic here with special logic to not get "already attached" errors when using multiple LSPs
-	-- Only attach navic to one LSP client if it supports documentSymbolProvider
-	if client.server_capabilities.documentSymbolProvider and not (vim.b[bufnr].navic_client_id ~= nil and vim.b[bufnr].navic_client_name ~= client.name) then
-		require("nvim-navic").attach(client, bufnr)
-	end
-
 	require("inlay-hints").on_attach(client, bufnr)
 	require("virtualtypes").on_attach()
 
