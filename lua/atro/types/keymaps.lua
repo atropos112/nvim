@@ -40,9 +40,9 @@
 ---@field close_all_goto_previews Keymap
 
 ---@class WebMotionKeymaps
----@field go_to_beginning_of_word Keymap
----@field go_to_end_of_word Keymap
----@field go_back_to_previous_word Keymap
+---@field go_to_beginning_of_sub_word Keymap
+---@field go_to_end_of_sub_word Keymap
+---@field go_back_to_previous_sub_word Keymap
 
 ---@class MotionKeymaps : FlashKeymaps, GoToPreviewsKeymaps, WebMotionKeymaps
 

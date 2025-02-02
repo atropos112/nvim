@@ -61,19 +61,19 @@ return {
 
 			KEYMAPS:set_many({
 				{
-					keys.go_back_to_previous_word,
+					keys.go_back_to_previous_sub_word,
 					function()
 						spider.motion("b")
 					end,
 				},
 				{
-					keys.go_to_beginning_of_word,
+					keys.go_to_beginning_of_sub_word,
 					function()
 						spider.motion("w")
 					end,
 				},
 				{
-					keys.go_to_end_of_word,
+					keys.go_to_end_of_sub_word,
 					function()
 						spider.motion("e")
 					end,

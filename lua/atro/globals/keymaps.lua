@@ -38,9 +38,9 @@ return require("atro.types.keymaps"):new({
 		flash_treesitter = { "S", "Flash jump to treesitter points", "n" },
 		close_all_goto_previews = { "gP", "Close all goto previews", "nv" },
 		open_goto_preview = { "gp", "Open goto preview", "nv" },
-		go_to_beginning_of_word = { "w", "Move to beginning of word", "nox" },
-		go_to_end_of_word = { "e", "Move to end of word", "nox" },
-		go_back_to_previous_word = { "b", "Move back to previous word", "nox" },
+		go_to_beginning_of_sub_word = { "W", "Move to beginning of word", "nox" },
+		go_to_end_of_sub_word = { "E", "Move to end of word", "nox" },
+		go_back_to_previous_sub_word = { "B", "Move back to previous word", "nox" },
 	},
 
 	buffer = {
