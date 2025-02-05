@@ -3,7 +3,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		dependencies = {
-			{ "nvim-dap-repl-highlights", opts = {} }, -- Has to be before ensure_installed is called
+			{ "LiadOz/nvim-dap-repl-highlights", opts = {} }, -- Has to be before ensure_installed is called
 		},
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
