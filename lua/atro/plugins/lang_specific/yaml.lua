@@ -4,6 +4,7 @@ if CONFIG.languages["yaml"] then
 			"towolf/vim-helm",
 			ft = { "yaml" },
 			lazy = true,
+			event = { "VeryLazy" },
 		},
 	}
 else

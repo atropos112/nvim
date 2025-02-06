@@ -18,6 +18,7 @@ local plugins = {
 	},
 	{
 		"LunarVim/bigfile.nvim",
+		event = { "BufRead", "BufNewFile" },
 		opts = {
 			filesize = 2, -- size of the file in MiB, the plugin round file sizes to the closest MiB
 			pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
@@ -48,6 +49,7 @@ local plugins = {
 	},
 	{
 		"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+		event = { "VeryLazy" },
 	},
 	{
 		-- INFO: This will be installed even before lazy is inited if it has to.
