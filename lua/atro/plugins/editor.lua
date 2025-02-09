@@ -3,16 +3,6 @@ local key = require("atro.utils").keyset
 ---@type LazyPlugin[]
 return {
 	{
-		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = { "VeryLazy" },
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end,
-	},
-	{
 		"chrisgrieser/nvim-rulebook",
 		keys = {
 			{
@@ -128,16 +118,6 @@ return {
 		end,
 	},
 	{
-		"saecki/live-rename.nvim",
-		event = { "LspAttach" },
-		config = function()
-			local live_rename = require("live-rename")
-
-			live_rename.setup({})
-			key("n", "gy", live_rename.map({ insert = true }), { desc = "LSP rename" })
-		end,
-	},
-	{
 		"chrisgrieser/nvim-puppeteer",
 		event = { "VeryLazy" },
 	},
@@ -200,10 +180,9 @@ return {
 	{
 		"Bekaboo/dropbar.nvim",
 		event = { "VeryLazy" },
-		-- optional, but required for fuzzy finder support
 		dependencies = {
+			-- optional, but required for fuzzy finder support
 			"nvim-telescope/telescope-fzf-native.nvim",
-			build = "make",
 		},
 		config = function()
 			local dropbar_api = require("dropbar.api")
@@ -383,6 +362,40 @@ return {
 				{ keys.flash_jump, require("flash").jump },
 				{ keys.flash_treesitter, require("flash").treesitter },
 			})
+		end,
+	},
+	-- Section: Plugin to add/remove/change surrounding brackets.
+	-- Say surround_with key is `ys` then `ys{motion}{char}` will surround the motion with the character.
+	-- Say change_surrounding key is `cs` then `cs{old_char}{new_char}` will change the surrounding character.
+	-- Say delete_surrounding key is `ds` then `ds{char}` will delete the surrounding character.
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = { "VeryLazy" },
+		config = function()
+			local keys = KEYMAPS.text_changing
+
+			require("nvim-surround").setup({
+				keymaps = {
+					normal = keys.surround_with.key,
+					delete = keys.delete_surrounding.key,
+					change = keys.change_surrounding.key,
+				},
+			})
+		end,
+	},
+
+	-- Section: Plugin to rename things like functions, variables, classes etc.
+	-- It uses LSP to rename these. It will rename all occurences across the entire project.
+	{
+		"saewki/live-rename.nvim",
+		event = { "LspAttach" },
+		config = function()
+			local live_rename = require("live-rename")
+
+			live_rename.setup({})
+
+			KEYMAPS:set(KEYMAPS.text_changing.rename, live_rename.map({ insert = true }))
 		end,
 	},
 }

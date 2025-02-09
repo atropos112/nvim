@@ -61,4 +61,10 @@ return require("atro.types.keymaps"):new({
 		open_all_folds = { "zR", "Open all folds", "nv" },
 		close_all_folds = { "zM", "Close all folds", "nv" },
 	},
+	text_changing = {
+		surround_with = { "ys", "Surround with", "" }, -- Only works in normal mode, no leader key.
+		delete_surrounding = { "ds", "Delete surrounding", "" }, -- Only works in normal mode, no leader key.
+		change_surrounding = { "cs", "Change surrounding", "" }, -- Only works in normal mode, no leader key.
+		rename = { "gy", "Rename", "n" },
+	},
 })

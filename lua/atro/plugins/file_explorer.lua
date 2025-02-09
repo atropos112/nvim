@@ -11,18 +11,11 @@ return {
 		},
 		keys = {
 			{
-				"<leader>fe",
-				function()
-					require("neo-tree.command").execute({ reveal = true, dir = require("atro.utils.init").GetGitRoot() })
-				end,
-				desc = "Reveal in Explorer",
-			},
-			{
-				"<leader>fE",
+				"<leader>-",
 				function()
 					require("neo-tree.command").execute({ reveal = true, dir = vim.uv.cwd() })
 				end,
-				desc = "Reveal in Explorer (cwd)",
+				desc = "Reveal in Explorer",
 			},
 		},
 		-- See: https://github.com/nvim-neo-tree/neo-tree.nvim
@@ -78,15 +71,15 @@ return {
 			},
 
 			filesystem = {
-				bind_to_cwd = false,
-				follow_current_file = { enabled = false },
+				bind_to_cwd = true,
+				follow_current_file = { enabled = true },
 				find_by_full_path_words = true,
 				group_empty_dirs = true,
 				use_libuv_file_watcher = true,
 
 				filtered_items = {
 					hide_dotfiles = false,
-					hide_gitignored = false,
+					hide_gitignored = true,
 					hide_by_name = {
 						".git",
 						".hg",

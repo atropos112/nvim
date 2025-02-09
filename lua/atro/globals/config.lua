@@ -205,8 +205,10 @@ return {
 			-- INFO: The plugin olexsmir/gopher.nvim provides another test adapter for ginkgo
 			-- So here we only need to provide the adapter for go test.
 			test_adapter = {
-				pkg_name = "nvim-neotest/neotest-go",
-				adapter_name = "neotest-go",
+				-- pkg_name = "nvim-neotest/neotest-go",
+				-- adapter_name = "neotest-go",
+				pkg_name = "nvim-contrib/nvim-ginkgo",
+				adapter_name = "nvim-ginkgo",
 			},
 			formatters = { gofumpt = {}, goimports = {} },
 			dap_package = "dlv",

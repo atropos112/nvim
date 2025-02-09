@@ -87,7 +87,11 @@ return {
 			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.test_adapter then
 					log:with({ language = lang }):debug("Including test adapter " .. cfg.test_adapter.adapter_name)
-					table.insert(adapters, require(cfg.test_adapter.adapter_name)(cfg.test_adapter.config or {}))
+					if cfg.test_adapter.config then
+						table.insert(adapters, require(cfg.test_adapter.adapter_name)(cfg.test_adapter.config))
+					else
+						table.insert(adapters, require(cfg.test_adapter.adapter_name))
+					end
 				end
 			end
 

@@ -35,6 +35,12 @@
 ---@field flash_jump Keymap
 ---@field flash_treesitter Keymap
 
+---@class TextChangingKeymaps
+---@field surround_with Keymap
+---@field delete_surrounding Keymap
+---@field change_surrounding Keymap
+---@field rename Keymap
+
 ---@class GoToPreviewsKeymaps
 ---@field open_goto_preview Keymap
 ---@field close_all_goto_previews Keymap
@@ -73,6 +79,7 @@
 ---@field close_all_folds Keymap
 
 ---@class Keymaps
+---@field text_changing TextChangingKeymaps
 ---@field other OtherKeymaps
 ---@field lsp_on_attach LspOnAttachKeymaps
 ---@field copilot CopilotKeymaps
