@@ -118,6 +118,12 @@ return {
 				},
 			},
 		},
+		jsonnet = {
+			lsps = {
+				jsonnet_ls = {},
+			},
+			formatters = { jsonnetfmt = {} },
+		},
 		zig = {
 			formatters = { zigfmt = {} },
 			lsps = {

@@ -20,6 +20,7 @@
   "helm-ls": "v0.2.0",
   "iferr": "v0.0.0-20240122035601-9c3e2fbe4bd1",
   "jsonlint": "1.6.3",
+  "jsonnet-language-server": "v0.15.0",
   "markdown-toc": "1.2.0",
   "markdownlint": "0.42.0",
   "markdownlint-cli2": "0.17.2",
