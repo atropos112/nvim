@@ -50,13 +50,6 @@ return {
 	-- 		},
 	-- 	},
 	-- },
-	-- Adds matching pairs of brackets, quotes, etc.
-	{
-		-- INFO: Autopairs plugin, adds matching pairs of brackets, quotes, etc.
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = {},
-	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		lazy = true,
@@ -116,10 +109,6 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"chrisgrieser/nvim-puppeteer",
-		event = { "VeryLazy" },
 	},
 	-- Section: Plugin to pop-up a window with the definition of a function or variable.
 	-- The below implementation has window size set to 30% of the editor size and appaers in top right corner.
@@ -396,6 +385,22 @@ return {
 			live_rename.setup({})
 
 			KEYMAPS:set(KEYMAPS.text_changing.rename, live_rename.map({ insert = true }))
+		end,
+	},
+	-- Section: Adds matching pairs of brackets, quotes, etc.
+	{
+		"windwp/nvim-autopairs",
+		event = { "InsertEnter", "VeryLazy" },
+		opts = {},
+	},
+
+	-- Section: Plugin to turn strings to formatted strings when neeeded.
+	-- In Python: writing "something {my_var}" will automatically convert it to f"something {my_var}"
+	{
+		"chrisgrieser/nvim-puppeteer",
+		event = { "InsertEnter", "VeryLazy" },
+		config = function()
+			vim.g.puppeteer_disable_filetypes = {} -- Defaults to { "lua" }
 		end,
 	},
 }
