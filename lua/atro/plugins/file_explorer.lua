@@ -13,7 +13,7 @@ return {
 			{
 				"<leader>-",
 				function()
-					require("neo-tree.command").execute({ reveal = true, dir = vim.uv.cwd() })
+					require("neo-tree.command").execute({ toggle = true, reveal = true, dir = vim.uv.cwd() })
 				end,
 				desc = "Reveal in Explorer",
 			},
