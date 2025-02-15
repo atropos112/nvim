@@ -9,7 +9,13 @@ return {
 	{
 		"RRethy/vim-illuminate",
 		event = "LspAttach",
-		opt = {},
+		config = function()
+			require("illuminate").configure({
+				providers = {
+					"lsp",
+				},
+			})
+		end,
 	},
 	{
 		"hiphish/rainbow-delimiters.nvim",

@@ -29,6 +29,22 @@ M.lst_to_str = function(lst)
 	return str:sub(1, -3)
 end
 
+-- Chceks if a root dir is a git directory
+--- @return boolean
+M.is_git_dir = function()
+	local path = vim.fn.getcwd()
+	while path do
+		if vim.fn.isdirectory(path .. "/.git") == 1 then
+			return true
+		end
+		path = vim.fn.fnamemodify(path, ":h")
+		if path == "/" or path == "" then
+			break
+		end
+	end
+	return false
+end
+
 --- @param tbl table<any, string>
 --- @return string[]
 M.tbl_to_lst = function(tbl, key)

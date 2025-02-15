@@ -23,6 +23,7 @@ return {
 			"folke/lazydev.nvim",
 			"rcarriga/cmp-dap",
 			"xzbdmw/colorful-menu.nvim",
+			"mikavilpas/blink-ripgrep.nvim",
 		},
 		version = "*",
 		config = function()
@@ -30,7 +31,6 @@ return {
 			---@module 'blink.cmp'
 			---@type blink.cmp.Config
 			require("blink.cmp").setup({
-
 				enabled = function()
 					return vim.bo.buftype ~= "prompt" or is_dap_buffer()
 				end,
@@ -98,13 +98,30 @@ return {
 						if sql_filetypes[vim.bo.filetype] ~= nil then
 							return { "dadbod", "snippets", "buffer" }
 						elseif is_dap_buffer() then
-							return { "dap", "snippets", "buffer" }
+							return { "dap", "snippets", "buffer", "ripgrep" }
+						elseif require("atro.utils").is_git_dir() then
+							-- ripgrep slows stuff down if the project is big, limiting to git repos only.
+							return { "lsp", "path", "snippets", "buffer", "ripgrep" }
 						else
 							return { "lsp", "path", "snippets", "buffer" }
 						end
 					end,
 
 					providers = {
+						ripgrep = {
+							module = "blink-ripgrep",
+							name = "Ripgrep",
+							---@module "blink-ripgrep"
+							---@type blink-ripgrep.Options
+							opts = {
+								--  The number of lines to show around each match in the preview (documentation) window. For example, 5 means to show 5 lines before, then the match, and another 5 lines after the match.
+								context_size = 50,
+
+								-- The maximum file size that ripgrep should include in its search. Examples: "1024" (bytes by default), "200K", "1M", "1G"
+								max_filesize = "1M",
+							},
+							score_offset = 50,
+						},
 						lazydev = {
 							name = "LazyDev",
 							module = "lazydev.integrations.blink",
@@ -120,6 +137,12 @@ return {
 							name = "dap",
 							module = "blink.compat.source",
 							score_offset = 100,
+							opts = {},
+						},
+						lsp = {
+							name = "LSP",
+							module = "blink.cmp.sources.lsp",
+							score_offset = 200,
 							opts = {},
 						},
 					},

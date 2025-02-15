@@ -33,6 +33,15 @@ return {
 		},
 		opts = {},
 	},
+	{
+		"SunnyTamang/select-undo.nvim",
+		config = function()
+			require("select-undo").setup({
+				line_mapping = "gU", -- Change line undo mapping
+				partial_mapping = "gCp", -- Change partial undo mapping
+			})
+		end,
+	},
 	-- {
 	-- 	"smoka7/multicursors.nvim",
 	-- 	event = "VeryLazy",
