@@ -8,8 +8,8 @@ return {
 		lazy = true,
 		-- make sure to set opts so that lazy.nvim calls blink.compat's setup
 		opts = {
-			impersonate_nvim_cmp = true,
-			debug = true,
+			impersonate_nvim_cmp = false,
+			debug = false,
 		},
 	},
 	{
@@ -22,6 +22,7 @@ return {
 			"kristijanhusak/vim-dadbod-completion",
 			"folke/lazydev.nvim",
 			"rcarriga/cmp-dap",
+			"xzbdmw/colorful-menu.nvim",
 		},
 		version = "*",
 		config = function()
@@ -38,6 +39,24 @@ return {
 					preset = "super-tab",
 				},
 				completion = {
+					menu = {
+						draw = {
+							-- We don't need label_description now because label and label_description are already
+							-- combined together in label by colorful-menu.nvim.
+							columns = { { "kind_icon" }, { "label", gap = 1 } },
+							components = {
+								label = {
+									text = function(ctx)
+										return require("colorful-menu").blink_components_text(ctx)
+									end,
+									highlight = function(ctx)
+										return require("colorful-menu").blink_components_highlight(ctx)
+									end,
+								},
+							},
+						},
+					},
+
 					accept = {
 						auto_brackets = {
 							enabled = true,
@@ -118,7 +137,7 @@ return {
 	},
 	{
 		"nvimtools/none-ls.nvim",
-		event = "VeryLazy",
+		event = { "VeryLazy" },
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
@@ -135,7 +154,7 @@ return {
 	-- Github Copilot
 	{
 		"zbirenbaum/copilot.lua",
-		event = "VeryLazy",
+		event = { "VeryLazy" },
 		config = function()
 			local keys = KEYMAPS.copilot
 
@@ -157,5 +176,10 @@ return {
 
 			KEYMAPS:set(keys.accept_mac, require("copilot.suggestion").accept)
 		end,
+	},
+	{
+		"xzbdmw/colorful-menu.nvim",
+		lazy = true,
+		opts = {},
 	},
 }
