@@ -393,22 +393,24 @@ return {
 		nix = {
 			formatters = { alejandra = {} }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
 			lsps = {
-				-- INFO: Is worse than nixd but has very good go-to-definition.
-				nil_ls = {},
-
-				-- INFO: All around best nix lsp, except the go-to-definition is not working that well.
 				nixd = {
-					on_attach = function(client, _)
-						-- Disabling in favour of nix_ls's better go-to-definition.
-						client.server_capabilities.definitionProvider = false
-						client.server_capabilities.typeDefinitionProvider = false
-						client.server_capabilities.implementationProvider = false
-						client.server_capabilities.referencesProvider = false
-					end,
 					settings = {
 						nixd = {
+							nixpkgs = {
+								expr = "import <nixpkgs> { }",
+							},
+							formatting = {
+								command = { "nixfmt" },
+							},
 							diagnostic = {
 								suppress = { "sema-escaping-with" },
+							},
+
+							options = {
+								-- my own nixos config
+								nixos = {
+									expr = '(builtins.getFlake "/home/atropos/nixos").nixosConfigurations.giant.options',
+								},
 							},
 						},
 					},

@@ -21,7 +21,7 @@ local plugins = {
 	},
 	{
 		"tummetott/unimpaired.nvim",
-		event = "VeryLazy",
+		event = { "VeryLazy" },
 		opts = {
 			-- add options here if you wish to override the default settings
 		},
