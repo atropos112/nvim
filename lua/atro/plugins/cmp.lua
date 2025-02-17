@@ -1,3 +1,5 @@
+local dict_path = os.getenv("HOME") .. "/.local/share/nvim/dict.txt"
+
 ---@type LazyPlugin[]
 return {
 	{
@@ -13,6 +15,20 @@ return {
 		},
 	},
 	{
+		"Kaiser-Yang/blink-cmp-dictionary",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		lazy = true,
+		config = function()
+			-- If there is no dictionary get it.
+			if vim.fn.filereadable(dict_path) == 0 or vim.fn.getftime(dict_path) < os.time() - 86400 then
+				vim.fn.system("wget -q -O " .. dict_path .. " https://raw.githubusercontent.com/dwyl/english-words/refs/heads/master/words_alpha.txt")
+				LOGGER:with({ dict_path = dict_path }):info("Downloaded dictionary, a one time operation")
+			end
+		end,
+	},
+	{
 		"saghen/blink.cmp",
 		event = { "VeryLazy" },
 		dependencies = {
@@ -24,10 +40,31 @@ return {
 			"rcarriga/cmp-dap",
 			"xzbdmw/colorful-menu.nvim",
 			"mikavilpas/blink-ripgrep.nvim",
+			"Kaiser-Yang/blink-cmp-dictionary",
 		},
 		version = "*",
 		config = function()
 			local is_dap_buffer = require("cmp_dap").is_dap_buffer
+			local log = LOGGER:with({ phase = "CMP" })
+
+			local sql_filetypes = { mysql = true, sql = true }
+
+			-- Computing sources here rather than later so I can log.
+			local sources = { "snippets", "buffer", "dictionary" }
+
+			if sql_filetypes[vim.bo.filetype] ~= nil then
+				sources = vim.list_extend(sources, { "dadbod" })
+			elseif is_dap_buffer() then
+				sources = vim.list_extend(sources, { "dap", "ripgrep", "path" })
+			elseif require("atro.utils").is_git_dir() then
+				-- ripgrep slows stuff down if the project is big, limiting to git repos only.
+				sources = vim.list_extend(sources, { "lsp", "ripgrep", "path" })
+			else
+				sources = vim.list_extend(sources, { "lsp", "path" })
+			end
+
+			log:with({ sources = sources }):info("Enabled CMP sources")
+
 			---@module 'blink.cmp'
 			---@type blink.cmp.Config
 			require("blink.cmp").setup({
@@ -93,21 +130,18 @@ return {
 				-- Default list of enabled providers defined so that you can extend it
 				-- elsewhere in your config, without redefining it, due to `opts_extend`
 				sources = {
-					default = function()
-						local sql_filetypes = { mysql = true, sql = true }
-						if sql_filetypes[vim.bo.filetype] ~= nil then
-							return { "dadbod", "snippets", "buffer" }
-						elseif is_dap_buffer() then
-							return { "dap", "snippets", "buffer", "ripgrep" }
-						elseif require("atro.utils").is_git_dir() then
-							-- ripgrep slows stuff down if the project is big, limiting to git repos only.
-							return { "lsp", "path", "snippets", "buffer", "ripgrep" }
-						else
-							return { "lsp", "path", "snippets", "buffer" }
-						end
-					end,
+					default = sources,
 
 					providers = {
+						dictionary = {
+							module = "blink-cmp-dictionary",
+							name = "Dict",
+							min_keyword_length = 4, -- has to be at least 2
+							opts = {
+								dictionary_files = { dict_path },
+							},
+							score_offset = 50,
+						},
 						ripgrep = {
 							module = "blink-ripgrep",
 							name = "Ripgrep",
@@ -120,23 +154,23 @@ return {
 								-- The maximum file size that ripgrep should include in its search. Examples: "1024" (bytes by default), "200K", "1M", "1G"
 								max_filesize = "1M",
 							},
-							score_offset = 50,
+							score_offset = 51,
 						},
 						lazydev = {
 							name = "LazyDev",
 							module = "lazydev.integrations.blink",
 							-- make lazydev completions top priority (see `:h blink.cmp`)
-							score_offset = 100,
+							score_offset = 101,
 						},
 						dadbod = {
 							name = "Dadbod",
 							module = "vim_dadbod_completion.blink",
-							score_offset = 100,
+							score_offset = 102,
 						},
 						dap = {
 							name = "dap",
 							module = "blink.compat.source",
-							score_offset = 100,
+							score_offset = 103,
 							opts = {},
 						},
 						lsp = {
