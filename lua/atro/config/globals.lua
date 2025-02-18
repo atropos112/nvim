@@ -31,6 +31,9 @@ function M.load_defaults()
 			["http"] = "http",
 		},
 	})
+	-- map q <Nop>
+	-- WARN: Disabling recordings for now.
+	vim.api.nvim_set_keymap("n", "q", "<Nop>", { noremap = true, silent = true })
 end
 
 return M

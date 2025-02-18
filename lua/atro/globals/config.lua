@@ -59,7 +59,13 @@ return {
 			},
 			linters = { "ruff" },
 			lsps = {
-				ruff = {},
+				ruff = {
+					on_attach = function(client, _)
+						-- Basedpyright has better code actions than pylsp. And pylsp somehow blocks basedpyright
+						client.server_capabilities.codeActionProvider = false
+						client.server_capabilities.hoverProvider = false -- Making sure basedpyright hover is used as this one sucks.
+					end,
+				},
 				basedpyright = {
 					on_attach = function(client, _)
 						-- Basedpyright does not support these capabilities well.
@@ -83,6 +89,7 @@ return {
 					on_attach = function(client, _)
 						-- Basedpyright has better code actions than pylsp. And pylsp somehow blocks basedpyright
 						client.server_capabilities.codeActionProvider = false
+						client.server_capabilities.hoverProvider = false -- Making sure basedpyright hover is used as this one sucks.
 					end,
 					settings = {
 						pylsp = {
@@ -393,7 +400,23 @@ return {
 		nix = {
 			formatters = { alejandra = {} }, -- Two other ones are nixfmt and nixpkgs-fmt, but alejendra seems the nicest to read.
 			lsps = {
+				-- INFO: Is worse than nixd but has very good go-to-definition.
+				nil_ls = {},
+
+				-- INFO: All around best nix lsp, except the go-to-definition is not working that well.
 				nixd = {
+					on_attach = function(client, _)
+						-- To get capabilities of a given lsp:
+						-- LspStop to stop all then start the one you want and then run
+						-- :lua =vim.lsp.get_active_clients()[1].server_capabilities
+						--
+						-- Disabling in favour of nix_ls's better go-to-definition.
+						client.server_capabilities.definitionProvider = false
+						client.server_capabilities.typeDefinitionProvider = false
+						client.server_capabilities.implementationProvider = false
+						client.server_capabilities.referencesProvider = false
+					end,
+
 					settings = {
 						nixd = {
 							nixpkgs = {

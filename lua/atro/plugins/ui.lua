@@ -70,8 +70,21 @@ return {
 	{
 		"folke/noice.nvim",
 		branch = "main",
-		event = "VeryLazy",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+
+			-- INFO: This plugin is nice but not really necessary on its own
+			-- However noice.nvim has dap selection broken and this plugin "plugs in" a version
+			-- that works (over-writting the buggy behaviour)
+			-- "stevearc/dressing.nvim",
+		},
+
+		-- event = "VeryLazy",
 		opts = {
+			popupmenu = {
+				enabled = true,
+			},
 			-- Don't want written messages to be shown
 			routes = {
 				{
@@ -82,24 +95,29 @@ return {
 					},
 					opts = { skip = true },
 				},
+				{
+					view = "notify",
+					filter = {
+						event = "msg_showmode",
+						find = "recording",
+					},
+				},
+			},
+			presets = {
+				lsp_doc_border = true,
 			},
 			lsp = {
 				signature = {
-					enabled = false,
+					enabled = true,
 				},
 				progress = {
-					enabled = false,
+					enabled = true,
+				},
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
 				},
 			},
-		},
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-
-			-- INFO: This plugin is nice but not really necessary on its own
-			-- However noice.nvim has dap selection broken and this plugin "plugs in" a version
-			-- that works (over-writting the buggy behaviour)
-			"stevearc/dressing.nvim",
 		},
 	},
 	{

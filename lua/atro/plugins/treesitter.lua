@@ -7,7 +7,7 @@ return {
 		},
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
-			local ensure_installed = { "dap_repl" }
+			local ensure_installed = { "dap_repl", "regex" }
 
 			for lang, lang_cfg in pairs(CONFIG.languages) do
 				ensure_installed = vim.list_extend(ensure_installed, lang_cfg.treesitters or { lang })
