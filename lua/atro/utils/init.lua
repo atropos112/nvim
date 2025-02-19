@@ -32,17 +32,24 @@ end
 -- Chceks if a root dir is a git directory
 --- @return boolean
 M.is_git_dir = function()
+	if M._is_git_dir then
+		return M._is_git_dir
+	end
+
 	local path = vim.fn.getcwd()
 	while path do
 		if vim.fn.isdirectory(path .. "/.git") == 1 then
-			return true
+			M._is_git_dir = true
+			return M._is_git_dir
 		end
 		path = vim.fn.fnamemodify(path, ":h")
 		if path == "/" or path == "" then
 			break
 		end
 	end
-	return false
+
+	M._is_git_dir = false
+	return M._is_git_dir
 end
 
 --- @param tbl table<any, string>
