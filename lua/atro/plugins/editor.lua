@@ -2,54 +2,6 @@ local key = require("atro.utils").keyset
 
 ---@type LazyPlugin[]
 return {
-	{
-		"wurli/contextindent.nvim",
-		-- This is the only config option; you can use it to restrict the files
-		-- which this plugin will affect (see :help autocommand-pattern).
-		opts = { pattern = "*" },
-		event = { "VeryLazy" },
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-	},
-	{
-		"chrisgrieser/nvim-rulebook",
-		keys = {
-			{
-				"<leader>Ri",
-				function()
-					require("rulebook").ignoreRule()
-				end,
-			},
-			{
-				"<leader>Rl",
-				function()
-					require("rulebook").lookupRule()
-				end,
-			},
-			{
-				"<leader>Ry",
-				function()
-					require("rulebook").yankDiagnosticCode()
-				end,
-			},
-			{
-				"<leader>sf",
-				function()
-					require("rulebook").suppressFormatter()
-				end,
-				mode = { "n", "x" },
-			},
-		},
-		opts = {},
-	},
-	{
-		"SunnyTamang/select-undo.nvim",
-		config = function()
-			require("select-undo").setup({
-				line_mapping = "gU", -- Change line undo mapping
-				partial_mapping = "gCp", -- Change partial undo mapping
-			})
-		end,
-	},
 	-- {
 	-- 	"smoka7/multicursors.nvim",
 	-- 	event = "VeryLazy",
@@ -418,6 +370,35 @@ return {
 		event = { "InsertEnter", "VeryLazy" },
 		config = function()
 			vim.g.puppeteer_disable_filetypes = {} -- Defaults to { "lua" }
+		end,
+	},
+	-- Section: A tiny Neovim plugin which adds context-aware indenting (i.e. using =/==). In practice this means that if you're editing a file with treesitter
+	-- language injections - think a markdown file with a python code chunk, or a HTML file with embedded javascript - the python/javascript portions of the
+	-- files will be indented according to your indent settings for those languages; not according to the settings you use for markdown/HTML.
+	{
+		"wurli/contextindent.nvim",
+		-- This is the only config option; you can use it to restrict the files
+		-- which this plugin will affect (see :help autocommand-pattern).
+		opts = { pattern = "*" },
+		event = { "VeryLazy" },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+	},
+	-- Section:Provides keymaps to ignore or supress formatter/linter rules and lookup diagnostic codes and rules themselves.
+	{
+		"chrisgrieser/nvim-rulebook",
+		event = { "VeryLazy" },
+		config = function()
+			local keys = KEYMAPS.rules
+			local rulebook = require("rulebook")
+
+			rulebook.setup()
+
+			KEYMAPS:set_many({
+				{ keys.supress_formatter, rulebook.suppressFormatter },
+				{ keys.ignore_linter_rule, rulebook.ignoreRule },
+				{ keys.lookup_linter_rule, rulebook.lookupRule },
+				{ keys.yank_diagnostic, rulebook.yankDiagnosticCode },
+			})
 		end,
 	},
 }
