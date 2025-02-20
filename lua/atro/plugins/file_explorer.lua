@@ -138,7 +138,7 @@ return {
 		-- See: https://github.com/nvim-neo-tree/neo-tree.nvim
 		config = function()
 			local opts = {
-				enable_git_status = true,
+				enable_git_status = require("atro.utils").is_git_dir(),
 				close_if_last_window = true,
 				popup_border_style = "rounded",
 				sort_case_insensitive = true,
