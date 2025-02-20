@@ -135,90 +135,6 @@ return {
 			})
 		end,
 	},
-	{
-		"Bekaboo/dropbar.nvim",
-		event = { "VeryLazy" },
-		dependencies = {
-			-- optional, but required for fuzzy finder support
-			"nvim-telescope/telescope-fzf-native.nvim",
-		},
-		config = function()
-			local dropbar_api = require("dropbar.api")
-			local dropbar = require("dropbar")
-
-			dropbar.setup(
-				---@class dropbar_configs_t
-				{
-					sources = {
-						path = {
-							max_depth = 8,
-						},
-						treesitter = {
-							-- treesitter is a bit too much for me.
-							max_depth = 0,
-						},
-						lsp = {
-							max_depth = 3, -- 3 is already a lot
-							valid_symbols = {
-								"File",
-								"Module",
-								"Namespace",
-								"Package",
-								"Class",
-								"Method",
-								"Property",
-								"Field",
-								"Constructor",
-								"Enum",
-								"Interface",
-								"Function",
-								"Variable",
-								"Constant",
-								"String",
-								"Number",
-								"Boolean",
-								"Array",
-								"Object",
-								"Keyword",
-								"Null",
-								"EnumMember",
-								"Struct",
-								"Event",
-								"Operator",
-								"TypeParameter",
-							},
-							request = {
-								-- Times to retry a request before giving up
-								ttl_init = 60,
-								interval = 1000, -- in ms
-							},
-						},
-						markdown = {
-							max_depth = 6,
-							parse = {
-								-- Number of lines to update when cursor moves out of the parsed range
-								look_ahead = 200,
-							},
-						},
-						terminal = {
-							---@type string|fun(buf: integer): string
-							icon = function(_)
-								return M.opts.icons.kinds.symbols.Terminal or " "
-							end,
-							---@type string|fun(buf: integer): string
-							name = vim.api.nvim_buf_get_name,
-							---@type boolean
-							---Show the current terminal buffer in the menu
-							show_current = true,
-						},
-					},
-				}
-			)
-
-			vim.keymap.set("n", "<Leader>e", dropbar_api.pick, { desc = "Pick symbols in winbar" })
-			vim.ui.select = require("dropbar.utils.menu").select
-		end,
-	},
 	-- Section: Plugin to peek at the line number we are jumping to when using :<n> inside of a file.
 	{
 		"nacro90/numb.nvim",
@@ -346,7 +262,7 @@ return {
 	-- Section: Plugin to rename things like functions, variables, classes etc.
 	-- It uses LSP to rename these. It will rename all occurences across the entire project.
 	{
-		"saewki/live-rename.nvim",
+		"saecki/live-rename.nvim",
 		event = { "LspAttach" },
 		config = function()
 			local live_rename = require("live-rename")
@@ -362,7 +278,6 @@ return {
 		event = { "InsertEnter", "VeryLazy" },
 		opts = {},
 	},
-
 	-- Section: Plugin to turn strings to formatted strings when neeeded.
 	-- In Python: writing "something {my_var}" will automatically convert it to f"something {my_var}"
 	{
@@ -382,23 +297,5 @@ return {
 		opts = { pattern = "*" },
 		event = { "VeryLazy" },
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-	},
-	-- Section:Provides keymaps to ignore or supress formatter/linter rules and lookup diagnostic codes and rules themselves.
-	{
-		"chrisgrieser/nvim-rulebook",
-		event = { "VeryLazy" },
-		config = function()
-			local keys = KEYMAPS.rules
-			local rulebook = require("rulebook")
-
-			rulebook.setup()
-
-			KEYMAPS:set_many({
-				{ keys.supress_formatter, rulebook.suppressFormatter },
-				{ keys.ignore_linter_rule, rulebook.ignoreRule },
-				{ keys.lookup_linter_rule, rulebook.lookupRule },
-				{ keys.yank_diagnostic, rulebook.yankDiagnosticCode },
-			})
-		end,
 	},
 }

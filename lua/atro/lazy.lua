@@ -14,55 +14,62 @@ end
 -- Add lazy-vim to the runtimepath
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-	lockfile = os.getenv("HOME") .. "/.config/nvim/lazy-lock.json",
-	change_detection = {
-		enabled = true,
-		notify = false,
-	},
-	spec = {
-		{
-			import = "atro.plugins",
-		},
-		{
-			import = "atro.plugins.lang_specific",
-		},
-	},
-	performance = {
-		cache = {
+require("lazy").setup(
+	---@type LazyConfig
+	{
+		lockfile = os.getenv("HOME") .. "/.config/nvim/lazy-lock.json",
+		change_detection = {
 			enabled = true,
+			notify = false,
 		},
-		reset_packpath = true,
-		rtp = {
-			disabled_plugins = {
-				"2html_plugin",
-				"tohtml",
-				"getscript",
-				"getscriptPlugin",
-				"gzip",
-				"logipat",
-				"netrw",
-				"netrwPlugin",
-				"netrwSettings",
-				"netrwFileHandlers",
-				"matchit",
-				"tar",
-				"tarPlugin",
-				"rrhelper",
-				"spellfile_plugin",
-				"vimball",
-				"vimballPlugin",
-				"zip",
-				"zipPlugin",
-				"tutor",
-				"rplugin",
-				"syntax",
-				"synmenu",
-				"optwin",
-				"compiler",
-				"bugreport",
-				"ftplugin",
+		spec = {
+			{
+				import = "atro.plugins",
+			},
+			{
+				import = "atro.plugins.lang_specific",
 			},
 		},
-	},
-})
+		profiling = {
+			loader = true,
+			require = false, -- Too much
+		},
+		performance = {
+			cache = {
+				enabled = true,
+			},
+			reset_packpath = true,
+			rtp = {
+				disabled_plugins = {
+					"2html_plugin",
+					"tohtml",
+					"getscript",
+					"getscriptPlugin",
+					"gzip",
+					"logipat",
+					"netrw",
+					"netrwPlugin",
+					"netrwSettings",
+					"netrwFileHandlers",
+					"matchit",
+					"tar",
+					"tarPlugin",
+					"rrhelper",
+					"spellfile_plugin",
+					"vimball",
+					"vimballPlugin",
+					"zip",
+					"zipPlugin",
+					"tutor",
+					"rplugin",
+					"syntax",
+					"synmenu",
+					"optwin",
+					"compiler",
+					"bugreport",
+					"ftplugin",
+				},
+			},
+		},
+	}
+)

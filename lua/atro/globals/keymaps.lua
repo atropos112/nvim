@@ -67,11 +67,8 @@ return require("atro.types.keymaps"):new({
 		change_surrounding = { "cs", "Change surrounding", "" }, -- Only works in normal mode, no leader key.
 		rename = { "gy", "Rename", "n" },
 	},
-
-	rules = {
-		supress_formatter = { "<leader>sf", "Supress formatter", "nxv" },
-		ignore_linter_rule = { "<leader>Ri", "Ignore rule", "nxv" },
-		lookup_linter_rule = { "<leader>Rl", "Lookup rule", "nxv" },
-		yank_diagnostic = { "<leader>Ry", "Yank diagnostic code", "nxv" },
+	file_exploration = {
+		toggle_file_explorer = { "<leader>-", "Toggle file explorer", "n" },
+		show_top_bar_keys = { "<leader>e", "Show top bar keys", "n" },
 	},
 })

@@ -62,12 +62,6 @@
 ---@class DiagnosticKeymaps
 ---@field open_float Keymap
 
----@class RuleKeymaps
----@field ignore_linter_rule Keymap
----@field lookup_linter_rule Keymap
----@field yank_diagnostic Keymap
----@field supress_formatter Keymap
-
 ---@class CommentKeymaps
 ---@field generate_annotation Keymap
 ---@field toggle_comment_line Keymap
@@ -84,6 +78,10 @@
 ---@field open_all_folds Keymap
 ---@field close_all_folds Keymap
 
+---@class FileExplorationKeymaps
+---@field show_top_bar_keys Keymap
+---@field toggle_file_explorer Keymap
+
 ---@class Keymaps
 ---@field text_changing TextChangingKeymaps
 ---@field other OtherKeymaps
@@ -95,7 +93,7 @@
 ---@field diagnostic DiagnosticKeymaps
 ---@field comments CommentKeymaps
 ---@field fold FoldKeymaps
----@field rules RuleKeymaps
+---@field file_exploration FileExplorationKeymaps
 local Keymaps = {}
 Keymaps.__index = Keymaps
 
