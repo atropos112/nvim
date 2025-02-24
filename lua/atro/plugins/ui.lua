@@ -91,7 +91,10 @@ return {
 					filter = {
 						event = "msg_show",
 						kind = "",
-						find = "written",
+						any = {
+							{ find = "Agent service not initialized" }, -- Copilot complains.
+							{ find = "written" },
+						},
 					},
 					opts = { skip = true },
 				},
