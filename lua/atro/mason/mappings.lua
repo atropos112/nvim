@@ -309,6 +309,7 @@ M.to_bin = function(name)
 		["ruff_organize_imports"] = "ruff",
 		["golangcilint"] = "golangci-lint",
 		["nil_ls"] = "nil",
+		["rust_analyzer"] = "rust-analyzer",
 	}
 
 	return exceptions[name] or name

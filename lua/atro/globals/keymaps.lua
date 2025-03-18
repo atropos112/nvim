@@ -20,8 +20,6 @@ return require("atro.types.keymaps"):new({
 		lsp_code_actions = { "<leader>ca", "See available code actions", "nv" },
 		lsp_buffer_diagnostics = { "<leader>D", "Show buffer diagnostics", "nv" },
 		lsp_line_diagnostics = { "<leader>d", "Show line diagnostics", "nv" },
-		lsp_prev_diagnostic = { "[d", "Go to previous diagnostic", "nv" },
-		lsp_next_diagnostic = { "]d", "Go to next diagnostic", "nv" },
 		lsp_hover = { "K", "Show documentation for what is under cursor", "nv" },
 	},
 	copilot = {

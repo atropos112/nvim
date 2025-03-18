@@ -19,8 +19,6 @@ M.on_attach = function(client, bufnr)
 		{ keys.lsp_code_actions, require("actions-preview").code_actions },
 		{ keys.lsp_buffer_diagnostics, "<cmd>Telescope diagnostics bufnr=0<CR>" },
 		{ keys.lsp_line_diagnostics, vim.diagnostic.open_float },
-		{ keys.lsp_prev_diagnostic, vim.diagnostic.goto_prev },
-		{ keys.lsp_next_diagnostic, vim.diagnostic.goto_next },
 		{ keys.lsp_hover, vim.lsp.buf.hover },
 	}, { noremap = true, silent = true, buffer = bufnr })
 end

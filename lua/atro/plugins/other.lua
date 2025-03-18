@@ -2,6 +2,10 @@ local set = require("atro.utils").keyset
 ---@type LazySpec[]
 local plugins = {
 	{
+		"stevearc/profile.nvim",
+		lazy = true,
+	},
+	{
 		"LunarVim/bigfile.nvim",
 		event = { "BufRead", "BufNewFile" },
 		opts = {
