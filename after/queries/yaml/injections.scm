@@ -1,6 +1,5 @@
 ; extends
 
-;yaml
 
 (block_mapping_pair 
   key: (flow_node 
@@ -14,41 +13,6 @@
 	 (#set! injection.language "yaml")
 )) 
 
-(block_mapping_pair 
-key: (flow_node 
-  (plain_scalar 
-	(string_scalar))) 
-(comment) @cmt (#eq? @cmt "# yaml")  
-value: (block_node 
-  (block_mapping
-	(block_mapping_pair 
-	  key: (flow_node 
-		(plain_scalar
-		  (string_scalar))) 
-	  value: (block_node 
-		(block_scalar) @injection.content
-		(#offset! @injection.content 0 1 0 -1)
-		(#set! injection.language "yaml")
-))))) 
-
-
-;json
-
-(block_mapping_pair 
-key: (flow_node 
-  (plain_scalar 
-	(string_scalar))) 
-(comment) @cmt (#eq? @cmt "# json")  
-value: (block_node 
-  (block_mapping
-	(block_mapping_pair 
-	  key: (flow_node 
-		(plain_scalar
-		  (string_scalar))) 
-	  value: (block_node 
-		(block_scalar) @injection.content
-		(#set! injection.language "json")
-))))) 
 
 (block_mapping_pair 
   key: (flow_node 
@@ -56,9 +20,32 @@ value: (block_node
 	  (string_scalar))) 
   value: (block_node 
 	(block_scalar 
-	  (comment) @cmt (#eq? @cmt "# json")  
+	  (comment) @cmt (#eq? @cmt "# toml")  
 	  ) @injection.content 
-	 (#set! injection.language "json")
+	 (#offset! @injection.content 0 1 0 -1)
+	 (#set! injection.language "toml")
 )) 
 
+(block_mapping_pair 
+  key: (flow_node 
+	(plain_scalar
+	  (string_scalar))) 
+  value: (block_node 
+	(block_scalar 
+	  (comment) @cmt (#eq? @cmt "# sh")  
+	  ) @injection.content 
+	 (#offset! @injection.content 0 1 0 -1)
+	 (#set! injection.language "bash")
+)) 
 
+(block_mapping_pair 
+  key: (flow_node 
+	(plain_scalar
+	  (string_scalar))) 
+  value: (block_node 
+	(block_scalar 
+	  (comment) @cmt (#eq? @cmt "# bash")  
+	  ) @injection.content 
+	 (#offset! @injection.content 0 1 0 -1)
+	 (#set! injection.language "bash")
+)) 
