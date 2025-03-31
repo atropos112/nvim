@@ -152,8 +152,8 @@ return {
 		end,
 	},
 	{
-		"sphamba/smear-cursor.nvim",
-		event = "VeryLazy",
-		opts = {},
+		"danilamihailov/beacon.nvim",
+		event = { "BufRead", "BufNewFile" },
+		-- lazy calls setup() by itself
 	},
 }
