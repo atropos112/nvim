@@ -52,8 +52,9 @@ return {
 			-- Computing sources here rather than later so I can log.
 			local sources = { "snippets", "buffer", "dictionary" }
 
+			-- TODO: This won't work after file is loaded. need to do per file or other way.
 			if sql_filetypes[vim.bo.filetype] ~= nil then
-				sources = vim.list_extend(sources, { "dadbod" })
+				sources = { "dadbod" } -- I dont want anything else there
 			elseif is_dap_buffer() then
 				sources = vim.list_extend(sources, { "dap", "ripgrep", "path" })
 			elseif require("atro.utils").is_git_dir() then
@@ -131,6 +132,7 @@ return {
 				-- elsewhere in your config, without redefining it, due to `opts_extend`
 				sources = {
 					default = sources,
+					per_filetype = { sql = { "dadbod" } },
 
 					providers = {
 						dictionary = {
