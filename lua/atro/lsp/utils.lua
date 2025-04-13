@@ -9,6 +9,7 @@ M.on_attach = function(client, bufnr)
 
 	require("inlay-hints").on_attach(client, bufnr)
 	require("virtualtypes").on_attach()
+	require("lsp_signature").on_attach(client, bufnr)
 
 	KEYMAPS:set_many({
 		{ keys.lsp_references, telescope.lsp_references },

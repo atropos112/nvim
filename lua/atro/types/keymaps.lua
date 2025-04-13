@@ -9,6 +9,10 @@
 ---@class OtherKeymaps
 ---@field show_file_outline Keymap
 
+---@class LLMKeymaps
+---@field accept_suggested_change Keymap
+---@field reject_suggested_change Keymap
+
 ---@class LspOnAttachKeymaps
 ---@field lsp_references Keymap
 ---@field lsp_declaration Keymap
@@ -94,6 +98,7 @@
 ---@field comments CommentKeymaps
 ---@field fold FoldKeymaps
 ---@field file_exploration FileExplorationKeymaps
+---@field llm LLMKeymaps
 local Keymaps = {}
 Keymaps.__index = Keymaps
 

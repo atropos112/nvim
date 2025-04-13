@@ -1,6 +1,6 @@
 
 ---@class Config
----@field talk_to_external boolean Should this nvim instance talk to external providers like Github Copilot
+---@field use_wakatime  boolean Should this nvim instance talk to external providers like Github Copilot
 ---@field global_linters string[] List of global linters for all languages
 ---@field languages table<string, LanguageConfig> List of language specific configurations
 ---@field logging Logging Log level for the logger
@@ -8,6 +8,7 @@
 ---@field extra_git_linker_callbacks table<string, function> | function | nil List of git linker callbacks, if function it is evaluated at runtime and should return a table of string -> function
 ---@field extra_overseerr_tasks overseer.TemplateDefinition[] | nil List of extra overseer tasks
 ---@field mason_config MasonConfig | nil Mason configuration
+---@field llm_config LLMConfig | nil LLM configuration
 
 ---@class LanguageConfig
 ---@field treesitters string[] | nil List of treesitters for this language
@@ -32,3 +33,7 @@
 ---@field pkg_name string Name of the package to install as a dependency of neotest
 ---@field adapter_name string Name of the adapter to use, its what is added to require("neotest").adapters
 ---@field config table<string, any> | nil Configuration for the test adapter
+
+---@class LLMConfig
+---@field kind string Type of the LLM adapter (ollama, openai, etc)
+---@field adapter CodeCompanion.Adapter Adapter configuration

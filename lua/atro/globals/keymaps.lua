@@ -1,5 +1,9 @@
 ---@type Keymaps
 return require("atro.types.keymaps"):new({
+	llm = {
+		accept_suggested_change = { "ga", "Accept suggested change", "n" },
+		reject_suggested_change = { "gr", "Reject suggested change", "n" },
+	},
 	comments = {
 		generate_annotation = { "<leader>co", "Generate annotation", "nv" },
 		-- Below keymaps are a bit "limited" in selection due to how "numToStr/Comment.nvim" works.

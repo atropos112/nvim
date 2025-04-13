@@ -4,8 +4,30 @@ return {
 		consol_log_level = "ERROR",
 		file_log_level = "DEBUG",
 	},
+	llm_config = {
+		kind = "ollama",
+		adapter = {
+			schema = {
+				model = {
+					default = "qwen2.5-coder:14b",
+				},
+				num_ctx = {
+					default = 16384,
+				},
+				num_predict = {
+					default = -1,
+				},
+			},
+			env = {
+				url = "http://ollama:11434",
+			},
+			parameters = {
+				sync = true,
+			},
+		},
+	},
 	log_level = "DEBUG",
-	talk_to_external = true,
+	use_wakatime = true,
 	global_linters = { "codespell" },
 	languages = {
 		csv = {},
@@ -96,7 +118,7 @@ return {
 							plugins = {
 								pycodestyle = {
 									ignore = {},
-									maxLineLength = 120,
+									maxLineLength = 180,
 								},
 								autopep8 = {
 									enabled = false,

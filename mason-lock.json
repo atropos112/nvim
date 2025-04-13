@@ -1,4 +1,5 @@
 {
+  "basedpyright": "1.28.4",
   "bash-debug-adapter": "untagged-438733f35feb8659d939",
   "bash-language-server": "5.4.3",
   "buf": "v1.51.0",
@@ -38,6 +39,5 @@
   "taplo": "0.9.3",
   "templ": "v0.3.857",
   "yamlfix": "1.17.0",
-  "yamlfmt": "v0.16.0",
-
+  "yamlfmt": "v0.16.0"
 }

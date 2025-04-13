@@ -25,6 +25,7 @@ if CONFIG.languages["lua"] then
 					"Comment.nvim",
 					"dropbar.nvim",
 					"rainbow-delimiters.nvim",
+					"olimorris/codecompanion.nvim",
 				},
 				enabled = function()
 					return true

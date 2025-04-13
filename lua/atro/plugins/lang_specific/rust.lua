@@ -3,7 +3,7 @@ if CONFIG.languages["rust"] then
 	return {
 		{
 			"mrcjkb/rustaceanvim",
-			version = "^5",
+			version = "^6",
 			event = { "VeryLazy" }, -- This is when it will really kick-in
 			lazy = true, -- Github page says its already lazy loaded and can set lazy to false, but its lazy loaded at startup not for BufRead which is what I wanted
 			ft = { "rust" },

@@ -132,7 +132,10 @@ return {
 				-- elsewhere in your config, without redefining it, due to `opts_extend`
 				sources = {
 					default = sources,
-					per_filetype = { sql = { "dadbod" } },
+					per_filetype = {
+						sql = { "dadbod" },
+						codecompanion = { "codecompanion" },
+					},
 
 					providers = {
 						dictionary = {

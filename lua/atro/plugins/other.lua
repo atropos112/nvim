@@ -313,8 +313,7 @@ local plugins = {
 	},
 }
 
--- INFO: If user wants to talk to external services
-if CONFIG.talk_to_external == true then
+if CONFIG.use_wakatime == true then
 	---@type LazySpec
 	local wakatime_plugin = {
 		"wakatime/vim-wakatime",

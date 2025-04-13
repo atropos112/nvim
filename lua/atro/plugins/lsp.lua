@@ -4,6 +4,7 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPost", "BufNewFile" }, -- Can't be VeryLazy (doesn't work for some reason)
 		dependencies = {
+			"ray-x/lsp_signature.nvim",
 			"williamboman/mason.nvim",
 			"jubnzv/virtual-types.nvim",
 			"b0o/schemastore.nvim",
@@ -31,15 +32,6 @@ return {
 					log:with({ language = lang }):debug("No lsps found for language")
 				end
 			end
-		end,
-	},
-
-	-- Shows where you are in the file LSP wise (which class/function etc)
-	{
-		"ray-x/lsp_signature.nvim",
-		event = "LspAttach",
-		config = function(_, opts)
-			require("lsp_signature").setup(opts)
 		end,
 	},
 
