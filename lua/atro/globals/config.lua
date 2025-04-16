@@ -117,6 +117,7 @@ return {
 						pylsp = {
 							plugins = {
 								pycodestyle = {
+									enabled = false,
 									ignore = {},
 									maxLineLength = 180,
 								},

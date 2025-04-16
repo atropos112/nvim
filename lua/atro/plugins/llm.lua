@@ -1,3 +1,7 @@
+if not CONFIG.llm_config then
+	return {}
+end
+
 return {
 	{
 		"olimorris/codecompanion.nvim",
