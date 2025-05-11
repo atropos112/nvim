@@ -22,6 +22,9 @@ M.ensure_installed = function(ensure_installed)
 	if #to_install == 0 then
 		return
 	end
+	LOGGER:info("Installing the following packages: ", {
+		packages = vim.inspect(to_install),
+	})
 
 	-- WARN: This expects the mason-registry to be installed and available
 	local registry = require("mason-registry")
@@ -32,6 +35,9 @@ M.ensure_installed = function(ensure_installed)
 			local pkg = registry.get_package(mapper.to_mason(pkg_name))
 
 			if not pkg:is_installed() then
+				LOGGER:debug("Installing package: ", {
+					pkg_name = pkg_name,
+				})
 				pkg:install()
 			end
 		end
@@ -68,6 +74,8 @@ M.ensure_packages_are_installed = function()
 	end
 
 	packages = deduplicate(packages)
+
+	LOGGER:debug("Ensuring the following packages are installed: ", { packages = vim.inspect(packages) })
 
 	M.ensure_installed(packages)
 end

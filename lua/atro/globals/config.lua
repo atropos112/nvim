@@ -38,6 +38,15 @@ return {
 			linters = { "sqlfluff" },
 			formatters = { sqlfluff = {} },
 		},
+		ocaml = {
+			lsps = {
+				ocamllsp = {},
+			},
+			formatters = {
+				ocamlformat = {},
+			},
+			dap_package = "ocamlearlybird",
+		},
 		markdown = {
 			treesitters = { "markdown", "markdown_inline" },
 			formatters = {
@@ -241,10 +250,8 @@ return {
 			-- INFO: The plugin olexsmir/gopher.nvim provides another test adapter for ginkgo
 			-- So here we only need to provide the adapter for go test.
 			test_adapter = {
-				-- pkg_name = "nvim-neotest/neotest-go",
-				-- adapter_name = "neotest-go",
-				pkg_name = "nvim-contrib/nvim-ginkgo",
-				adapter_name = "nvim-ginkgo",
+				pkg_name = "nvim-neotest/neotest-go",
+				adapter_name = "neotest-go",
 			},
 			formatters = { gofumpt = {}, goimports = {} },
 			dap_package = "dlv",
@@ -284,15 +291,15 @@ return {
 								parameterNames = true,
 								rangeVariableTypes = true,
 							},
-							buildFlags = { "-tags", "integration" },
+							buildFlags = { "-race", "-tags", "integration" },
 							completeUnimported = true,
-							diagnosticsDelay = "500ms",
+							diagnosticsDelay = "100ms",
 							gofumpt = true,
 							matcher = "Fuzzy",
 							semanticTokens = true,
-							staticcheck = true,
+							staticcheck = false, -- Using thorugh golangci-lint
 							symbolMatcher = "fuzzy",
-							usePlaceholders = true,
+							usePlaceholders = false, -- This is super annoying.
 						},
 					},
 				},
@@ -359,36 +366,6 @@ return {
 			},
 			-- Tried yaml lint but it stopped using it as its buggy.
 			lsps = {
-				helm_ls = {
-					-- INFO: Wrapping it as we can't guarantee that the plugin is installed at this point.
-					settings = function()
-						local schemas = require("schemastore").yaml.schemas({
-							extra = require("atro.lsp.yaml_schemas"),
-						})
-						schemas["kubernetes"] = {
-							"deployment.yaml",
-							"service.yaml",
-							"*.k8s.yaml",
-							"*.k8s.yml",
-						}
-
-						return {
-							["helm-ls"] = {
-								yamlls = {
-									enabled = true,
-									showDiagnosticsDirectly = false,
-									path = "yaml-language-server",
-									config = {
-										schemas = schemas,
-										completion = true,
-										hover = true,
-										-- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
-									},
-								},
-							},
-						}
-					end,
-				},
 				yamlls = {
 					-- INFO: Wrapping it as we can't guarantee that the plugin is installed at this point.
 					settings = function()

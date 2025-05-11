@@ -30,6 +30,8 @@ if CONFIG.languages["go"] then
 				)
 			end,
 		},
+		-- Shows the "implemented by: " on each interface to show which structs implement it
+		-- Also shows "implements: " on each struct to show which interfaces it implements
 		{
 			"maxandron/goplements.nvim",
 			ft = "go",

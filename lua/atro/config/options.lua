@@ -2,6 +2,11 @@ local M = {}
 local o = vim.opt
 
 function M.load_defaults()
+	o.expandtab = true
+	o.shiftwidth = 4
+	o.tabstop = 4
+	o.softtabstop = 4
+
 	--  Other
 	o.clipboard = "unnamedplus" -- make copy work with rest of OS
 	o.number = true -- show numbers on the left

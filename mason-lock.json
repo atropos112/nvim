@@ -12,7 +12,6 @@
   "dockerfile-language-server": "0.13.0",
   "fixjson": "1.1.2",
   "goimports": "v0.31.0",
-  "golangci-lint": "v2.0.2",
   "gomodifytags": "v1.17.0",
   "gotests": "v1.6.0",
   "harper-ls": "v0.28.0",

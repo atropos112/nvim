@@ -1,9 +1,38 @@
-if not CONFIG.llm_config then
-	return {}
-end
-
-return {
+---@type LazyPlugin[]
+local llm_plugins = {
+	-- Github Copilot
 	{
+		"zbirenbaum/copilot.lua",
+		event = { "VeryLazy" },
+		config = function()
+			local keys = KEYMAPS.copilot
+
+			require("copilot").setup({
+				panel = { enabled = false },
+
+				suggestion = {
+					auto_trigger = true,
+					keymap = {
+						accept = keys.accept.key, -- default
+					},
+				},
+				filetypes = {
+					yaml = true,
+					help = true,
+					markdown = true,
+					gitcommit = true,
+					gitrebase = true,
+					["."] = true,
+				},
+			})
+
+			KEYMAPS:set(keys.accept_mac, require("copilot.suggestion").accept)
+		end,
+	},
+}
+
+if CONFIG.llm_config then
+	table.insert(llm_plugins, {
 		"olimorris/codecompanion.nvim",
 		event = "VeryLazy",
 		dependencies = {
@@ -65,5 +94,7 @@ return {
 				},
 			})
 		end,
-	},
-}
+	})
+end
+
+return llm_plugins
