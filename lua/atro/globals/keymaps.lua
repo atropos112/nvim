@@ -26,7 +26,7 @@ return require("atro.types.keymaps"):new({
 		lsp_line_diagnostics = { "<leader>d", "Show line diagnostics", "nv" },
 		lsp_hover = { "K", "Show documentation for what is under cursor", "nv" },
 	},
-	copilot = {
+	auto_complete_llm = {
 		accept = { "<A-g>", "Accept Copilot suggestion", "i" },
 		accept_mac = { "©", "Accept Copilot suggestion (Macbook)", "i" },
 	},

@@ -1,3 +1,8 @@
+---@enum AutoCompleteType
+AutoCompleteType = {
+	copilot = "copilot", -- Copilot auto-completion
+	supermaven = "supermaven", -- SuperMaven auto-completion
+}
 
 ---@class Config
 ---@field use_wakatime  boolean Should this nvim instance talk to external providers like Github Copilot
@@ -9,6 +14,7 @@
 ---@field extra_overseerr_tasks overseer.TemplateDefinition[] | nil List of extra overseer tasks
 ---@field mason_config MasonConfig | nil Mason configuration
 ---@field llm_config LLMConfig | nil LLM configuration
+---@field auto_complete_type AutoCompleteType  | nil Type of LLM auto-completion to use e.g. "copilot" or "supermaven"
 
 ---@class LanguageConfig
 ---@field treesitters string[] | nil List of treesitters for this language

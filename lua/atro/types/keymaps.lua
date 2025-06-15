@@ -26,7 +26,7 @@
 ---@field lsp_next_diagnostic Keymap
 ---@field lsp_hover Keymap
 
----@class CopilotKeymaps
+---@class AutoCompleteLLMKeymaps
 ---@field accept Keymap
 ---@field accept_mac Keymap
 
@@ -90,7 +90,7 @@
 ---@field text_changing TextChangingKeymaps
 ---@field other OtherKeymaps
 ---@field lsp_on_attach LspOnAttachKeymaps
----@field copilot CopilotKeymaps
+---@field auto_complete_llm AutoCompleteLLMKeymaps
 ---@field debug DebugKeymaps
 ---@field motion MotionKeymaps
 ---@field buffer BufferKeymaps
