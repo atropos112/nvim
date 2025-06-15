@@ -213,32 +213,6 @@ return {
 			null_ls.setup({ sources = CONFIG.null_ls_sources or {} })
 		end,
 	},
-	-- Github Copilot
-	{
-		"zbirenbaum/copilot.lua",
-		event = { "VeryLazy" },
-		config = function()
-			local keys = KEYMAPS.copilot
-
-			require("copilot").setup({
-				suggestion = {
-					auto_trigger = true,
-					keymap = {
-						accept = keys.accept.key, -- default
-					},
-				},
-				filetypes = {
-					yaml = true,
-					markdown = true,
-					gitcommit = true,
-					gitrebase = true,
-					["."] = true,
-				},
-			})
-
-			KEYMAPS:set(keys.accept_mac, require("copilot.suggestion").accept)
-		end,
-	},
 	{
 		"xzbdmw/colorful-menu.nvim",
 		lazy = true,

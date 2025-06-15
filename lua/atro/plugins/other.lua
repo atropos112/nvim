@@ -2,6 +2,11 @@ local set = require("atro.utils").keyset
 ---@type LazySpec[]
 local plugins = {
 	{
+		"grafana/vim-alloy",
+		event = { "VeryLazy" },
+		ft = { "alloy" },
+	},
+	{
 		"stevearc/profile.nvim",
 		lazy = true,
 	},
