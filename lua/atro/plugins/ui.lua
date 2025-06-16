@@ -94,6 +94,9 @@ return {
 						any = {
 							{ find = "Agent service not initialized" }, -- Copilot complains.
 							{ find = 'Raised at Lsp__Import.Json.Nullable_option.yojson_of_t in file "lsp/src/import.ml"' }, -- ocamllsp
+							{
+								find = 'lsp_signatur handler RPC[Error] code_name = InternalError, message = "uncaught exception" data = {  backtrace = \'Raised at Lsp__Import.Json.Nullable_option.yojson_of_t in file "lsp/src/import.ml", line 219, characters 16-28\nCalled from Lsp__Types.SignatureHelp.yojson_of_t in file "lsp/src/types.ml", lines 49241-49243, characters 13-32\nCalled from Lsp_fiber__Rpc.Make.to_jsonrpc.on_request.to_response in file "lsp-fiber/src/rpc.ml", line 184, characters 37-70\nCalled from Lsp_fiber__Rpc.Make.to_jsonrpc.on_request.f.(fun) in file "lsp-fiber/src/rpc.ml", line 196, characters 38-53\nCalled from Fiber__Scheduler.exec in file "fiber/src/scheduler.ml", line 73, characters 8-11\nRe-raised at Stdune__Exn.raise_with_backtrace in file "otherlibs/stdune/src/exn.ml" (inlined), line 38, characters 27-56\nCalled from Stdune__Exn_with_backtrace.reraise in file "otherlibs/stdune/src/exn_with_backtrace.ml", line 20, characters 33-71\nCalled from Fiber__Scheduler.exec in file "fiber/src/scheduler.ml", line 73, characters 8-11\n\', exn = \'File "lsp/src/import.ml", line 219, characters 16-22: Assertion failed\'}',
+							}, -- ocamllsp
 							{ find = "written" },
 						},
 					},
