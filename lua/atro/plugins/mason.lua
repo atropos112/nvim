@@ -1,3 +1,4 @@
+local mason_install_root_dir = os.getenv("HOME") .. "/.local/share/nvim-mason"
 ---@type LazySpec[]
 return {
 	{
@@ -10,6 +11,8 @@ return {
 			require("mason").setup(
 				---@type MasonSettings
 				{
+					install_root_dir = mason_install_root_dir,
+					max_concurrent_installers = 20,
 					ui = {
 						icons = {
 							package_installed = "✓",
@@ -23,18 +26,6 @@ return {
 					},
 				}
 			)
-		end,
-	},
-	{
-		"zapling/mason-lock.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"williamboman/mason.nvim",
-		},
-		config = function()
-			require("mason-lock").setup({
-				lockfile_path = os.getenv("HOME") .. "/.config/nvim/mason-lock.json",
-			})
 			require("atro.mason").ensure_packages_are_installed()
 		end,
 	},

@@ -89,8 +89,6 @@ return {
 			routes = {
 				{
 					filter = {
-						event = "msg_show",
-						kind = "",
 						any = {
 							{ find = "Agent service not initialized" }, -- Copilot complains.
 							{ find = 'Raised at Lsp__Import.Json.Nullable_option.yojson_of_t in file "lsp/src/import.ml"' }, -- ocamllsp
