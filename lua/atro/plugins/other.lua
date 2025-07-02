@@ -60,19 +60,21 @@ local plugins = {
 	{
 		"voxelprismatic/rabbit.nvim",
 		event = { "VeryLazy" },
-		version = "*", -- newest bleeding edge for them types.
-		opts = {
-			---@type Rabbit.Keymap
-			default_keys = {
-				open = { "<leader>r" },
-				close = { "<Esc>", "q", "<leader>" },
-				select = { "<CR>" },
-				file_add = { "a" },
-				file_del = { "<Del>" },
-				group = { "A" },
-				group_up = { "-" },
-			},
-		},
+		config = function()
+			require("rabbit").setup({
+				---@type Rabbit.Keymap
+				default_keys = {
+					open = { "<leader>r" },
+					close = { "<Esc>", "q", "<leader>" },
+					select = { "<CR>" },
+					file_add = { "a" },
+					file_del = { "<Del>" },
+					group = { "A" },
+					group_up = { "-" },
+				},
+			})
+			vim.keymap.set("n", "<leader>r", "<Cmd>Rabbit trail<Return>", { desc = "Open Rabbit trail window" })
+		end,
 	},
 	-- Tells you what keybindings are available
 	{

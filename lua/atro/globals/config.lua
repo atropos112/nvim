@@ -58,6 +58,17 @@ return {
 			linters = { "markdownlint" },
 			lsps = {
 				marksman = {},
+				-- TOOD: It leaks into other files like .lua
+				-- harper_ls = {
+				-- 	settings = {
+				-- 		["harper-ls"] = {
+				-- 			-- INFO: This is where global dictionary is stored.
+				-- 			userDictPath = "~/.local/share/nvim/harper_dict.txt",
+				-- 			-- INFO: The file specific dictionary is stored in
+				-- 			-- ~/.local/share/harper-ls/file_dictionaries
+				-- 		},
+				-- 	},
+				-- },
 			},
 		},
 		python = {

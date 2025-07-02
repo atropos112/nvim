@@ -1,12 +1,5 @@
 ---@type LazyPlugin[]
 return {
-	-- Section: Plugin overloads h and l to fold/unfold if the cursor is at the start of the line, otherwise it moves the cursor
-	-- as usual. Very natural, and small plugin.
-	{
-		"chrisgrieser/nvim-origami",
-		event = { "VeryLazy" },
-		opts = {}, -- needed even when using default config
-	},
 	-- Section: Adds some nicer folding capabilities, like folding based on treesitter or indent.
 	-- Also offers fold all and unfold all commands.
 	{

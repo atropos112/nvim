@@ -1,5 +1,3 @@
-local dict_path = os.getenv("HOME") .. "/.local/share/nvim/dict.txt"
-
 ---@type LazyPlugin[]
 return {
 	{
@@ -15,22 +13,9 @@ return {
 		},
 	},
 	{
-		"Kaiser-Yang/blink-cmp-dictionary",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		lazy = true,
-		config = function()
-			-- If there is no dictionary get it.
-			if vim.fn.filereadable(dict_path) == 0 or vim.fn.getftime(dict_path) < os.time() - 86400 then
-				vim.fn.system("wget -q -O " .. dict_path .. " https://raw.githubusercontent.com/dwyl/english-words/refs/heads/master/words_alpha.txt")
-				LOGGER:with({ dict_path = dict_path }):info("Downloaded dictionary, a one time operation")
-			end
-		end,
-	},
-	{
 		"saghen/blink.cmp",
 		event = { "VeryLazy" },
+		build = "cargo build --release",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
 			"L3MON4D3/LuaSnip",
@@ -41,6 +26,7 @@ return {
 			"xzbdmw/colorful-menu.nvim",
 			"mikavilpas/blink-ripgrep.nvim",
 			"Kaiser-Yang/blink-cmp-dictionary",
+			"archie-judd/blink-cmp-words",
 		},
 		version = "*",
 		config = function()
@@ -53,6 +39,7 @@ return {
 			local sources = { "snippets", "buffer", "dictionary" }
 
 			-- TODO: This won't work after file is loaded. need to do per file or other way.
+			-- Better of using per-filetype option.
 			if sql_filetypes[vim.bo.filetype] ~= nil then
 				sources = { "dadbod" } -- I dont want anything else there
 			elseif is_dap_buffer() then
@@ -135,17 +122,43 @@ return {
 					per_filetype = {
 						sql = { "dadbod" },
 						codecompanion = { "codecompanion" },
+						text = { "dictionary" },
+						markdown = { "thesaurus" },
 					},
 
 					providers = {
-						dictionary = {
-							module = "blink-cmp-dictionary",
-							name = "Dict",
-							min_keyword_length = 4, -- has to be at least 2
+						-- Use the thesaurus source
+						thesaurus = {
+							name = "blink-cmp-words",
+							module = "blink-cmp-words.thesaurus",
+							-- All available options
 							opts = {
-								dictionary_files = { dict_path },
+								-- A score offset applied to returned items.
+								-- By default the highest score is 0 (item 1 has a score of -1, item 2 of -2 etc..).
+								score_offset = 0,
+
+								-- Default pointers define the lexical relations listed under each definition,
+								-- see Pointer Symbols below.
+								-- Default is as below ("antonyms", "similar to" and "also see").
+								pointer_symbols = { "!", "&", "^" },
 							},
-							score_offset = 50,
+						},
+
+						-- Use the dictionary source
+						dictionary = {
+							name = "blink-cmp-words",
+							module = "blink-cmp-words.dictionary",
+							-- All available options
+							opts = {
+								-- The number of characters required to trigger completion.
+								dictionary_search_threshold = 4,
+
+								-- See above
+								score_offset = 0,
+
+								-- See above
+								pointer_symbols = { "!", "&", "^" },
+							},
 						},
 						ripgrep = {
 							module = "blink-ripgrep",
