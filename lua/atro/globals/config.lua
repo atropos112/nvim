@@ -2,10 +2,10 @@ require("atro.types.config")
 ---@type Config
 return {
 	logging = {
-		consol_log_level = "ERROR",
-		file_log_level = "DEBUG",
+		consol_log_level = "error",
+		file_log_level = "debug",
 	},
-	auto_complete_type = AutoCompleteType.supermaven,
+	auto_complete_type = AutoCompleteType.copilot,
 	llm_config = {
 		kind = "ollama",
 		adapter = {

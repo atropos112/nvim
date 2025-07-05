@@ -15,7 +15,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		event = { "VeryLazy" },
-		build = "cargo build --release",
+		version = "1.*",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
 			"L3MON4D3/LuaSnip",
@@ -28,7 +28,6 @@ return {
 			"Kaiser-Yang/blink-cmp-dictionary",
 			"archie-judd/blink-cmp-words",
 		},
-		version = "*",
 		config = function()
 			local is_dap_buffer = require("cmp_dap").is_dap_buffer
 			local log = LOGGER:with({ phase = "CMP" })
@@ -59,6 +58,10 @@ return {
 				enabled = function()
 					return vim.bo.buftype ~= "prompt" or is_dap_buffer()
 				end,
+				fuzzy = {
+					-- https://cmp.saghen.dev/configuration/fuzzy#rust-vs-lua-implementation
+					implementation = "rust",
+				},
 				snippets = { preset = "luasnip" },
 				keymap = {
 					preset = "super-tab",

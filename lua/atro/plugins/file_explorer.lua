@@ -1,5 +1,15 @@
 ---@type LazySpec[]
 return {
+	{
+		"s1n7ax/nvim-window-picker",
+		name = "window-picker",
+		event = "VeryLazy",
+		version = "2.*",
+		config = function()
+			require("window-picker").setup()
+		end,
+	},
+
 	-- Section: Plugin to show the top bar. Showing file path with respect to root but also where in that file we
 	-- are object wise (i.e. tells you which function you are or which class or which list).
 	{
