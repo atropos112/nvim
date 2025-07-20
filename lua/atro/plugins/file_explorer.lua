@@ -9,6 +9,95 @@ return {
 			require("window-picker").setup()
 		end,
 	},
+
+	-- Section: Plugin to show the top bar. Showing file path with respect to root but also where in that file we
+	-- are object wise (i.e. tells you which function you are or which class or which list).
+	{
+		"Bekaboo/dropbar.nvim",
+		event = { "VeryLazy" },
+		dependencies = {
+			-- optional, but required for fuzzy finder support
+			"nvim-telescope/telescope-fzf-native.nvim",
+		},
+		config = function()
+			local dropbar_api = require("dropbar.api")
+			local dropbar = require("dropbar")
+
+			dropbar.setup(
+				---@class dropbar_configs_t
+				{
+					sources = {
+						path = {
+							max_depth = 8,
+						},
+						treesitter = {
+							-- treesitter is a bit too much for me.
+							max_depth = 0,
+						},
+						lsp = {
+							-- How deep to look into objects inside of a file.
+							-- 3 seems like a lot already so I'm keeping it at 3.
+							max_depth = 3,
+							valid_symbols = {
+								"File",
+								"Module",
+								"Namespace",
+								"Package",
+								"Class",
+								"Method",
+								"Property",
+								"Field",
+								"Constructor",
+								"Enum",
+								"Interface",
+								"Function",
+								"Variable",
+								"Constant",
+								"String",
+								"Number",
+								"Boolean",
+								"Array",
+								"Object",
+								"Keyword",
+								"Null",
+								"EnumMember",
+								"Struct",
+								"Event",
+								"Operator",
+								"TypeParameter",
+							},
+							request = {
+								-- Times to retry a request before giving up
+								ttl_init = 60,
+								interval = 1000, -- in ms
+							},
+						},
+						markdown = {
+							max_depth = 6,
+							parse = {
+								-- Number of lines to update when cursor moves out of the parsed range
+								look_ahead = 200,
+							},
+						},
+						terminal = {
+							---@type string|fun(buf: integer): string
+							icon = function(_)
+								return M.opts.icons.kinds.symbols.Terminal or " "
+							end,
+							---@type string|fun(buf: integer): string
+							name = vim.api.nvim_buf_get_name,
+							---@type boolean
+							---Show the current terminal buffer in the menu
+							show_current = true,
+						},
+					},
+				}
+			)
+			KEYMAPS:set(KEYMAPS.file_exploration.show_top_bar_keys, dropbar_api.pick)
+
+			vim.ui.select = require("dropbar.utils.menu").select
+		end,
+	},
 	-- Section: Plugin that adds support for file operations using built-in LSP support. Adding support for
 	-- workspace/WillRename
 	-- workspace/DidRename
