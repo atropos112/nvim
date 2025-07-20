@@ -1,6 +1,8 @@
 ---
-allowUnfree: true
-
+# yaml-language-server: $schema=https://devenv.sh/devenv.schema.json
 inputs:
   nixpkgs:
-    url: github:nixos/nixpkgs/nixos-unstable
+    url: github:NixOS/nixpkgs/nixos-unstable
+  atrolib:
+    url: github:atropos112/atronixlib
+allowUnfree: true

@@ -35,19 +35,19 @@ return {
 			local sql_filetypes = { mysql = true, sql = true }
 
 			-- Computing sources here rather than later so I can log.
-			local sources = { "snippets", "buffer", "dictionary" }
+			local sources = { "path", "snippets", "buffer", "dictionary" }
 
 			-- TODO: This won't work after file is loaded. need to do per file or other way.
 			-- Better of using per-filetype option.
 			if sql_filetypes[vim.bo.filetype] ~= nil then
 				sources = { "dadbod" } -- I dont want anything else there
 			elseif is_dap_buffer() then
-				sources = vim.list_extend(sources, { "dap", "ripgrep", "path" })
+				sources = vim.list_extend(sources, { "dap", "ripgrep" })
 			elseif require("atro.utils").is_git_dir() then
 				-- ripgrep slows stuff down if the project is big, limiting to git repos only.
-				sources = vim.list_extend(sources, { "lsp", "ripgrep", "path" })
+				sources = vim.list_extend(sources, { "lsp", "ripgrep" })
 			else
-				sources = vim.list_extend(sources, { "lsp", "path" })
+				sources = vim.list_extend(sources, { "lsp" })
 			end
 
 			log:with({ sources = sources }):info("Enabled CMP sources")
@@ -183,6 +183,7 @@ return {
 							-- make lazydev completions top priority (see `:h blink.cmp`)
 							score_offset = 101,
 						},
+
 						dadbod = {
 							name = "Dadbod",
 							module = "vim_dadbod_completion.blink",
@@ -192,6 +193,13 @@ return {
 							name = "dap",
 							module = "blink.compat.source",
 							score_offset = 103,
+							opts = {},
+						},
+
+						path = {
+							name = "Path",
+							module = "blink.cmp.sources.path",
+							score_offset = 104,
 							opts = {},
 						},
 						lsp = {
