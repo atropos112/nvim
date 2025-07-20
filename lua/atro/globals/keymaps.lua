@@ -71,6 +71,5 @@ return require("atro.types.keymaps"):new({
 	},
 	file_exploration = {
 		toggle_file_explorer = { "<leader>-", "Toggle file explorer", "n" },
-		show_top_bar_keys = { "<leader>e", "Show top bar keys", "n" },
 	},
 })

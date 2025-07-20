@@ -83,7 +83,6 @@
 ---@field close_all_folds Keymap
 
 ---@class FileExplorationKeymaps
----@field show_top_bar_keys Keymap
 ---@field toggle_file_explorer Keymap
 
 ---@class Keymaps
