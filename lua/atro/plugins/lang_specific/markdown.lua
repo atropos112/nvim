@@ -2,6 +2,14 @@ if CONFIG.languages["markdown"] then
 	---@type LazyPlugin[]
 	return {
 		{
+			"HakonHarnes/img-clip.nvim",
+			event = { "VeryLazy" },
+			opts = {},
+			keys = {
+				{ "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+			},
+		},
+		{
 			-- INFO: Markdown preview functionality
 			"iamcco/markdown-preview.nvim",
 			cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
