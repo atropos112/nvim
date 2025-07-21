@@ -93,7 +93,10 @@ return {
 					},
 				}
 			)
-			KEYMAPS:set(KEYMAPS.file_exploration.show_top_bar_keys, dropbar_api.pick)
+			KEYMAPS:set(KEYMAPS.file_exploration.show_top_bar_keys, function()
+				dropbar_api.pick()
+				dropbar_api.fuzzy_find_toggle()
+			end)
 
 			vim.ui.select = require("dropbar.utils.menu").select
 		end,
