@@ -14,11 +14,8 @@ return {
 
 			ufo.setup({
 				provider_selector = function(_, _, _)
-					return { "treesitter", "lsp" }
+					return { "treesitter", "indent" }
 				end,
-				close_fold_kinds_for_ft = {
-					default = { "imports" },
-				},
 			})
 			KEYMAPS:set_many({
 				{ keys.open_fold, "zo" }, -- "zo" is default we are "mapping" to
