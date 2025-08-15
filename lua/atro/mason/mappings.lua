@@ -25,7 +25,6 @@ local lsp_mason_mappings = {
 	["biome"] = "biome",
 	["bright_script"] = "brighterscript",
 	["bsl_ls"] = "bsl-language-server",
-	["bufls"] = "buf-language-server",
 	["bzl"] = "bzl",
 	["cairo_ls"] = "cairo-language-server",
 	["clangd"] = "clangd",
@@ -299,6 +298,14 @@ end
 ---@return string
 M.to_bin = function(name)
 	local exceptions = {
+		["dockerls"] = "docker-langserver",
+		["buf_ls"] = "buf",
+		["buf_lint"] = "buf",
+		["dockerfile-language-server"] = "docker-langserver",
+		["bashls"] = "bash-language-server",
+		["omnisharp"] = "OmniSharp",
+		["python-lsp-server"] = "pylsp",
+		["jsonnet_ls"] = "jsonnet-language-server",
 		["docker_compose_language_service"] = "docker-compose-langserver",
 		["lua_ls"] = "lua-language-server",
 		["jsonls"] = "vscode-json-language-server",

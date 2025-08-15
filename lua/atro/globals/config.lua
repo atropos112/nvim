@@ -203,7 +203,6 @@ return {
 				bashls = {},
 			},
 			formatters = { shfmt = {}, shellharden = {} },
-			dap_package = "bash-debug-adapter",
 			dap_adapters = {
 				bashdb = {
 					type = "executable",
@@ -266,7 +265,7 @@ return {
 				pkg_name = "nvim-neotest/neotest-go",
 				adapter_name = "neotest-go",
 			},
-			formatters = { gofumpt = {}, goimports = {} },
+			formatters = { gofumpt = {} },
 			dap_package = "dlv",
 			linters = { "golangcilint" },
 			lsps = {
@@ -316,11 +315,6 @@ return {
 						},
 					},
 				},
-			},
-		},
-		templ = {
-			lsps = {
-				templ = {},
 			},
 		},
 		lua = {
