@@ -43,7 +43,6 @@ if CONFIG.languages["python"] then
 		{
 			"linux-cultist/venv-selector.nvim",
 			ft = "python",
-			branch = "regexp",
 			event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
 			dependencies = {
 				"neovim/nvim-lspconfig",

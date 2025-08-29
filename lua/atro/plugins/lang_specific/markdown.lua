@@ -4,9 +4,28 @@ if CONFIG.languages["markdown"] then
 		{
 			"HakonHarnes/img-clip.nvim",
 			event = { "VeryLazy" },
-			opts = {},
+			opts = {
+				default = {
+					-- file and directory options
+					dir_path = "images",
+					relative_to_current_file = true,
+				},
+				filetypes = {
+					markdown = {
+						url_encode_path = true,
+						template = [[
+![$LABEL]($FILE_PATH){loading=lazy width=auto height=auto}
+/// caption
+Picture taken from [$CURSOR]()
+///
+						]],
+
+						download_images = false,
+					},
+				},
+			},
 			keys = {
-				{ "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+				{ "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
 			},
 		},
 		{

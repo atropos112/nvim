@@ -134,17 +134,7 @@ return {
 						thesaurus = {
 							name = "blink-cmp-words",
 							module = "blink-cmp-words.thesaurus",
-							-- All available options
-							opts = {
-								-- A score offset applied to returned items.
-								-- By default the highest score is 0 (item 1 has a score of -1, item 2 of -2 etc..).
-								score_offset = 0,
-
-								-- Default pointers define the lexical relations listed under each definition,
-								-- see Pointer Symbols below.
-								-- Default is as below ("antonyms", "similar to" and "also see").
-								pointer_symbols = { "!", "&", "^" },
-							},
+							opts = {},
 						},
 
 						-- Use the dictionary source
@@ -155,12 +145,6 @@ return {
 							opts = {
 								-- The number of characters required to trigger completion.
 								dictionary_search_threshold = 4,
-
-								-- See above
-								score_offset = 0,
-
-								-- See above
-								pointer_symbols = { "!", "&", "^" },
 							},
 						},
 						ripgrep = {
@@ -170,10 +154,13 @@ return {
 							---@type blink-ripgrep.Options
 							opts = {
 								--  The number of lines to show around each match in the preview (documentation) window. For example, 5 means to show 5 lines before, then the match, and another 5 lines after the match.
-								context_size = 50,
-
-								-- The maximum file size that ripgrep should include in its search. Examples: "1024" (bytes by default), "200K", "1M", "1G"
-								max_filesize = "1M",
+								backend = {
+									context_size = 50,
+									ripgrep = {
+										-- The maximum file size that ripgrep should include in its search. Examples: "1024" (bytes by default), "200K", "1M", "1G"
+										max_filesize = "1M",
+									},
+								},
 							},
 							score_offset = 51,
 						},
@@ -243,3 +230,6 @@ return {
 		opts = {},
 	},
 }
+
+-- context_size = "backend.context_size",
+-- max_filesize = "backend.ripgrep.max_filesize"

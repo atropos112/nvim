@@ -109,16 +109,18 @@ if CONFIG.llm_config then
 					},
 				},
 				adapters = {
-					opts = {
-						show_defaults = false,
-					},
-					copilot = function()
-						return require("codecompanion.adapters").extend("copilot")
-					end,
+					http = {
+						opts = {
+							show_defaults = false,
+						},
+						copilot = function()
+							return require("codecompanion.adapters").extend("copilot")
+						end,
 
-					custom = function()
-						return require("codecompanion.adapters").extend(CONFIG.llm_config.kind, adapter)
-					end,
+						custom = function()
+							return require("codecompanion.adapters").extend(CONFIG.llm_config.kind, adapter)
+						end,
+					},
 				},
 			})
 		end,
