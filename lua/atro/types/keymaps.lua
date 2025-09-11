@@ -34,6 +34,15 @@
 ---@field toggle_breakpoint Keymap
 ---@field set_conditional_breakpoint Keymap
 ---@field clear_all_breakpoints Keymap
+---@field start Keymap
+---@field step_into Keymap
+---@field step_over Keymap
+---@field continue Keymap
+---@field terminate Keymap
+---@field step_into_alt Keymap
+---@field step_over_alt Keymap
+---@field continue_alt Keymap
+---@field terminate_alt Keymap
 
 ---@class FlashKeymaps
 ---@field flash_jump Keymap

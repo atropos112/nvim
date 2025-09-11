@@ -23,7 +23,7 @@ return require("atro.types.keymaps"):new({
 		lsp_type_definitions = { "gt", "Show LSP type definitions", "nv" },
 		lsp_code_actions = { "<leader>ca", "See available code actions", "nv" },
 		lsp_buffer_diagnostics = { "<leader>D", "Show buffer diagnostics", "nv" },
-		lsp_line_diagnostics = { "<leader>d", "Show line diagnostics", "nv" },
+		lsp_line_diagnostics = { "<leader>tc", "Show line diagnostics", "nv" },
 		lsp_hover = { "K", "Show documentation for what is under cursor", "nv" },
 	},
 	auto_complete_llm = {
@@ -34,7 +34,18 @@ return require("atro.types.keymaps"):new({
 	debug = {
 		toggle_breakpoint = { "<leader>bb", "Toggle breakpoint", "n" },
 		set_conditional_breakpoint = { "<leader>bc", "Set conditional breakpoint", "n" },
+		clear_all_breakpoints = { "<leader>ba", "Clear all breakpoints", "n" },
+		start = { "<leader>ds", "Start debugging", "n" },
+		terminate = { "<leader>dt", "Stop debugging", "n" },
+		continue = { "<leader>dc", "Continue", "n" },
+		step_into = { "<leader>di", "Step into", "n" },
+		step_over = { "<leader>do", "Step over", "n" },
+		terminate_alt = { "F5", "Stop debugging", "nvi" },
+		continue_alt = { "F9", "Continue", "nvi" },
+		step_into_alt = { "F10", "Step into", "nvi" },
+		step_over_alt = { "F11", "Step over", "nvi" },
 	},
+
 	motion = {
 		flash_jump = { "s", "Flash jump to next char iteration.", "n" },
 		flash_treesitter = { "S", "Flash jump to treesitter points", "n" },

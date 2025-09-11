@@ -14,40 +14,6 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 		},
-		keys = {
-			{
-				"<leader>di",
-				function()
-					require("dap").step_into()
-				end,
-				mode = "n",
-				desc = "Step into",
-			},
-			{
-				"<leader>do",
-				function()
-					require("dap").step_over()
-				end,
-				mode = "n",
-				desc = "Step over",
-			},
-			{
-				"<leader>dc",
-				function()
-					require("dap").continue()
-				end,
-				mode = "n",
-				desc = "Continue",
-			},
-			{
-				"<leader>dt",
-				function()
-					require("dap").terminate()
-				end,
-				mode = "n",
-				desc = "Stop debugging",
-			},
-		},
 		config = function()
 			local dap = require("dap")
 			dap.set_log_level("ERROR")
@@ -71,6 +37,17 @@ return {
 			log:info("Setting up DAP adapters " .. vim.inspect(custom_adapters))
 
 			dap.adapters = vim.tbl_deep_extend("error", dap.adapters, custom_adapters)
+
+			local keys = KEYMAPS.debug
+
+			KEYMAPS:set_many({
+				{ keys.step_into, dap.step_into },
+				{ keys.step_over, dap.step_over },
+				{ keys.continue, dap.continue },
+				{ keys.step_into_alt, dap.step_into },
+				{ keys.step_over_alt, dap.step_over },
+				{ keys.continue_alt, dap.continue },
+			}, { noremap = false, silent = true })
 		end,
 	},
 	{
@@ -82,22 +59,17 @@ return {
 		config = function()
 			local pb = require("persistent-breakpoints")
 			local pb_api = require("persistent-breakpoints.api")
+			local keys = KEYMAPS.debug
 
 			pb.setup({
 				load_breakpoints_event = { "BufReadPost" },
 			})
 
-			local set = vim.keymap.set
-
-			set("n", "<leader>bb", function()
-				pb_api.toggle_breakpoint()
-			end, { desc = "Toggle breakpoint", remap = true })
-			set("n", "<leader>bc", function()
-				pb_api.set_conditional_breakpoint()
-			end, { desc = "Set conditional breakpoint" })
-			set("n", "<leader>ba", function()
-				pb_api.clear_all_breakpoints()
-			end, { desc = "Clear all breakpoints" })
+			KEYMAPS:set_many({
+				{ keys.clear_all_breakpoints, pb_api.clear_all_breakpoints },
+				{ keys.set_conditional_breakpoint, pb_api.set_conditional_breakpoint },
+				{ keys.toggle_breakpoint, pb_api.toggle_breakpoint },
+			}, { noremap = true, silent = true })
 		end,
 	},
 	{
@@ -120,6 +92,8 @@ return {
 		event = "VeryLazy",
 		config = function()
 			local dap, dapui = require("dap"), require("dapui")
+			local keys = KEYMAPS.debug
+
 			-- INFO: To see what config is available do :dapui.setup()
 			dapui.setup({
 				layouts = {
@@ -173,14 +147,29 @@ return {
 				},
 			})
 
-			vim.keymap.set("n", "<leader>ds", function()
-				dapui.open()
-				dap.continue()
-			end, { desc = "Start debugging" })
-			vim.keymap.set("n", "<leader>dt", function()
-				dap.terminate()
-				dapui.close()
-			end, { desc = "Stop debugging" })
+			KEYMAPS:set_many({
+				{
+					keys.start,
+					function()
+						dapui.open()
+						dap.continue()
+					end,
+				},
+				{
+					keys.terminate,
+					function()
+						dap.terminate()
+						dapui.close()
+					end,
+				},
+				{
+					keys.terminate_alt,
+					function()
+						dap.terminate()
+						dapui.close()
+					end,
+				},
+			}, { noremap = false, silent = true })
 
 			dap.listeners.before.attach.dapui_config = function()
 				dapui.open()

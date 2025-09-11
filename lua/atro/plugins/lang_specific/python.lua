@@ -41,35 +41,6 @@ if CONFIG.languages["python"] then
 
 	return {
 		{
-			"linux-cultist/venv-selector.nvim",
-			ft = "python",
-			event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
-			dependencies = {
-				"neovim/nvim-lspconfig",
-				"nvim-telescope/telescope.nvim",
-				"mfussenegger/nvim-dap-python",
-			},
-			config = function()
-				require("venv-selector").setup({
-					settings = {
-						options = {
-							debug = true,
-							require_lsp_activation = false,
-						},
-					},
-					search = CONFIG.languages["python"].other.venv_search or {
-						cwd = true,
-					},
-				})
-			end,
-			keys = {
-				-- Keymap to open VenvSelector to pick a venv.
-				{ "<leader>vs", "<cmd>VenvSelect<cr>" },
-				-- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
-				{ "<leader>vc", "<cmd>VenvSelectCached<cr>" },
-			},
-		},
-		{
 			"mfussenegger/nvim-dap-python",
 			ft = "python",
 			dependencies = {

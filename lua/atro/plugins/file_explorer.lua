@@ -82,7 +82,7 @@ return {
 						terminal = {
 							---@type string|fun(buf: integer): string
 							icon = function(_)
-								return M.opts.icons.kinds.symbols.Terminal or " "
+								return " "
 							end,
 							---@type string|fun(buf: integer): string
 							name = vim.api.nvim_buf_get_name,
