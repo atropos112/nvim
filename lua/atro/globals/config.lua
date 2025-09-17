@@ -360,7 +360,6 @@ return {
 		yaml = {
 			treesitters = { "yaml", "helm" },
 			formatters = {
-				yamlfix = {},
 				yamlfmt = {
 					prepend_args = function(_, _)
 						return {
