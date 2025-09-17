@@ -365,8 +365,9 @@ return {
 					prepend_args = function(_, _)
 						return {
 							"-formatter",
-							-- WARN: This is a custom configuration for yamlfmt. Main concern was it mushing multiline strings into one line. It doesn't do that AS long as there is at MOST one comment line in the multi string. A compromise for sure.
-							"scan_folded_as_literal=true,retain_line_breaks=true,include_document_start=true,drop_merge_tag=true",
+							-- WARN: If you change this you will have to adjust yamlint behaviour somehow as well,
+							-- its quiet messy, ideally leave it as is.
+							"can_folded_as_literal=true,include_document_start=true,drop_merge_tag=true",
 						}
 					end,
 				},
