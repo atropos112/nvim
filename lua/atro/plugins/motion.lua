@@ -1,13 +1,5 @@
 ---@type LazySpec[]
 return {
-	{
-		"sustech-data/wildfire.nvim",
-		event = "VeryLazy",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			require("wildfire").setup()
-		end,
-	},
 	-- Section: Overloads tab to jump out of the brackets when inside of them so that { | } -> { } | or ( | ) -> ( ) |
 	{
 		"abecodes/tabout.nvim",
