@@ -2,6 +2,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+		branch = "main",
 		dependencies = {
 			{ "LiadOz/nvim-dap-repl-highlights", opts = {} }, -- Has to be before ensure_installed is called
 		},
@@ -13,7 +14,7 @@ return {
 				ensure_installed = vim.list_extend(ensure_installed, lang_cfg.treesitters or { lang })
 			end
 
-			require("nvim-treesitter.configs").setup({
+			require("nvim-treesitter").setup({
 				auto_install = true,
 				ignore_install = {},
 				modules = {},

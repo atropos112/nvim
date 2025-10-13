@@ -82,20 +82,7 @@ return {
 			formatters = {
 				ruff_fix = {},
 				ruff_organize_imports = {},
-				ruff_format = {
-
-					args = function(_, _)
-						return {
-							"format",
-							"--force-exclude",
-							"--line-length",
-							"120",
-							"--stdin-filename",
-							"$FILENAME",
-							"-",
-						}
-					end,
-				},
+				ruff_format = {},
 			},
 			dap_package = "debugpy",
 			other = {
@@ -103,21 +90,7 @@ return {
 			},
 			linters = { "ruff" },
 			lsps = {
-				ruff = {
-					on_attach = function(client, _)
-						-- Basedpyright has better code actions than pylsp. And pylsp somehow blocks basedpyright
-						client.server_capabilities.codeActionProvider = false
-						client.server_capabilities.hoverProvider = false -- Making sure basedpyright hover is used as this one sucks.
-					end,
-				},
 				basedpyright = {
-					on_attach = function(client, _)
-						-- Basedpyright does not support these capabilities well.
-						client.server_capabilities.definitionProvider = false
-						client.server_capabilities.typeDefinitionProvider = false
-						client.server_capabilities.implementationProvider = false
-						client.server_capabilities.referencesProvider = false
-					end,
 					settings = {
 						basedpyright = {
 							analysis = {
@@ -125,45 +98,6 @@ return {
 								typeCheckingMode = "standard",
 								useLibraryCodeForTypes = true,
 								autoImportCompletions = true,
-							},
-						},
-					},
-				},
-				pylsp = {
-					on_attach = function(client, _)
-						-- Basedpyright has better code actions than pylsp. And pylsp somehow blocks basedpyright
-						client.server_capabilities.codeActionProvider = false
-						client.server_capabilities.hoverProvider = false -- Making sure basedpyright hover is used as this one sucks.
-					end,
-					settings = {
-						pylsp = {
-							plugins = {
-								pycodestyle = {
-									enabled = false,
-									ignore = {},
-									maxLineLength = 180,
-								},
-								autopep8 = {
-									enabled = false,
-								},
-								flake8 = {
-									enabled = false,
-								},
-								mccabe = {
-									enabled = false,
-								},
-								pyflakes = {
-									enabled = false,
-								},
-								pylint = {
-									enabled = false,
-								},
-								rope_autoimport = {
-									enabled = false,
-								},
-								yapf = {
-									enabled = false,
-								},
 							},
 						},
 					},
@@ -259,13 +193,18 @@ return {
 		},
 		go = {
 			treesitters = { "go", "gomod", "gowork", "gosum" },
-			-- INFO: The plugin olexsmir/gopher.nvim provides another test adapter for ginkgo
-			-- So here we only need to provide the adapter for go test.
 			test_adapter = {
-				pkg_name = "nvim-neotest/neotest-go",
-				adapter_name = "neotest-go",
+				pkg_name = "fredrikaverpil/neotest-golang",
+				adapter_name = "neotest-golang",
+				config = {
+					go_test_args = {
+						"-race",
+						"-tags",
+						"assert",
+					},
+				},
 			},
-			formatters = { gofumpt = {} },
+			formatters = { ["golangci-lint"] = {} },
 			dap_package = "dlv",
 			linters = { "golangcilint" },
 			lsps = {
