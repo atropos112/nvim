@@ -202,6 +202,7 @@ return {
 						"-tags",
 						"assert",
 					},
+					runner = "gotestsum",
 				},
 			},
 			formatters = { ["golangci-lint"] = {} },

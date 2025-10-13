@@ -14,6 +14,7 @@ if CONFIG.languages["go"] then
 			config = function()
 				require("atro.mason").ensure_installed({
 					"gomodifytags",
+					"gotestsum", -- For neotest-golang
 					"gotests",
 					"impl",
 					"iferr",
