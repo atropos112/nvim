@@ -37,4 +37,14 @@ return {
 			require("catppuccin").setup(opts)
 		end,
 	},
+	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	opts = {},
+	-- 	-- Loads by default
+	-- 	init = function()
+	-- 		vim.cmd.colorscheme("tokyonight-storm")
+	-- 	end,
+	-- },
 }

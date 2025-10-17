@@ -29,7 +29,7 @@ local get_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
-	-- nvim-ufo adds these capabilities
+	--nvim-ufo adds these capabilities
 	capabilities.textDocument.foldingRange = {
 		dynamicRegistration = false,
 		lineFoldingOnly = true,
@@ -43,9 +43,7 @@ end
 
 ---@param server_name string
 ---@param lsp_config LspConfig
----@param lsp_module any -- The pre-loaded require("lspconfig")
----@return any -- The pre-loaded require("lspconfig") with new server setup
-M.setup_lsp = function(server_name, lsp_config, lsp_module)
+M.setup_lsp = function(server_name, lsp_config)
 	local final_cfg = {}
 
 	if lsp_config.skip_on_attach and lsp_config.on_attach then
@@ -75,9 +73,9 @@ M.setup_lsp = function(server_name, lsp_config, lsp_module)
 		end
 	end
 
-	lsp_module[server_name].setup(final_cfg)
-
-	return lsp_module
+	vim.lsp.config(server_name, final_cfg)
+	vim.lsp.enable(server_name, false)
+	-- vim.lsp.enable(server_name, true)
 end
 
 return M

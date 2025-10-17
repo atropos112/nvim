@@ -2,7 +2,8 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost", "BufNewFile" }, -- Can't be VeryLazy (doesn't work for some reason)
+		event = { "BufReadPre", "BufNewFile" }, -- Can't be VeryLazy (doesn't work for some reason)
+		-- Must be BufReadPre and not BufReadPost as otherwise LSP and treesitter won't load for first file.
 		dependencies = {
 			"ray-x/lsp_signature.nvim",
 			"williamboman/mason.nvim",
@@ -14,10 +15,10 @@ return {
 			"antosha417/nvim-lsp-file-operations",
 		},
 		config = function()
-			local lsp = require("lspconfig")
 			local setup_lsp = require("atro.lsp.utils").setup_lsp
 
 			local log = LOGGER:with({ phase = "LSP" })
+			local server_names = {}
 			log:info("Starting LSP setup")
 			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.lsps then
@@ -26,12 +27,15 @@ return {
 						log:debug("Setting up LSP: " .. server_name)
 						log:trace(lsp_config)
 
-						lsp = setup_lsp(server_name, lsp_config, lsp)
+						setup_lsp(server_name, lsp_config)
+						table.insert(server_names, server_name)
 					end
 				else
 					log:with({ language = lang }):debug("No lsps found for language")
 				end
 			end
+
+			vim.lsp.enable(server_names, true)
 		end,
 	},
 

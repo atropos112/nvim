@@ -230,6 +230,3 @@ return {
 		opts = {},
 	},
 }
-
--- context_size = "backend.context_size",
--- max_filesize = "backend.ripgrep.max_filesize"
