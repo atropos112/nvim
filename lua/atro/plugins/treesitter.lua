@@ -39,6 +39,7 @@ return {
 				pattern = ensure_installed,
 				callback = function()
 					vim.treesitter.start() -- Highlighting on etc.
+					vim.bo.indentexpr = "" -- Disable treesitter indentation
 				end,
 			})
 		end,

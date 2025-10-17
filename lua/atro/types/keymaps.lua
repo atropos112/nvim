@@ -30,19 +30,38 @@
 ---@field accept Keymap
 ---@field accept_mac Keymap
 
+---@class TestingKeymaps
+---@field attach Keymap
+---@field run_file Keymap
+---@field run_all_files Keymap
+---@field run_suite Keymap
+---@field run_nearest Keymap
+---@field run_last Keymap
+---@field toggle_summary Keymap
+---@field open_output Keymap
+---@field toggle_output_panel Keymap
+---@field stop Keymap
+---@field debug_nearest Keymap
+---@field debug_file Keymap
+
 ---@class DebugKeymaps
 ---@field toggle_breakpoint Keymap
----@field set_conditional_breakpoint Keymap
----@field clear_all_breakpoints Keymap
----@field start Keymap
----@field step_into Keymap
----@field step_over Keymap
+---@field set_breakpoint Keymap
 ---@field continue Keymap
+---@field run_to_cursor Keymap
+---@field goto_line Keymap
+---@field step_over Keymap
+---@field step_out Keymap
+---@field step_into Keymap
+---@field down Keymap
+---@field up Keymap
+---@field run_last Keymap
+---@field pause Keymap
+---@field repl_toggle Keymap
+---@field clear_breakpoints Keymap
+---@field session Keymap
 ---@field terminate Keymap
----@field step_into_alt Keymap
----@field step_over_alt Keymap
----@field continue_alt Keymap
----@field terminate_alt Keymap
+---@field hover_widgets Keymap
 
 ---@class FlashKeymaps
 ---@field flash_jump Keymap
@@ -101,6 +120,7 @@
 ---@field lsp_on_attach LspOnAttachKeymaps
 ---@field auto_complete_llm AutoCompleteLLMKeymaps
 ---@field debug DebugKeymaps
+---@field testing TestingKeymaps
 ---@field motion MotionKeymaps
 ---@field buffer BufferKeymaps
 ---@field diagnostic DiagnosticKeymaps

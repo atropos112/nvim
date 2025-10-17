@@ -14,8 +14,10 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 		},
+		event = "VeryLazy",
 		config = function()
 			local dap = require("dap")
+			local dap_ui_widgets = require("dap.ui.widgets")
 			dap.set_log_level("ERROR")
 			local log = LOGGER:with({ phase = "DAP" })
 			local custom_adapters = {}
@@ -41,12 +43,18 @@ return {
 			local keys = KEYMAPS.debug
 
 			KEYMAPS:set_many({
-				{ keys.step_into, dap.step_into },
+				{ keys.run_to_cursor, dap.run_to_cursor },
+				{ keys.goto_line, dap.goto_ },
 				{ keys.step_over, dap.step_over },
-				{ keys.continue, dap.continue },
-				{ keys.step_into_alt, dap.step_into },
-				{ keys.step_over_alt, dap.step_over },
-				{ keys.continue_alt, dap.continue },
+				{ keys.step_out, dap.step_out },
+				{ keys.step_into, dap.step_into },
+				{ keys.down, dap.down },
+				{ keys.up, dap.up },
+				{ keys.run_last, dap.run_last },
+				{ keys.pause, dap.pause },
+				{ keys.repl_toggle, dap.repl.toggle },
+				{ keys.session, dap.session },
+				{ keys.hover_widgets, dap_ui_widgets.hover },
 			}, { noremap = false, silent = true })
 		end,
 	},
@@ -66,9 +74,9 @@ return {
 			})
 
 			KEYMAPS:set_many({
-				{ keys.clear_all_breakpoints, pb_api.clear_all_breakpoints },
-				{ keys.set_conditional_breakpoint, pb_api.set_conditional_breakpoint },
 				{ keys.toggle_breakpoint, pb_api.toggle_breakpoint },
+				{ keys.clear_breakpoints, pb_api.clear_all_breakpoints },
+				{ keys.set_breakpoint, pb_api.set_conditional_breakpoint },
 			}, { noremap = true, silent = true })
 		end,
 	},
@@ -149,7 +157,8 @@ return {
 
 			KEYMAPS:set_many({
 				{
-					keys.start,
+
+					keys.continue,
 					function()
 						dapui.open()
 						dap.continue()
@@ -157,13 +166,6 @@ return {
 				},
 				{
 					keys.terminate,
-					function()
-						dap.terminate()
-						dapui.close()
-					end,
-				},
-				{
-					keys.terminate_alt,
 					function()
 						dap.terminate()
 						dapui.close()

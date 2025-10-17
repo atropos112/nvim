@@ -28,52 +28,9 @@ return {
 		"nvim-neotest/neotest",
 		event = "VeryLazy",
 		dependencies = neotest_deps(),
-		keys = {
-			{
-				"<leader>tr",
-				function()
-					require("neotest").run.run()
-				end,
-				desc = "Run tests",
-			},
-			{
-				"<leader>td",
-				function()
-					require("neotest").run.run({ strategy = "dap" })
-				end,
-				desc = "Run tests with DAP",
-			},
-			{
-				"<leader>ts",
-				function()
-					require("neotest").run.stop()
-				end,
-				desc = "Stop tests",
-			},
-			{
-				"<leader>tw",
-				function()
-					require("neotest").watch.toggle(vim.fn.expand("%"))
-				end,
-				desc = "Toggle watch",
-			},
-			{
-				"<leader>tt",
-				function()
-					require("neotest").summary.toggle()
-				end,
-				desc = "Toggle summary",
-			},
-			{
-				"<leader>to",
-				function()
-					require("neotest").output_panel.toggle()
-				end,
-				desc = "Toggle output panel",
-			},
-		},
 		config = function()
 			local neotest_ns = vim.api.nvim_create_namespace("neotest")
+			local nt = require("neotest")
 			vim.diagnostic.config({
 				virtual_text = {
 					format = function(diagnostic)
@@ -96,12 +53,59 @@ return {
 			end
 
 			-- INFO: This can't be set in opts because the dependencies are not loaded yet at that time.
-			require("neotest").setup({
+			nt.setup({
 
 				-- For all runners go to https://github.com/nvim-neotest/neotest#supported-runners
 				-- adapters = require("atro.utils.config").RequireAllTestingAdapters(),
 				adapters = adapters,
 			})
+
+			local keys = KEYMAPS.testing
+
+			KEYMAPS:set_many({
+				{ keys.attach, nt.run.attach },
+				{
+					keys.run_file,
+					function()
+						nt.run.run(vim.fn.expand("%"))
+					end,
+				},
+				{
+					keys.run_all_files,
+					function()
+						nt.run.run(vim.uv.cwd())
+					end,
+				},
+				{
+					keys.run_suite,
+					function()
+						nt.run.run({ suite = true })
+					end,
+				},
+				{ keys.run_nearest, nt.run.run },
+				{ keys.run_last, nt.run.run_last },
+				{ keys.toggle_summary, nt.summary.toggle },
+				{
+					keys.open_output,
+					function()
+						nt.output.open({ enter = true, auto_close = true })
+					end,
+				},
+				{ keys.toggle_output_panel, nt.output_panel.toggle },
+				{ keys.stop, nt.run.stop },
+				{
+					keys.debug_nearest,
+					function()
+						nt.run.run({ strategy = "dap" })
+					end,
+				},
+				{
+					keys.debug_file,
+					function()
+						nt.run.run({ vim.fn.expand("%"), strategy = "dap" })
+					end,
+				},
+			}, { noremap = false, silent = true })
 		end,
 	},
 }
