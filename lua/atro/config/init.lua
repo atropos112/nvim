@@ -3,16 +3,10 @@ local M = {}
 ---@return nil
 function M:init_default()
 	LOGGER:info("Loading default configuration")
-	require("atro.types")
 
 	require("atro.utils.logs"):set_levels({ CONFIG.logging.consol_log_level, CONFIG.logging.file_log_level })
 	LOGGER:trace(CONFIG)
 
-	-- INFO: Deprecated, use CONFIG.use_wakatime instead.
-	-- This can be removed in 2 months time (2025-06-13)
-	if CONFIG.talk_to_external ~= nil then
-		LOGGER:error("CONFIG.talk_to_external is deprecated, use CONFIG.use_wakatime instead.")
-	end
 	LOGGER:trace(KEYMAPS)
 
 	require("atro.config.globals").load_defaults()

@@ -1,61 +1,34 @@
 ---@type LazyPlugin[]
 local llm_plugins = {}
 
---- Depending if we want to use copilot or supermaven for auto-completion
---- we need to install the correct plugin.
-if CONFIG.auto_complete_type then
-	LOGGER:info("Auto-completion type set", { type = CONFIG.auto_complete_type })
-	if CONFIG.auto_complete_type == AutoCompleteType.copilot then
-		-- Github Copilot
-		table.insert(
-			llm_plugins,
-			-- Github Copilot
-			{
-				"zbirenbaum/copilot.lua",
-				event = { "VeryLazy" },
-				config = function()
-					local keys = KEYMAPS.auto_complete_llm
-					require("copilot").setup({
-						panel = { enabled = false },
+if CONFIG.copilot_enabled then
+	table.insert(llm_plugins, {
+		"zbirenbaum/copilot.lua",
+		event = { "VeryLazy" },
+		config = function()
+			local keys = KEYMAPS.auto_complete_llm
+			require("copilot").setup({
+				panel = { enabled = false },
 
-						suggestion = {
-							auto_trigger = true,
-							keymap = {
-								accept = keys.accept.key, -- default
-							},
-						},
-						filetypes = {
-							yaml = true,
-							help = true,
-							markdown = true,
-							gitcommit = true,
-							gitrebase = true,
-							["."] = true,
-						},
-					})
+				suggestion = {
+					auto_trigger = true,
+					keymap = {
+						accept = keys.accept.key, -- default
+					},
+				},
+				filetypes = {
+					yaml = true,
+					help = true,
+					markdown = true,
+					gitcommit = true,
+					gitrebase = true,
+					["."] = true,
+				},
+			})
 
-					KEYMAPS:set(keys.accept_mac, require("copilot.suggestion").accept)
-				end,
-			}
-		)
-	elseif CONFIG.auto_complete_type == AutoCompleteType.supermaven then
-		-- SuperMaven
-		table.insert(
-			llm_plugins,
-			-- SuperMaven
-			{
-				"supermaven-inc/supermaven-nvim",
-				config = function()
-					local keys = KEYMAPS.auto_complete_llm
-					require("supermaven-nvim").setup({
-						keymaps = {
-							accept_suggestion = keys.accept.key, -- default
-						},
-					})
-				end,
-			}
-		)
-	end
+			KEYMAPS:set(keys.accept_mac, require("copilot.suggestion").accept)
+		end,
+	})
 end
 
 if CONFIG.llm_config then

@@ -331,7 +331,7 @@ local plugins = {
 	},
 }
 
-if CONFIG.use_wakatime == true then
+if CONFIG.wakatime_enabled == true then
 	---@type LazySpec
 	local wakatime_plugin = {
 		"wakatime/vim-wakatime",

@@ -1,13 +1,70 @@
-require("atro.types.config")
----@type Config
+---@class LanguageConfig
+---@field treesitters string[] | nil List of treesitters for this language
+---@field linters string[] | nil List of linters for this language
+---@field formatters nil | table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride> List of formatters for this language
+---@field lsps table<string,LspConfig> | nil List of lsps for this language
+---@field test_adapter TestAdapter | nil Test adapter configuration for this language
+---@field dap_package string | nil Dap package for this language
+---@field dap_adapters table<string, dap.Adapter> | nil Dap adapters for this language
+---@field dap_configs dap.Configuration[] | nil Dap configuration for this language
+---@field other table<string, any> | nil Other configuration options
+
+---@class LspConfig
+---@field settings table<string, any> | function | nil Lsp settings
+---@field skip_on_attach boolean | nil Skip adding the on_attach function to the client
+---@field on_attach function | nil On attach function to add to the client on top of the default
+---@field skip_capabilities boolean | nil Skip adding the capabilities to the client
+---@field skip_install boolean | nil Skip installing the lsp even if it is not installed
+---@field on_new_config function | nil Mutation of config after the root dir has been detected
+
+---@class TestAdapter
+---@field pkg_name string Name of the package to install as a dependency of neotest
+---@field adapter_name string Name of the adapter to use, its what is added to require("neotest").adapters
+---@field config table<string, any> | nil Configuration for the test adapter
+
+---@enum LogLevel
+LogLevel = {
+	TRACE = "TRACE",
+	DEBUG = "DEBUG",
+	INFO = "INFO",
+	WARN = "WARN",
+	ERROR = "ERROR",
+}
+
 return {
-	logging = {
-		consol_log_level = "error",
-		file_log_level = "debug",
+	---@type any[] | nil List of null-ls sources
+	null_ls_sources = nil,
+
+	mason_config = {
+		---@type string[] | nil Arguments to pass to pip install
+		pip_install_args = {},
 	},
-	auto_complete_type = AutoCompleteType.copilot,
+
+	---@type overseer.TemplateDefinition[] | nil List of extra overseer tasks
+	extra_overseerr_tasks = {},
+
+	---@type table<string, function> | function | nil List of git linker callbacks, if function it is evaluated at runtime and should return a table of string -> function
+	extra_git_linker_callbacks = {},
+
+	logging = {
+		---@type LogLevel Log level for the console
+		consol_log_level = LogLevel.ERROR,
+
+		---@type LogLevel Log level for the file
+		file_log_level = LogLevel.DEBUG,
+	},
+
+	---@type boolean Should github copilot integration be enabled
+	copilot_enabled = true,
+
+	---@type boolean Should wakatime integration be enabled
+	wakatime_enabled = true,
+
 	llm_config = {
+		---@type string Type of the LLM adapter (ollama, openai, etc)
 		kind = "ollama",
+
+		---@type table Adapter configuration
 		adapter = {
 			schema = {
 				model = {
@@ -29,8 +86,11 @@ return {
 		},
 	},
 	log_level = "DEBUG",
-	use_wakatime = true,
+
+	---@type string[] List of global linters for all languages
 	global_linters = { "codespell" },
+
+	---@type table<string, LanguageConfig> List of language specific configurations
 	languages = {
 		csv = {},
 		sql = {

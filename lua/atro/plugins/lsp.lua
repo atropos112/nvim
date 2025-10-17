@@ -1,5 +1,6 @@
 ---@type LazySpec[]
 return {
+	-- INFO: Even though we now use vim.lsp.config and vim.lsp.enable and no longer require "lspconfig" directly we still need this plugin. vim.lsp loads the lsp/ directory from that plugin with all the lsp base configurations so that I don't have to define them fully myself.
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" }, -- Can't be VeryLazy (doesn't work for some reason)
