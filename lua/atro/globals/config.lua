@@ -201,6 +201,7 @@ return {
 						"-race",
 						"-tags",
 						"assert",
+						"-parallel=10",
 					},
 					runner = "gotestsum",
 				},
