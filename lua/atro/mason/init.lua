@@ -38,7 +38,13 @@ M.ensure_installed = function(ensure_installed)
 				LOGGER:debug("Installing package: ", {
 					pkg_name = pkg_name,
 				})
-				pkg:install()
+				pkg:install({}, function(success, result)
+					if success then
+						LOGGER:debug("Successfully installed package: ", { package = result.name })
+					else
+						LOGGER:error("Failed to install package: ", { package = result.name, result = vim.inspect(result) })
+					end
+				end)
 			end
 		end
 	end)

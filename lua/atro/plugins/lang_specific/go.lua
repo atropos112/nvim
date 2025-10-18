@@ -39,6 +39,10 @@ if CONFIG.languages["go"] then
 			opts = {},
 		},
 		{
+			"samiulsami/cmp-go-deep",
+			dependencies = { "kkharji/sqlite.lua" },
+		},
+		{
 			"leoluz/nvim-dap-go",
 			ft = "go",
 			lazy = true,

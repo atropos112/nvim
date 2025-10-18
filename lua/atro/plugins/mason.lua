@@ -2,12 +2,9 @@ local mason_install_root_dir = os.getenv("HOME") .. "/.local/share/nvim-mason"
 ---@type LazySpec[]
 return {
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		event = "VeryLazy",
 		config = function()
-			---@type MasonConfig
-			local custom_cfg = CONFIG.mason_config or {}
-
 			require("mason").setup(
 				---@type MasonSettings
 				{
@@ -22,7 +19,7 @@ return {
 					},
 					pip = {
 						upgrade_pip = true,
-						install_args = custom_cfg.pip_install_args or {},
+						install_args = CONFIG.mason_config.pip_install_args or {},
 					},
 				}
 			)

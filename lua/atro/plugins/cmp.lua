@@ -18,6 +18,7 @@ return {
 		version = "1.*",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
+			"samiulsami/cmp-go-deep",
 			"L3MON4D3/LuaSnip",
 			"mikavilpas/blink-ripgrep.nvim",
 			"kristijanhusak/vim-dadbod-completion",
@@ -35,7 +36,7 @@ return {
 			local sql_filetypes = { mysql = true, sql = true }
 
 			-- Computing sources here rather than later so I can log.
-			local sources = { "path", "snippets", "buffer", "dictionary" }
+			local sources = { "path", "snippets", "buffer", "dictionary", "go_deep" }
 
 			-- TODO: This won't work after file is loaded. need to do per file or other way.
 			-- Better of using per-filetype option.
@@ -58,6 +59,10 @@ return {
 				enabled = function()
 					return vim.bo.buftype ~= "prompt" or is_dap_buffer()
 				end,
+				cmdline = {
+					keymap = { preset = "inherit" },
+					completion = { menu = { auto_show = true } },
+				},
 				fuzzy = {
 					-- https://cmp.saghen.dev/configuration/fuzzy#rust-vs-lua-implementation
 					implementation = "rust",
@@ -135,6 +140,17 @@ return {
 							name = "blink-cmp-words",
 							module = "blink-cmp-words.thesaurus",
 							opts = {},
+						},
+
+						go_deep = {
+							name = "go_deep",
+							module = "blink.compat.source",
+							min_keyword_length = 3,
+							max_items = 5,
+							---@module "cmp_go_deep"
+							---@type cmp_go_deep.Options
+							opts = {},
+							score_offset = 300,
 						},
 
 						-- Use the dictionary source
