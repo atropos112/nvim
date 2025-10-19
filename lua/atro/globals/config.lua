@@ -232,7 +232,12 @@ return {
 		},
 		json = {
 			treesitters = { "json", "json5" },
-			formatters = { fixjson = {} },
+			formatters = {
+				biome = {
+					-- https://biomejs.dev/formatter/
+					args = { "format", "--indent-style", "space", "--stdin-file-path", "$FILENAME" },
+				},
+			},
 			linters = { "jsonlint" },
 			lsps = {
 				jsonls = {
@@ -367,7 +372,8 @@ return {
 							"-formatter",
 							-- WARN: If you change this you will have to adjust yamlint behaviour somehow as well,
 							-- its quiet messy, ideally leave it as is.
-							"can_folded_as_literal=true,include_document_start=true,drop_merge_tag=true",
+							-- https://github.com/google/yamlfmt/blob/main/docs/config-file.md#configuration-1
+							"can_folded_as_literal=true,include_document_start=true,drop_merge_tag=true,pad_line_comments=2,retain_line_breaks_single=true",
 						}
 					end,
 				},
