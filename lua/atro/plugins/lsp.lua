@@ -1,70 +1,74 @@
 ---@type LazySpec[]
 return {
-	-- INFO: Even though we now use vim.lsp.config and vim.lsp.enable and no longer require "lspconfig" directly we still need this plugin. vim.lsp loads the lsp/ directory from that plugin with all the lsp base configurations so that I don't have to define them fully myself.
+	-- Section::  Quickstart configs for Nvim LSP.
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile" }, -- Can't be VeryLazy (doesn't work for some reason)
-		-- Must be BufReadPre and not BufReadPost as otherwise LSP and treesitter won't load for first file.
+		-- INFO: If you load any time later than BufReadPre/BufNewFile the LSP and treesitter won't start for the first opened file.
+		-- This is quiet heavy as it loads stuff like treesitter, lsp plugins etc. so best to start as late as possible. Currently
+		-- startup time is ~50ms, with this in startup it would be around ~110ms.
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"ray-x/lsp_signature.nvim",
-			"williamboman/mason.nvim",
-			"jubnzv/virtual-types.nvim",
-			"b0o/schemastore.nvim",
+			"williamboman/mason.nvim", -- Downloads LSP servers if missing, needs to happen before lspconfig
+			"b0o/schemastore.nvim", -- JSON schemas to provide better json/yaml checks
 			"aznhe21/actions-preview.nvim",
 			"nvim-telescope/telescope.nvim",
-			"MysticalDevil/inlay-hints.nvim",
 			"antosha417/nvim-lsp-file-operations",
 		},
 		config = function()
-			local setup_lsp = require("atro.lsp.utils").setup_lsp
-
+			local parse_user_lsp_config = require("atro.lsp.utils").parse_user_lsp_config
 			local log = LOGGER:with({ phase = "LSP" })
-			local server_names = {}
 			log:info("Starting LSP setup")
 			for lang, cfg in pairs(CONFIG.languages) do
 				if cfg.lsps then
-					for server_name, lsp_config in pairs(cfg.lsps) do
+					for server_name, user_lsp_config in pairs(cfg.lsps) do
 						log = log:with({ language = lang })
 						log:debug("Setting up LSP: " .. server_name)
+						local lsp_config = parse_user_lsp_config(user_lsp_config)
 						log:trace(lsp_config)
 
-						setup_lsp(server_name, lsp_config)
-						table.insert(server_names, server_name)
+						vim.lsp.config(server_name, lsp_config)
+						vim.lsp.enable(server_name, true)
 					end
 				else
 					log:with({ language = lang }):debug("No lsps found for language")
 				end
 			end
-
-			vim.lsp.enable(server_names, true)
 		end,
 	},
 
-	-- Multi-line <-> Single-line toggling
+	-- Section: Plugin that allows Multi-line <-> Single-line toggling
 	{
 		"Wansmer/treesj",
-		keys = { "<space>m", "<leader>M" },
 		event = "VeryLazy",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 		},
 		config = function()
-			require("treesj").setup({
+			local keys = KEYMAPS.split_join
+			local sj = require("treesj")
+
+			sj.setup({
 				use_default_keymaps = false,
 			})
-			vim.keymap.set("n", "<leader>m", require("treesj").toggle)
-			vim.keymap.set("n", "<leader>M", function()
-				require("treesj").toggle({ split = { recursive = true } })
-			end)
+			KEYMAPS:set_many({
+				{ keys.toggle_split_join, sj.toggle },
+				{
+					keys.toggle_split_join_recursive,
+					function()
+						sj.toggle({ split = { recursive = true } })
+					end,
+				},
+			}, { noremap = true, silent = true })
 		end,
 	},
 
+	-- Section: Plugin that uses LSP to show inlay hints in all LSP servers that support it
 	{
 		"MysticalDevil/inlay-hints.nvim",
 		event = "LspAttach",
-		dependencies = { "neovim/nvim-lspconfig" },
-		config = function()
-			require("inlay-hints").setup()
-		end,
+		dependencies = {
+			"neovim/nvim-lspconfig",
+		},
+		opts = {},
 	},
 }

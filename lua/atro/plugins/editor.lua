@@ -247,7 +247,7 @@ return {
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
 		event = { "VeryLazy" },
 		config = function()
-			local keys = KEYMAPS.text_changing
+			local keys = KEYMAPS.surrounding
 
 			require("nvim-surround").setup({
 				keymaps = {
@@ -269,7 +269,7 @@ return {
 
 			live_rename.setup({})
 
-			KEYMAPS:set(KEYMAPS.text_changing.rename, live_rename.map({ insert = true }))
+			KEYMAPS:set(KEYMAPS.other.rename, live_rename.map({ insert = true }))
 		end,
 	},
 	-- Section: Adds matching pairs of brackets, quotes, etc.

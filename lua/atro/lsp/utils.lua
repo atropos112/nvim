@@ -7,10 +7,6 @@ M.on_attach = function(client, bufnr)
 	local telescope = require("telescope.builtin")
 	local keys = KEYMAPS.lsp_on_attach
 
-	require("inlay-hints").on_attach(client, bufnr)
-	require("virtualtypes").on_attach()
-	require("lsp_signature").on_attach(client, bufnr)
-
 	KEYMAPS:set_many({
 		{ keys.lsp_references, telescope.lsp_references },
 		{ keys.lsp_declaration, vim.lsp.buf.declaration },
@@ -41,41 +37,39 @@ local get_capabilities = function()
 	return capabilities
 end
 
----@param server_name string
----@param lsp_config LspConfig
-M.setup_lsp = function(server_name, lsp_config)
+---@param user_lsp_config LspConfig
+---@return table
+M.parse_user_lsp_config = function(user_lsp_config)
 	local final_cfg = {}
 
-	if lsp_config.skip_on_attach and lsp_config.on_attach then
+	if user_lsp_config.skip_on_attach and user_lsp_config.on_attach then
 		error("Cannot skip on_attach and provide an on_attach function")
 	end
 
-	if not lsp_config.skip_on_attach then
-		if lsp_config.on_attach then
+	if not user_lsp_config.skip_on_attach then
+		if user_lsp_config.on_attach then
 			final_cfg.on_attach = function(client, bufnr)
 				M.on_attach(client, bufnr)
-				lsp_config.on_attach(client, bufnr)
+				user_lsp_config.on_attach(client, bufnr)
 			end
 		else
 			final_cfg.on_attach = M.on_attach
 		end
 	end
 
-	if not lsp_config.skip_capabilities then
+	if not user_lsp_config.skip_capabilities then
 		final_cfg.capabilities = get_capabilities()
 	end
 
-	if lsp_config.settings then
-		if type(lsp_config.settings) == "function" then
-			final_cfg.settings = lsp_config.settings()
+	if user_lsp_config.settings then
+		if type(user_lsp_config.settings) == "function" then
+			final_cfg.settings = user_lsp_config.settings()
 		else
-			final_cfg.settings = lsp_config.settings
+			final_cfg.settings = user_lsp_config.settings
 		end
 	end
 
-	vim.lsp.config(server_name, final_cfg)
-	vim.lsp.enable(server_name, false)
-	-- vim.lsp.enable(server_name, true)
+	return final_cfg
 end
 
 return M

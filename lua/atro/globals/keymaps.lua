@@ -115,6 +115,7 @@ local Keymaps = {
 
 	other = {
 		show_file_outline = key("<leader>oo", "Show file outline (functions, classes, variables etc)", "n"),
+		rename = key("gy", "Rename", "n"),
 	},
 
 	diagnostic = {
@@ -128,11 +129,15 @@ local Keymaps = {
 		close_all_folds = key("zM", "Close all folds", "nv"),
 	},
 
-	text_changing = {
-		surround_with = key("ys", "Surround with", "n"), -- Only works in normal mode, no leader key.
-		delete_surrounding = key("ds", "Delete surrounding", "n"), -- Only works in normal mode, no leader key.
-		change_surrounding = key("cs", "Change surrounding", "n"), -- Only works in normal mode, no leader key.
-		rename = key("gy", "Rename", "n"),
+	split_join = {
+		toggle_split_join = key("<leader>sj", "Toggle [s]plit/[j]oin", "n"),
+		toggle_split_join_recursive = key("<leader>sJ", "Toggle [s]plit/[j]oin recursively", "n"),
+	},
+
+	surrounding = {
+		surround_with = key("sw", "[S]urround $1 [w]ith $2", "n"), -- Only works in normal mode, no leader key.
+		delete_surrounding = key("ds", "[D]elete [s]urrounding of $1", "n"), -- Only works in normal mode, no leader key.
+		change_surrounding = key("cs", "[C]hange [s]urrounding from $1 to $2", "n"), -- Only works in normal mode, no leader key.
 	},
 
 	file_exploration = {
