@@ -16,13 +16,12 @@ return {
 					lualine_a = {},
 					lualine_b = { "branch", "diff", "diagnostics" },
 					lualine_c = {
-						-- invoke `progress` here.
 						require("lsp-progress").progress,
 					},
 					lualine_x = {
 						{
-							require("noice").api.statusline.mode.get,
-							cond = require("noice").api.statusline.mode.has,
+							require("noice").api.status.mode.get,
+							cond = require("noice").api.status.mode.has,
 							color = { fg = "#ff9e64" },
 						},
 					},

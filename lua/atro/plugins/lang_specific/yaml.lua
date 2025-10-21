@@ -8,21 +8,15 @@ if CONFIG.languages["yaml"] then
 			[".*/%.github/dependabot.yaml"] = "dependabot",
 			[".*/%.github/workflows[%w/]+.*%.yml"] = "gha",
 			[".*/%.github/workflows/[%w/]+.*%.yaml"] = "gha",
+			[".*/templates/.*%.yaml"] = "helm",
+			[".*/templates/.*%.yml"] = "helm",
 		},
 	})
 
 	-- use the yaml parser for the custom filetypes
 	vim.treesitter.language.register("yaml", "gha")
 	vim.treesitter.language.register("yaml", "dependabot")
-
-	return {
-		{
-			"towolf/vim-helm",
-			ft = { "yaml" },
-			lazy = true,
-			event = { "VeryLazy" },
-		},
-	}
-else
-	return {}
+	vim.treesitter.language.register("yaml", "helm")
 end
+
+return {}
