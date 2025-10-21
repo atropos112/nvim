@@ -1,4 +1,5 @@
 return {
+	-- Section: Plugin that provides a customizable status line at the bottom of the Neovim window
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
@@ -9,43 +10,52 @@ return {
 		},
 		event = "VeryLazy",
 		config = function()
-			require("lualine").setup({
+			local lualine = require("lualine")
+			local lsp_progress = require("lsp-progress")
+			local noice = require("noice")
+
+			lualine.setup({
 				icons_enabled = true,
 				theme = "catppuccin",
 				sections = {
 					lualine_a = {},
 					lualine_b = { "branch", "diff", "diagnostics" },
 					lualine_c = {
-						require("lsp-progress").progress,
+						lsp_progress.progress,
 					},
 					lualine_x = {
 						{
-							require("noice").api.status.mode.get,
-							cond = require("noice").api.status.mode.has,
+							noice.api.status.mode.get, ---@diagnostic disable-line: undefined-field
+							cond = noice.api.status.mode.has, ---@diagnostic disable-line: undefined-field
 							color = { fg = "#ff9e64" },
 						},
 					},
 					lualine_y = { "progress", "location" },
 
 					lualine_z = { "copilot" },
-					-- lualine_z = { "location" },
 				},
 			})
 
-			-- listen lsp-progress event and refresh lualine
+			-- NOTE: This is lsp-progress feature that is displayed in lualine this is why lualine depends on lsp-progress
+			-- It listen lsp-progress event and refresh lualine.
 			vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
 			vim.api.nvim_create_autocmd("User", {
 				group = "lualine_augroup",
 				pattern = "LspProgressStatusUpdated",
-				callback = require("lualine").refresh,
+				callback = function()
+					lualine.refresh()
+				end,
 			})
 		end,
 	},
+	-- Section: Plugin that shows LSP progress in the status line
 	{
 		"linrongbin16/lsp-progress.nvim",
 		event = "LspAttach",
 		config = function()
 			require("lsp-progress").setup({
+				-- INFO: On https://github.com/linrongbin16/lsp-progress.nvim there are 3 examples on how to configure it, I liked the second
+				-- and below is an exact copy of that example except I didn't want copilot to show in the lsp-progress so I added a check for that.
 				client_format = function(client_name, spinner, series_messages)
 					if #series_messages == 0 then
 						return nil
@@ -92,8 +102,5 @@ return {
 				end,
 			})
 		end,
-		dependencies = {
-			"nvim-lualine/lualine.nvim",
-		},
 	},
 }
