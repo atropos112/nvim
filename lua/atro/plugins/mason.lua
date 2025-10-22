@@ -1,4 +1,3 @@
-local mason_install_root_dir = os.getenv("HOME") .. "/.local/share/nvim-mason"
 ---@type LazySpec[]
 return {
 	{
@@ -8,7 +7,7 @@ return {
 			require("mason").setup(
 				---@type MasonSettings
 				{
-					install_root_dir = mason_install_root_dir,
+					install_root_dir = os.getenv("HOME") .. "/.local/share/nvim-mason",
 					max_concurrent_installers = 20,
 					ui = {
 						icons = {

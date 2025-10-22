@@ -1,4 +1,5 @@
 return {
+	-- Section: Treesitter is an incremental parsing system for programming tools that provides many features like syntax highlighting, code folding, and more.
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -17,6 +18,8 @@ return {
 				install_dir = vim.fn.stdpath("data") .. "/site",
 			})
 
+			-- INFO: Here we fidure out what is installed, what needs to be installed
+			-- take the diff and install with a timeout of 5 minutes.
 			local currently_installed = require("nvim-treesitter.config").get_installed()
 			local ensure_installed = { "dap_repl", "regex" }
 			local to_install = {}
@@ -35,6 +38,8 @@ return {
 				ts.install(to_install):wait(300000) -- wait max. 5 minutes
 			end
 
+			-- INFO: We start treesitter on every file type that we installed a parser for
+			-- but disable indentation because its often not good enough.
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = ensure_installed,
 				callback = function()

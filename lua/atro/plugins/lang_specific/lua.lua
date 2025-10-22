@@ -9,17 +9,17 @@ if CONFIG.languages["lua"] then
 			---@type lazydev.Config
 			opts = {
 				library = {
+					-- To include all by putting this path: 
+				    -- '~/.local/share/nvim/lazy/',
+					-- But that would be slow af.
+					-- These have to be the names of the folders inside the lazy directory
 					"luvit-meta/library",
 					"lazy.nvim",
 					"LazyVim",
-					"atro.types",
 					"lazydev.nvim",
 					"rabbit.nvim",
 					"which-key.nvim",
-					"dap",
-					"gopher.nvim",
 					"overseer.nvim",
-					"dap",
 					"conform.nvim",
 					"nvim-dap",
 					"Comment.nvim",
