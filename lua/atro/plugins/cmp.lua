@@ -150,7 +150,7 @@ return {
 							---@module "cmp_go_deep"
 							---@type cmp_go_deep.Options
 							opts = {},
-							score_offset = 300,
+							score_offset = 190,
 						},
 
 						-- Use the dictionary source
