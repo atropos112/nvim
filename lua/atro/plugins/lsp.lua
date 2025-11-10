@@ -33,6 +33,7 @@ return {
 					log:with({ language = lang }):debug("No lsps found for language")
 				end
 			end
+			vim.lsp.inlay_hint.enable(true)
 		end,
 	},
 
@@ -60,15 +61,5 @@ return {
 				},
 			}, { noremap = true, silent = true })
 		end,
-	},
-
-	-- Section: Plugin that uses LSP to show inlay hints in all LSP servers that support it
-	{
-		"MysticalDevil/inlay-hints.nvim",
-		event = "LspAttach",
-		dependencies = {
-			"neovim/nvim-lspconfig",
-		},
-		opts = {},
 	},
 }

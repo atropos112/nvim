@@ -39,6 +39,12 @@ if CONFIG.languages["python"] then
 		end,
 	})
 
+	vim.filetype.add({
+		extension = {
+			ipy = "python",
+		},
+	})
+
 	return {
 		{
 			"mfussenegger/nvim-dap-python",

@@ -230,6 +230,7 @@ local lsp_mason_mappings = {
 local lint_mason_mappings = {
 	["oxlint"] = "oxlint",
 	["psalm"] = "psalm",
+	["pg_format"] = "pgformatter",
 	["actionlint"] = "actionlint",
 	["ansible_lint"] = "ansible-lint",
 	["buf_lint"] = "buf",
