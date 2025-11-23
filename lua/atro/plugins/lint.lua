@@ -28,7 +28,7 @@ return {
 
 			if require("atro.utils").is_git_dir() == true then
 				local git_root = utils.GetGitRoot()
-				local potential_markdownlint_config = git_root .. "/.markdownlint.yaml"
+				local potential_markdownlint_config = git_root .. "/.markdownlint.json"
 				if utils.file_exists(potential_markdownlint_config) then
 					log:debug("Found markdownlint config at: " .. potential_markdownlint_config .. ". Adjusting markdownlint args accordingly.")
 					lint.linters.markdownlint.args = {

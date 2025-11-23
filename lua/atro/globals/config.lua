@@ -238,7 +238,7 @@ return {
 					args = { "format", "--indent-style", "space", "--stdin-file-path", "$FILENAME" },
 				},
 			},
-			linters = { "jsonlint" },
+			linters = {},
 			lsps = {
 				jsonls = {
 					-- INFO: Wrapping it as we can't guarantee that the plugin is installed at this point.
